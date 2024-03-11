@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Mobile Game AppDev Project</string>
+    <string name="go_text">GO!</string>
 </resources>
