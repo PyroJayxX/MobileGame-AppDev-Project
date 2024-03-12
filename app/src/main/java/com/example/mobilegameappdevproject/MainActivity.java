@@ -40,6 +40,20 @@ public class MainActivity extends AppCompatActivity {
             menuBGM = null;
         }
     }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (menuBGM != null && menuBGM.isPlaying()) {
+            menuBGM.pause();
+        }
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (menuBGM != null && !menuBGM.isPlaying()) {
+            menuBGM.start();
+        }
+    }
 
     // MENU Methods
     public void btnStart(View v){
