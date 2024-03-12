@@ -32,6 +32,14 @@ public class MainActivity extends AppCompatActivity {
         menuBGM.start();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (menuBGM != null) {
+            menuBGM.release();
+            menuBGM = null;
+        }
+    }
 
     // MENU Methods
     public void btnStart(View v){

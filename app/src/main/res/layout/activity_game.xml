@@ -56,9 +56,9 @@
                 android:onClick="btnBack"
                 android:text="BACK"
                 android:textColor="#FFFFFF"
-                app:layout_constraintBottom_toTopOf="@+id/cardView1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.097"
+                app:layout_constraintBottom_toTopOf="@+id/card1"
+                app:layout_constraintEnd_toStartOf="@+id/txtTimer"
+                app:layout_constraintHorizontal_bias="0.471"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
@@ -73,15 +73,39 @@
                 android:onClick="btnRetry"
                 android:text="RETRY"
                 android:textColor="@color/white"
-                app:layout_constraintBottom_toTopOf="@+id/cardView3"
+                app:layout_constraintBottom_toTopOf="@+id/card3"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.905"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.509"
+                app:layout_constraintStart_toEndOf="@+id/txtTimer"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView2"
+            <ViewSwitcher
+                android:id="@+id/card1"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="112dp"
+                android:backgroundTint="#2E4D9A"
+                app:layout_constraintEnd_toStartOf="@+id/card2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/backCardView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/card_back" />
+
+                <ImageView
+                    android:id="@+id/frontCardView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/card_back" />
+
+            </ViewSwitcher>
+
+            <ViewSwitcher
+                android:id="@+id/card2"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="112dp"
@@ -91,151 +115,284 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-            </androidx.cardview.widget.CardView>
+                <ImageView
+                    android:id="@+id/backCardView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/card_back" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView1"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="112dp"
-                android:backgroundTint="#2E4D9A"
-                app:layout_constraintEnd_toStartOf="@+id/cardView2"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                <ImageView
+                    android:id="@+id/frontCardView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/card_back" />
+            </ViewSwitcher>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView3"
+            <ViewSwitcher
+                android:id="@+id/card3"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="112dp"
                 android:backgroundTint="#2E4D9A"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.49"
-                app:layout_constraintStart_toEndOf="@+id/cardView2"
+                app:layout_constraintStart_toEndOf="@+id/card2"
                 app:layout_constraintTop_toTopOf="parent">
 
-            </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView4"
+                <ImageView
+                    android:id="@+id/backCardView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/card_back" />
+
+                <ImageView
+                    android:id="@+id/frontCardView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/card_back" />
+            </ViewSwitcher>
+
+            <ViewSwitcher
+                android:id="@+id/card4"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="#2E4D9A"
-                app:layout_constraintEnd_toStartOf="@+id/cardView5"
+                app:layout_constraintEnd_toStartOf="@+id/card5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView1" />
+                app:layout_constraintTop_toBottomOf="@+id/card1">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView5"
+                <ImageView
+                    android:id="@+id/backCardView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/card_back" />
+
+                <ImageView
+                    android:id="@+id/frontCardView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/card_back" />
+            </ViewSwitcher>
+
+            <ViewSwitcher
+                android:id="@+id/card5"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="#2E4D9A"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView2">
+                app:layout_constraintTop_toBottomOf="@+id/card2">
 
-            </androidx.cardview.widget.CardView>
+                <ImageView
+                    android:id="@+id/backCardView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/card_back" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView6"
+                <ImageView
+                    android:id="@+id/frontCardView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/card_back" />
+
+            </ViewSwitcher>
+
+            <ViewSwitcher
+                android:id="@+id/card6"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="#2E4D9A"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.509"
-                app:layout_constraintStart_toEndOf="@+id/cardView5"
-                app:layout_constraintTop_toBottomOf="@+id/cardView3">
+                app:layout_constraintStart_toEndOf="@+id/card5"
+                app:layout_constraintTop_toBottomOf="@+id/card3">
 
-            </androidx.cardview.widget.CardView>
+                <ImageView
+                    android:id="@+id/backCardView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/card_back" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView7"
+                <ImageView
+                    android:id="@+id/frontCardView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/card_back" />
+            </ViewSwitcher>
+
+            <ViewSwitcher
+                android:id="@+id/card7"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="#2E4D9A"
-                app:layout_constraintEnd_toStartOf="@+id/cardView8"
+                app:layout_constraintEnd_toStartOf="@+id/card8"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView4">
+                app:layout_constraintTop_toBottomOf="@+id/card4">
 
-            </androidx.cardview.widget.CardView>
+                <ImageView
+                    android:id="@+id/backCardView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/card_back" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView8"
+                <ImageView
+                    android:id="@+id/frontCardView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/card_back" />
+            </ViewSwitcher>
+
+            <ViewSwitcher
+                android:id="@+id/card8"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="#2E4D9A"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView5">
+                app:layout_constraintTop_toBottomOf="@+id/card5">
 
-            </androidx.cardview.widget.CardView>
+                <ImageView
+                    android:id="@+id/frontCardView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/card_back" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView9"
+                <ImageView
+                    android:id="@+id/backCardView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/card_back" />
+            </ViewSwitcher>
+
+            <ViewSwitcher
+                android:id="@+id/card9"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="#2E4D9A"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.509"
-                app:layout_constraintStart_toEndOf="@+id/cardView8"
-                app:layout_constraintTop_toBottomOf="@+id/cardView6">
+                app:layout_constraintStart_toEndOf="@+id/card8"
+                app:layout_constraintTop_toBottomOf="@+id/card6">
 
-            </androidx.cardview.widget.CardView>
+                <ImageView
+                    android:id="@+id/backCardView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/card_back" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView10"
+                <ImageView
+                    android:id="@+id/frontCardView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/card_back" />
+            </ViewSwitcher>
+
+            <ViewSwitcher
+                android:id="@+id/card10"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="#2E4D9A"
-                app:layout_constraintEnd_toStartOf="@+id/cardView11"
+                app:layout_constraintEnd_toStartOf="@+id/card11"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView7" />
+                app:layout_constraintTop_toBottomOf="@+id/card7">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView11"
+                <ImageView
+                    android:id="@+id/backCardView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/card_back" />
+
+                <ImageView
+                    android:id="@+id/frontCardView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/card_back" />
+            </ViewSwitcher>
+
+            <ViewSwitcher
+                android:id="@+id/card11"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="#2E4D9A"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView8">
+                app:layout_constraintTop_toBottomOf="@+id/card8">
 
-            </androidx.cardview.widget.CardView>
+                <ImageView
+                    android:id="@+id/backCardView11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/card_back" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView12"
+                <ImageView
+                    android:id="@+id/frontCardView11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/card_back" />
+
+            </ViewSwitcher>
+
+            <ViewSwitcher
+                android:id="@+id/card12"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="#2E4D9A"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.49"
-                app:layout_constraintStart_toEndOf="@+id/cardView11"
-                app:layout_constraintTop_toBottomOf="@+id/cardView9">
+                app:layout_constraintStart_toEndOf="@+id/card11"
+                app:layout_constraintTop_toBottomOf="@+id/card9">
 
-            </androidx.cardview.widget.CardView>
+                <ImageView
+                    android:id="@+id/backCardView12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/card_back" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView13"
+                <ImageView
+                    android:id="@+id/frontCardView12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/card_back" />
+
+            </ViewSwitcher>
+
+            <ViewSwitcher
+                android:id="@+id/card13"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="#2E4D9A"
-                app:layout_constraintEnd_toStartOf="@+id/cardView14"
+                app:layout_constraintEnd_toStartOf="@+id/card14"
                 app:layout_constraintHorizontal_bias="0.509"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView10" />
+                app:layout_constraintTop_toBottomOf="@+id/card10">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView14"
+                <ImageView
+                    android:id="@+id/backCardView13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/card_back" />
+
+                <ImageView
+                    android:id="@+id/frontCardView13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/card_back" />
+
+            </ViewSwitcher>
+
+            <ViewSwitcher
+                android:id="@+id/card14"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="16dp"
@@ -243,21 +400,46 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView11">
+                app:layout_constraintTop_toBottomOf="@+id/card11">
 
-            </androidx.cardview.widget.CardView>
+                <ImageView
+                    android:id="@+id/backCardView14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/card_back" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView15"
+                <ImageView
+                    android:id="@+id/frontCardView14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/card_back" />
+
+            </ViewSwitcher>
+
+            <ViewSwitcher
+                android:id="@+id/card15"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="#2E4D9A"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/cardView14"
-                app:layout_constraintTop_toBottomOf="@+id/cardView12">
+                app:layout_constraintStart_toEndOf="@+id/card14"
+                app:layout_constraintTop_toBottomOf="@+id/card12">
 
-            </androidx.cardview.widget.CardView>
+
+                <ImageView
+                    android:id="@+id/backCardView15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/card_back" />
+
+                <ImageView
+                    android:id="@+id/frontCardView15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/card_back" />
+
+            </ViewSwitcher>
 
             <ImageView
                 android:id="@+id/hp1"
@@ -266,9 +448,9 @@
                 android:layout_marginTop="56dp"
                 android:layout_marginEnd="20dp"
                 app:layout_constraintEnd_toStartOf="@+id/hp2"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.978"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView13"
+                app:layout_constraintTop_toBottomOf="@+id/card13"
                 app:srcCompat="@drawable/hp_icon" />
 
             <ImageView
@@ -279,7 +461,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView14"
+                app:layout_constraintTop_toBottomOf="@+id/card14"
                 app:srcCompat="@drawable/hp_icon" />
 
             <ImageView
@@ -291,7 +473,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/hp2"
-                app:layout_constraintTop_toBottomOf="@+id/cardView15"
+                app:layout_constraintTop_toBottomOf="@+id/card15"
                 app:srcCompat="@drawable/hp_icon" />
 
             <ProgressBar
@@ -305,30 +487,30 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.49"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView14"
+                app:layout_constraintTop_toBottomOf="@+id/card14"
                 app:layout_constraintVertical_bias="0.63" />
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/dragon_icon"
                 android:layout_width="71dp"
                 android:layout_height="76dp"
                 app:layout_constraintBottom_toTopOf="@+id/hp2"
                 app:layout_constraintEnd_toStartOf="@+id/progressBar"
                 app:layout_constraintHorizontal_bias="0.108"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView13"
+                app:layout_constraintTop_toBottomOf="@+id/card13"
                 app:layout_constraintVertical_bias="0.35"
                 app:srcCompat="@drawable/dragon_icon" />
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/skull_icon"
                 android:layout_width="53dp"
                 android:layout_height="47dp"
                 android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toEndOf="@+id/progressBar"
-                app:layout_constraintTop_toBottomOf="@+id/cardView15"
+                app:layout_constraintTop_toBottomOf="@+id/card15"
                 app:srcCompat="@drawable/skull_icon" />
 
             <TextView
@@ -340,11 +522,12 @@
                 android:text="GO!"
                 android:textColor="#FFFFFF"
                 android:textSize="34sp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/card2"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.505"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/hp2"
-                app:layout_constraintVertical_bias="0.218" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.537" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -27,26 +27,27 @@
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/dungeons"
+                android:fontFamily="@font/vinque"
                 android:text="Main Menu"
-                android:textColor="#881717"
+                android:textColor="#C82121"
                 android:textSize="34sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.501"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView2"
-                app:layout_constraintVertical_bias="0.147" />
+                app:layout_constraintVertical_bias="0.091" />
 
             <Button
                 android:id="@+id/btnCredits"
-                android:layout_width="135dp"
-                android:layout_height="48dp"
+                android:layout_width="175dp"
+                android:layout_height="60dp"
+                android:alpha="0.92"
                 android:backgroundTint="#2D4683"
                 android:fontFamily="sans-serif-black"
                 android:text="CREDITS"
                 android:textColor="#FFFFFF"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -57,13 +58,15 @@
 
             <Button
                 android:id="@+id/btnQuit"
-                android:layout_width="135dp"
-                android:layout_height="48dp"
+                android:layout_width="175dp"
+                android:layout_height="60dp"
+                android:alpha="0.93"
                 android:backgroundTint="#2D4683"
                 android:fontFamily="sans-serif-black"
                 android:onClick="btnQuit"
                 android:text="EXIT"
                 android:textColor="#FFFFFF"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -74,13 +77,15 @@
 
             <Button
                 android:id="@+id/btnStartGame"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
+                android:layout_width="175dp"
+                android:layout_height="60dp"
+                android:alpha="0.92"
                 android:backgroundTint="#2D4683"
                 android:fontFamily="sans-serif-black"
                 android:onClick="btnStart"
                 android:text="START GAME"
                 android:textColor="#FFFFFF"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -90,12 +95,12 @@
 
             <TextView
                 android:id="@+id/textView2"
-                android:layout_width="299dp"
-                android:layout_height="133dp"
-                android:fontFamily="@font/dungeons"
+                android:layout_width="297dp"
+                android:layout_height="178dp"
+                android:fontFamily="@font/vinque"
                 android:shadowColor="#000000"
                 android:shadowRadius="15"
-                android:text="Fantasy FLIP"
+                android:text="Fantasy Flip"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="#FDFDFD"
@@ -106,7 +111,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.207" />
+                app:layout_constraintVertical_bias="0.171" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

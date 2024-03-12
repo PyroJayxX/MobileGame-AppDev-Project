@@ -62,6 +62,14 @@ public class GameActivity extends AppCompatActivity {
         //Start Timer
         initialTimer();
     }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (gameBGM != null) {
+            gameBGM.stop();
+            gameBGM.release();
+        }
+    }
 
     //GameScreen Timer Methods
     public void initialTimer() {
