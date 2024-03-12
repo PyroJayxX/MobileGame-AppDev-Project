@@ -86,6 +86,7 @@
                 android:layout_height="100dp"
                 android:layout_marginTop="112dp"
                 android:backgroundTint="#2E4D9A"
+                android:onClick="onCardClick"
                 app:layout_constraintEnd_toStartOf="@+id/card2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -100,7 +101,7 @@
                     android:id="@+id/frontCardView1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/card_back" />
+                    app:srcCompat="@drawable/carddragon" />
 
             </ViewSwitcher>
 
