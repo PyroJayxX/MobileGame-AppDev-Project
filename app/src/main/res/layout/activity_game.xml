@@ -76,8 +76,8 @@
                 android:text="BACK"
                 android:textColor="#FFFFFF"
                 app:layout_constraintBottom_toTopOf="@+id/card1"
-                app:layout_constraintEnd_toStartOf="@+id/txtTimer"
-                app:layout_constraintHorizontal_bias="0.471"
+                app:layout_constraintEnd_toStartOf="@+id/btnRetry"
+                app:layout_constraintHorizontal_bias="0.205"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
@@ -94,8 +94,8 @@
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toTopOf="@+id/card3"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.509"
-                app:layout_constraintStart_toEndOf="@+id/txtTimer"
+                app:layout_constraintHorizontal_bias="0.133"
+                app:layout_constraintStart_toEndOf="@+id/card2"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
 
@@ -548,6 +548,34 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.537" />
+
+            <ImageButton
+                android:id="@+id/btnPause"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="36dp"
+                android:backgroundTint="#00FFFFFF"
+                android:onClick="btnPause"
+                android:scaleType="fitCenter"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/pause_icon" />
+
+            <ImageButton
+                android:id="@+id/btnResume"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="36dp"
+                android:backgroundTint="#00FFFFFF"
+                android:onClick="btnResume"
+                android:scaleType="fitCenter"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/play_icon" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

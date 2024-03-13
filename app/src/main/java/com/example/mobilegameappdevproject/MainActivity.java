@@ -64,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
             menuBGM.stop();
             menuBGM.release();
         }
-       // loadingScreen.setVisibility(View.VISIBLE);
         Intent i = new Intent(this, GameActivity.class);
         startActivity(i);
     }

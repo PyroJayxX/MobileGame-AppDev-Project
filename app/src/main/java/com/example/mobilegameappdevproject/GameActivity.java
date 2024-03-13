@@ -5,11 +5,14 @@ import android.animation.AnimatorSet;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -40,8 +43,15 @@ public class GameActivity extends AppCompatActivity {
     private ViewSwitcher card1, card2, card3, card4, card5,card6, card7,
             card8, card9, card10, card11, card12, card13, card14, card15;
     private boolean isFront = false;
+    private ImageButton btnPause;
+    private ImageButton btnResume;
 
-    private int counter = 0;
+    private int initSec = 0;
+    private int cdSec = 0;
+    private boolean initRunning;
+    private boolean initWasRunning;
+    private boolean cdRunning;
+    private boolean cdWasRunning;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +66,17 @@ public class GameActivity extends AppCompatActivity {
 
         startMusic();
         initializeViews();
-        initialTimer();
+        initTimer();
+
+        if (savedInstanceState != null){
+            initSec = savedInstanceState.getInt("initSec");
+            initRunning = savedInstanceState.getBoolean("initRunning");
+            initWasRunning = savedInstanceState.getBoolean("initWasRunning");
+            cdSec = savedInstanceState.getInt("cdSec");
+            cdRunning = savedInstanceState.getBoolean("cdRunning");
+            cdWasRunning = savedInstanceState.getBoolean("cdWasRunning");
+        }
+
     }
 
     @Override
@@ -73,6 +93,8 @@ public class GameActivity extends AppCompatActivity {
         if (gameBGM != null && gameBGM.isPlaying()) {
             gameBGM.pause();
         }
+        initWasRunning = initRunning;
+        initRunning = false;
     }
     @Override
     protected void onResume() {
@@ -80,50 +102,88 @@ public class GameActivity extends AppCompatActivity {
         if (gameBGM != null && !gameBGM.isPlaying()) {
             gameBGM.start();
         }
+        if (initWasRunning){
+            initRunning = true;
+        }
     }
 
 
     //GameScreen Timer Methods
-    public void initialTimer() {
-        Timer t = new Timer();
-        counter = 7;
-        TimerTask tt = new TimerTask() {
+
+    // Initial Timer Methods
+
+    public void initTimer() {
+        initRunning = true;
+        final Handler handler = new Handler();
+        handler.post(new Runnable() {
             @Override
             public void run() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        counter--;
-                        txtTimer.setText(String.valueOf(counter-1));
-                        if (counter == 1) {
-                            txtTimer.setText(R.string.go_text);
-                        }
-                        if (counter <= 0) {
-                            t.cancel();
-                            txtTimer.setVisibility(View.INVISIBLE);
-                            countdown();
-                        }
+                if (initRunning) {
+                    initSec++;
+                    txtTimer.setText(String.valueOf(initSec));
+                    if (initSec==4){
+                        txtTimer.setText(R.string.go_text);
                     }
-                });
+                    if (initSec>4){
+                        txtTimer.setVisibility(View.INVISIBLE);
+                        btnPause.setVisibility(View.VISIBLE);
+                        handler.removeCallbacksAndMessages(null);
+                        initRunning = !initRunning;
+                        cdTimer();
+                    }
+                }
+                handler.postDelayed(this, 1000);
             }
-        };
-        t.schedule(tt, 0, 1000);
+        });
     }
 
-    public void countdown() {
-        Timer t = new Timer();
-        counter = 0;
-        TimerTask tt = new TimerTask() {
+    // Countdown Timer Methods
+    public void cdTimer() {
+        cdRunning = true;
+        final Handler handler = new Handler();
+        handler.post(new Runnable() {
             @Override
             public void run() {
-                counter++;
-                progressBar.setProgress(counter);
-                if (counter == 100) {
-                    t.cancel();
+                if (cdRunning) {
+                    cdSec++;
+                progressBar.setProgress(cdSec*5);
+                if (cdSec == 100) {
+                    cdRunning = !cdRunning;
+                    handler.removeCallbacksAndMessages(null);
+                    }
                 }
+                handler.postDelayed(this, 1000);
             }
-        };
-        t.schedule(tt, 0, 350);
+        });
+    }
+
+    public void cdOnStart(){
+        cdRunning = true;
+    }
+    public void cdOnPause(){
+        cdRunning = false;
+    }
+
+    public void btnPause(View v){
+        cdOnPause();
+
+        btnPause.setVisibility(View.GONE);
+        btnResume.setVisibility(View.VISIBLE);
+
+        if (gameBGM != null && gameBGM.isPlaying()) {
+            gameBGM.pause();
+        }
+    }
+
+    public void btnResume(View v){
+        cdOnStart();
+
+        btnPause.setVisibility(View.VISIBLE);
+        btnResume.setVisibility(View.GONE);
+
+        if (gameBGM != null && !gameBGM.isPlaying()) {
+            gameBGM.start();
+        }
     }
 
     // GameScreen Buttons
@@ -184,6 +244,10 @@ public class GameActivity extends AppCompatActivity {
         //Layouts
         loadingScreen = findViewById(R.id.loadingScreen);
         mainGameScreen = findViewById(R.id.mainGameScreen);
+
+        //Buttons
+        btnResume = findViewById(R.id.btnResume);
+        btnPause = findViewById(R.id.btnPause);
     }
 
     private void startMusic(){
