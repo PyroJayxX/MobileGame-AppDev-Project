@@ -8,7 +8,7 @@
     tools:context=".MainActivity">
 
     <FrameLayout
-        android:id="@+id/MenuLayout"
+        android:id="@+id/TitleScreenLayout"
         android:layout_width="411dp"
         android:layout_height="879dp"
         android:background="@drawable/background"
@@ -19,6 +19,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/menuScreen"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="visible">
@@ -113,6 +114,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.181" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/splashArt"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

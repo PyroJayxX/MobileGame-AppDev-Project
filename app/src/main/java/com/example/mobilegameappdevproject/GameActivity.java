@@ -159,7 +159,7 @@ public class GameActivity extends AppCompatActivity {
         // GIFS
         Glide.with(this).load(R.drawable.hp_icon).into(hp_icon1);
         Glide.with(this).load(R.drawable.hp_icon).into(hp_icon2);
-        Glide.with(this).load(R.drawable.hp_icon_dmg).into(hp_icon3);
+        Glide.with(this).load(R.drawable.hp_icon).into(hp_icon3);
 
         //Card Objects
         card1 = findViewById(R.id.card1);

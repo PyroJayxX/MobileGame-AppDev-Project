@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         }
         Intent i = new Intent(this, GameActivity.class);
         startActivity(i);
+        finish();
     }
 
     public void btnQuit(View v){
