@@ -64,6 +64,9 @@ public class GameActivity extends AppCompatActivity {
             gameBGM.stop();
             gameBGM.release();
         }
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
+        finish();
     }
     @Override
     protected void onPause() {
