@@ -7,6 +7,7 @@ import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -15,6 +16,9 @@ import java.io.BufferedInputStream;
 
 public class MainActivity extends AppCompatActivity {
     private MediaPlayer menuBGM;
+    private ConstraintLayout menuScreen;
+    private ConstraintLayout loadingScreen;
+    private ConstraintLayout splashArt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +31,8 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        menuBGM = MediaPlayer.create(MainActivity.this, R.raw.tavern_loop);
-        menuBGM.setLooping(true);
-        menuBGM.start();
+        initializeViews();
+        startMusic();
     }
 
     @Override
@@ -60,11 +63,10 @@ public class MainActivity extends AppCompatActivity {
         if (menuBGM != null) {
             menuBGM.stop();
             menuBGM.release();
-            menuBGM = null;
         }
+       // loadingScreen.setVisibility(View.VISIBLE);
         Intent i = new Intent(this, GameActivity.class);
         startActivity(i);
-        finish();
     }
 
     public void btnQuit(View v){
@@ -74,6 +76,20 @@ public class MainActivity extends AppCompatActivity {
             menuBGM = null;
         }
         finishAffinity();
+    }
+
+    // Initialization Methods
+
+    private void startMusic(){
+        menuBGM = MediaPlayer.create(MainActivity.this, R.raw.tavern_loop);
+        menuBGM.setLooping(true);
+        menuBGM.start();
+    }
+
+    private void initializeViews(){
+        menuScreen = findViewById(R.id.menuScreen);
+        loadingScreen = findViewById(R.id.loadingScreen);
+        splashArt = findViewById(R.id.splashArt);
     }
 
 }

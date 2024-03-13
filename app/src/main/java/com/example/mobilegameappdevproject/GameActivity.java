@@ -17,6 +17,7 @@ import android.widget.ViewSwitcher;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -34,7 +35,8 @@ public class GameActivity extends AppCompatActivity {
     public ImageView hp_icon3;
     public ProgressBar progressBar;
     public TextView txtTimer;
-    public FrameLayout loadingScreen;
+    private ConstraintLayout loadingScreen;
+    private ConstraintLayout mainGameScreen;
     private ViewSwitcher card1, card2, card3, card4, card5,card6, card7,
             card8, card9, card10, card11, card12, card13, card14, card15;
     private boolean isFront = false;
@@ -131,6 +133,7 @@ public class GameActivity extends AppCompatActivity {
             gameBGM.release();
             gameBGM = null;
         }
+        //loadingScreen.setVisibility(View.VISIBLE);
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
         finish();
@@ -177,6 +180,10 @@ public class GameActivity extends AppCompatActivity {
         card13 = findViewById(R.id.card13);
         card14 = findViewById(R.id.card14);
         card15 = findViewById(R.id.card15);
+
+        //Layouts
+        loadingScreen = findViewById(R.id.loadingScreen);
+        mainGameScreen = findViewById(R.id.mainGameScreen);
     }
 
     private void startMusic(){
