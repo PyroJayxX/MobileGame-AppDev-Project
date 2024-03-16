@@ -130,6 +130,7 @@
                 android:layout_height="100dp"
                 android:layout_marginTop="112dp"
                 android:backgroundTint="#2E4D9A"
+                android:onClick="onCardClick"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.501"
                 app:layout_constraintStart_toStartOf="parent"
@@ -145,7 +146,7 @@
                     android:id="@+id/frontCardView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/card_back" />
+                    app:srcCompat="@drawable/front_card_placeholder" />
             </ViewSwitcher>
 
             <ViewSwitcher
@@ -154,6 +155,7 @@
                 android:layout_height="100dp"
                 android:layout_marginTop="112dp"
                 android:backgroundTint="#2E4D9A"
+                android:onClick="onCardClick"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.49"
                 app:layout_constraintStart_toEndOf="@+id/card2"
@@ -170,7 +172,7 @@
                     android:id="@+id/frontCardView3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/card_back" />
+                    app:srcCompat="@drawable/front_card_placeholder" />
             </ViewSwitcher>
 
             <ViewSwitcher
@@ -179,6 +181,7 @@
                 android:layout_height="100dp"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="#2E4D9A"
+                android:onClick="onCardClick"
                 app:layout_constraintEnd_toStartOf="@+id/card5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/card1">
@@ -193,7 +196,7 @@
                     android:id="@+id/frontCardView4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/card_back" />
+                    app:srcCompat="@drawable/front_card_placeholder" />
             </ViewSwitcher>
 
             <ViewSwitcher
@@ -202,6 +205,7 @@
                 android:layout_height="100dp"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="#2E4D9A"
+                android:onClick="onCardClick"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/card2">
@@ -216,7 +220,7 @@
                     android:id="@+id/frontCardView5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/card_back" />
+                    app:srcCompat="@drawable/front_card_placeholder" />
 
             </ViewSwitcher>
 
@@ -226,6 +230,7 @@
                 android:layout_height="100dp"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="#2E4D9A"
+                android:onClick="onCardClick"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.509"
                 app:layout_constraintStart_toEndOf="@+id/card5"
@@ -241,7 +246,7 @@
                     android:id="@+id/frontCardView6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/card_back" />
+                    app:srcCompat="@drawable/front_card_placeholder" />
             </ViewSwitcher>
 
             <ViewSwitcher
@@ -250,6 +255,7 @@
                 android:layout_height="100dp"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="#2E4D9A"
+                android:onClick="onCardClick"
                 app:layout_constraintEnd_toStartOf="@+id/card8"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/card4">
@@ -264,7 +270,7 @@
                     android:id="@+id/frontCardView7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/card_back" />
+                    app:srcCompat="@drawable/front_card_placeholder" />
             </ViewSwitcher>
 
             <ViewSwitcher
@@ -273,6 +279,7 @@
                 android:layout_height="100dp"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="#2E4D9A"
+                android:onClick="onCardClick"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/card5">
@@ -287,7 +294,7 @@
                     android:id="@+id/backCardView8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/card_back" />
+                    app:srcCompat="@drawable/front_card_placeholder" />
             </ViewSwitcher>
 
             <ViewSwitcher
@@ -296,6 +303,7 @@
                 android:layout_height="100dp"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="#2E4D9A"
+                android:onClick="onCardClick"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.509"
                 app:layout_constraintStart_toEndOf="@+id/card8"
@@ -311,7 +319,7 @@
                     android:id="@+id/frontCardView9"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/card_back" />
+                    app:srcCompat="@drawable/front_card_placeholder" />
             </ViewSwitcher>
 
             <ViewSwitcher
@@ -320,6 +328,7 @@
                 android:layout_height="100dp"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="#2E4D9A"
+                android:onClick="onCardClick"
                 app:layout_constraintEnd_toStartOf="@+id/card11"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/card7">
@@ -334,7 +343,7 @@
                     android:id="@+id/frontCardView10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/card_back" />
+                    app:srcCompat="@drawable/front_card_placeholder"/>
             </ViewSwitcher>
 
             <ViewSwitcher
@@ -343,6 +352,7 @@
                 android:layout_height="100dp"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="#2E4D9A"
+                android:onClick="onCardClick"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/card8">
@@ -357,7 +367,7 @@
                     android:id="@+id/frontCardView11"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/card_back" />
+                    app:srcCompat="@drawable/front_card_placeholder" />
 
             </ViewSwitcher>
 
@@ -367,6 +377,7 @@
                 android:layout_height="100dp"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="#2E4D9A"
+                android:onClick="onCardClick"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.49"
                 app:layout_constraintStart_toEndOf="@+id/card11"
@@ -382,7 +393,7 @@
                     android:id="@+id/frontCardView12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/card_back" />
+                    app:srcCompat="@drawable/front_card_placeholder" />
 
             </ViewSwitcher>
 
@@ -392,6 +403,7 @@
                 android:layout_height="100dp"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="#2E4D9A"
+                android:onClick="onCardClick"
                 app:layout_constraintEnd_toStartOf="@+id/card14"
                 app:layout_constraintHorizontal_bias="0.509"
                 app:layout_constraintStart_toStartOf="parent"
@@ -407,7 +419,7 @@
                     android:id="@+id/frontCardView13"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/card_back" />
+                    app:srcCompat="@drawable/front_card_placeholder" />
 
             </ViewSwitcher>
 
@@ -417,6 +429,7 @@
                 android:layout_height="100dp"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="#2E4D9A"
+                android:onClick="onCardClick"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
@@ -432,7 +445,7 @@
                     android:id="@+id/frontCardView14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/card_back" />
+                    app:srcCompat="@drawable/front_card_placeholder" />
 
             </ViewSwitcher>
 
@@ -442,10 +455,10 @@
                 android:layout_height="100dp"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="#2E4D9A"
+                android:onClick="onCardClick"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/card14"
                 app:layout_constraintTop_toBottomOf="@+id/card12">
-
 
                 <ImageView
                     android:id="@+id/backCardView15"
@@ -457,7 +470,7 @@
                     android:id="@+id/frontCardView15"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/card_back" />
+                    app:srcCompat="@drawable/front_card_placeholder" />
 
             </ViewSwitcher>
 

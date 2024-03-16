@@ -86,9 +86,6 @@ public class GameActivity extends AppCompatActivity {
             gameBGM.stop();
             gameBGM.release();
         }
-        Intent i = new Intent(this, MainActivity.class);
-        startActivity(i);
-        finish();
     }
     @Override
     protected void onPause() {
@@ -149,7 +146,7 @@ public class GameActivity extends AppCompatActivity {
             public void run() {
                 if (cdRunning) {
                     cdSec++;
-                progressBar.setProgress(cdSec*5);
+                progressBar.setProgress(cdSec*2);
                 if (cdSec == 100) {
                     cdRunning = !cdRunning;
                     handler.removeCallbacksAndMessages(null);
@@ -260,33 +257,33 @@ public class GameActivity extends AppCompatActivity {
     }
 
     // Card Logic
-    public void onCardClick(View view) {
+    public void onCardClick(View view){
+        flipCard((ViewSwitcher) view);
+    }
+    public void flipCard(final ViewSwitcher card) {
         // Apply flip animation
         Animation flip = AnimationUtils.loadAnimation(this, R.anim.flip);
         Animation midFlip = AnimationUtils.loadAnimation(this, R.anim.flip_middle);
-
         flip.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-
             }
             @Override
             public void onAnimationEnd(Animation animation) {
                 // Start the midFlip animation after the first animation ends
-                card1.startAnimation(midFlip);
+                card.startAnimation(midFlip);
             }
             @Override
             public void onAnimationRepeat(Animation animation){
             }
         });
-
         midFlip.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
                 if (isFront) {
-                    card1.showNext(); // Switch to the back card
+                    card.showNext(); // Switch to the back card
                 } else {
-                    card1.showPrevious(); // Switch to the front card
+                    card.showPrevious(); // Switch to the front card
                 }
                 isFront = !isFront; // Toggle the card state
             }
@@ -297,7 +294,7 @@ public class GameActivity extends AppCompatActivity {
             public void onAnimationRepeat(Animation animation) {
             }
         });
-        card1.startAnimation(flip);
+        card.startAnimation(flip);
     }
 
 }
