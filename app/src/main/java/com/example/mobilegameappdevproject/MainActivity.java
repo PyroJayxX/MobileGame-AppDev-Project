@@ -12,13 +12,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import java.io.BufferedInputStream;
-
 public class MainActivity extends AppCompatActivity {
     private MediaPlayer menuBGM;
-    private ConstraintLayout menuScreen;
-    private ConstraintLayout loadingScreen;
-    private ConstraintLayout splashArt;
+    public ConstraintLayout menuScreen;
+    public ConstraintLayout loadingScreen;
+    public ConstraintLayout splashArt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
