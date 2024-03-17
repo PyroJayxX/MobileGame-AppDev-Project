@@ -37,7 +37,7 @@ public class GameActivity extends AppCompatActivity {
     public ProgressBar progressBar;
     public ViewSwitcher card1, card2, card3, card4, card5,card6, card7,
             card8, card9, card10, card11, card12, card13, card14, card15;
-    private boolean isFront = false, initRunning, initWasRunning, cdRunning;
+    private boolean isFront = false, gameInProgress = false, initRunning, initWasRunning, cdRunning;
     private int initSec = 0, cdSec = 0;
 
     @Override
@@ -117,7 +117,9 @@ public class GameActivity extends AppCompatActivity {
 
     // Card Logic
     public void onCardClick(View v){
-        flipCard((ViewSwitcher) v);
+        if (gameInProgress) {
+            flipCard((ViewSwitcher) v);
+        }
     }
     private void flipCard(final ViewSwitcher card) {
         // Apply flip animation
@@ -180,6 +182,7 @@ public class GameActivity extends AppCompatActivity {
                         btnPause.setVisibility(View.VISIBLE);
                         handler.removeCallbacksAndMessages(null);
                         initRunning = !initRunning;
+                        gameInProgress = true;
                         cdTimer();
                     }
                 }
