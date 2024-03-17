@@ -20,7 +20,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/mainGameScreen"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="gone">
 
             <Button
                 android:id="@+id/btnBack"
@@ -628,8 +629,78 @@
             android:id="@+id/defeatScreen"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone">
+            android:background="@drawable/background3"
+            android:visibility="visible">
 
+            <Button
+                android:id="@+id/btnTryAgain"
+                android:layout_width="160dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="28dp"
+                android:alpha="0.92"
+                android:backgroundTint="#2D4683"
+                android:fontFamily="sans-serif-black"
+                android:onClick="btnRetry"
+                android:text="RETRY"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtTryAgain" />
+
+            <Button
+                android:id="@+id/btnQuit"
+                android:layout_width="160dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="32dp"
+                android:alpha="0.93"
+                android:backgroundTint="#2D4683"
+                android:fontFamily="sans-serif-black"
+                android:onClick="btnBack"
+                android:text="QUIT"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnTryAgain" />
+
+            <TextView
+                android:id="@+id/txtGameOver"
+                android:layout_width="207dp"
+                android:layout_height="131dp"
+                android:layout_marginTop="140dp"
+                android:fontFamily="@font/dungeons"
+                android:shadowColor="#000000"
+                android:shadowDy="3"
+                android:shadowRadius="10"
+                android:text="Game Over"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="70sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txtTryAgain"
+                android:layout_width="296dp"
+                android:layout_height="52dp"
+                android:fontFamily="sans-serif-medium"
+                android:shadowColor="#000000"
+                android:shadowDy="3"
+                android:shadowRadius="10"
+                android:text="Try Again?"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="30dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.495"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtGameOver"
+                app:layout_constraintVertical_bias="0.153" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
