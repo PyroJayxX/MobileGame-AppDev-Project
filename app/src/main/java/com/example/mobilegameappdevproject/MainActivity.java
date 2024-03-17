@@ -88,5 +88,4 @@ public class MainActivity extends AppCompatActivity {
         loadingScreen = findViewById(R.id.loadingScreen);
         splashArt = findViewById(R.id.splashArt);
     }
-
 }

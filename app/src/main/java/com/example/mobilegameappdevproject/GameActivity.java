@@ -23,16 +23,17 @@ import androidx.core.view.WindowInsetsCompat;
 import com.bumptech.glide.Glide;
 
 public class GameActivity extends AppCompatActivity {
-    public ImageView hp_icon1;
-    public ImageView hp_icon2;
-    public ImageView hp_icon3;
     public ConstraintLayout loadingScreen;
     public ConstraintLayout mainGameScreen;
     public ConstraintLayout pausedScreen;
-    public MediaPlayer gameBGM;
-    public ProgressBar progressBar;
-    public ImageButton btnPause;
+    public ImageView hp_icon1;
+    public ImageView hp_icon2;
+    public ImageView hp_icon3;
     public TextView txtTimer;
+    public MediaPlayer gameBGM;
+
+    public ImageButton btnPause;
+    public ProgressBar progressBar;
     public ViewSwitcher card1, card2, card3, card4, card5,card6, card7,
             card8, card9, card10, card11, card12, card13, card14, card15;
     private boolean isFront = false, initRunning, initWasRunning, cdRunning;
