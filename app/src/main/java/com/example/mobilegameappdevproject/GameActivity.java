@@ -22,6 +22,11 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 public class GameActivity extends AppCompatActivity {
     public ConstraintLayout loadingScreen;
     public ConstraintLayout mainGameScreen;
@@ -35,7 +40,7 @@ public class GameActivity extends AppCompatActivity {
 
     public ImageButton btnPause;
     public ProgressBar progressBar;
-    public ViewSwitcher card1, card2, card3, card4, card5,card6, card7,
+    public ImageView card1, card2, card3, card4, card5,card6, card7,
             card8, card9, card10, card11, card12, card13, card14, card15;
     private boolean isFront = false, gameInProgress = false, initRunning, initWasRunning, cdRunning;
     private int initSec = 0, cdSec = 0;
@@ -53,6 +58,7 @@ public class GameActivity extends AppCompatActivity {
 
         startMusic();
         initializeViews();
+        shuffleCards();
         initTimer();
 
         if (savedInstanceState != null){
@@ -62,18 +68,20 @@ public class GameActivity extends AppCompatActivity {
             cdSec = savedInstanceState.getInt("cdSec");
             cdRunning = savedInstanceState.getBoolean("cdRunning");
         }
-
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        gameInProgress = false;
         releaseMusic();
     }
     @Override
     protected void onPause() {
         super.onPause();
-        pauseMusic();
+        if (gameBGM != null && gameBGM.isPlaying()) {
+            pauseMusic();
+        }
         initWasRunning = initRunning;
         initRunning = false;
     }
@@ -91,7 +99,9 @@ public class GameActivity extends AppCompatActivity {
     // Buttons
     public void btnPause(View v){
         cdOnPause();
-        pauseMusic();
+        if (gameBGM != null && gameBGM.isPlaying()) {
+            pauseMusic();
+        }
         mainGameScreen.setVisibility(View.GONE);
         pausedScreen.setVisibility(View.VISIBLE);
     }
@@ -103,12 +113,14 @@ public class GameActivity extends AppCompatActivity {
     }
     public void btnBack(View v) {
         releaseMusic();
+        gameInProgress = false;
         //loadingScreen.setVisibility(View.VISIBLE);
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
         finish();
     }
     public void btnRetry(View v){
+        gameInProgress = false;
         releaseMusic();
         finish();
         Intent i = new Intent(this, GameActivity.class);
@@ -121,6 +133,43 @@ public class GameActivity extends AppCompatActivity {
             flipCard((ViewSwitcher) v);
         }
     }
+
+    private void shuffleCards() {
+        Integer[] images = {R.drawable.image1, R.drawable.image2, R.drawable.image3, R.drawable.image4, R.drawable.image5,
+                R.drawable.image6, R.drawable.image1, R.drawable.image2, R.drawable.image3, R.drawable.image4,
+                R.drawable.image5, R.drawable.image6, R.drawable.mimic, R.drawable.bomber, R.drawable.bomber};
+
+        List<Integer> imageIndex = new ArrayList<>(Arrays.asList(images));
+        Collections.shuffle(imageIndex);
+
+        for (int i = 1; i <=15; i++) {
+            ImageView card = getCard(i);
+            if(card!=null) {
+                card.setImageResource(imageIndex.get(i-1));
+            }
+        }
+    }
+    private ImageView getCard(int index) {
+        switch (index) {
+            case 1: return card1;
+            case 2: return card2;
+            case 3: return card3;
+            case 4: return card4;
+            case 5: return card5;
+            case 6: return card6;
+            case 7: return card7;
+            case 8: return card8;
+            case 9: return card9;
+            case 10: return card10;
+            case 11: return card11;
+            case 12: return card12;
+            case 13: return card13;
+            case 14: return card14;
+            case 15: return card15;
+            default: return null;
+        }
+    }
+
     private void flipCard(final ViewSwitcher card) {
         // Apply flip animation
         Animation flip = AnimationUtils.loadAnimation(this, R.anim.flip);
@@ -245,21 +294,21 @@ public class GameActivity extends AppCompatActivity {
         Glide.with(this).load(R.drawable.hp_icon).into(hp_icon3);
 
         //Card Objects
-        card1 = findViewById(R.id.card1);
-        card2 = findViewById(R.id.card2);
-        card3 = findViewById(R.id.card3);
-        card4 = findViewById(R.id.card4);
-        card5 = findViewById(R.id.card5);
-        card6 = findViewById(R.id.card6);
-        card7 = findViewById(R.id.card7);
-        card8 = findViewById(R.id.card8);
-        card9 = findViewById(R.id.card9);
-        card10 = findViewById(R.id.card10);
-        card11 = findViewById(R.id.card11);
-        card12 = findViewById(R.id.card12);
-        card13 = findViewById(R.id.card13);
-        card14 = findViewById(R.id.card14);
-        card15 = findViewById(R.id.card15);
+        card1 = findViewById(R.id.frontCardView1);
+        card2 = findViewById(R.id.frontCardView2);
+        card3 = findViewById(R.id.frontCardView3);
+        card4 = findViewById(R.id.frontCardView4);
+        card5 = findViewById(R.id.frontCardView5);
+        card6 = findViewById(R.id.frontCardView6);
+        card7 = findViewById(R.id.frontCardView7);
+        card8 = findViewById(R.id.frontCardView8);
+        card9 = findViewById(R.id.frontCardView9);
+        card10 = findViewById(R.id.frontCardView10);
+        card11 = findViewById(R.id.frontCardView11);
+        card12 = findViewById(R.id.frontCardView12);
+        card13 = findViewById(R.id.frontCardView13);
+        card14 = findViewById(R.id.frontCardView14);
+        card15 = findViewById(R.id.frontCardView15);
 
         //Layouts
         loadingScreen = findViewById(R.id.loadingScreen);

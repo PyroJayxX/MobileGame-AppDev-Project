@@ -62,8 +62,7 @@ public class MainActivity extends AppCompatActivity {
             menuBGM.stop();
             menuBGM.release();
         }
-        Intent i = new Intent(this, GameActivity.class);
-        startActivity(i);
+        startActivity(new Intent(this, GameActivity.class));
     }
 
     public void btnQuit(View v){

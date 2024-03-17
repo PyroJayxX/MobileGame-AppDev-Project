@@ -243,16 +243,17 @@
                 app:layout_constraintTop_toBottomOf="@+id/card5">
 
                 <ImageView
-                    android:id="@+id/frontCardView8"
+                    android:id="@+id/backCardView8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:srcCompat="@drawable/card_back" />
 
                 <ImageView
-                    android:id="@+id/backCardView8"
+                    android:id="@+id/frontCardView8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/front_card_placeholder" />
+                    app:srcCompat="@drawable/card_back" />
+
             </ViewSwitcher>
 
             <ViewSwitcher
@@ -606,7 +607,7 @@
                 android:fontFamily="@font/dungeons"
                 android:shadowColor="#000000"
                 android:shadowDy="3"
-                android:shadowRadius="15"
+                android:shadowRadius="10"
                 android:text="Game Paused"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
