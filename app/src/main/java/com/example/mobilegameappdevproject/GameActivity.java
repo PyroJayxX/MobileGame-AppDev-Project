@@ -25,6 +25,7 @@ import com.bumptech.glide.Glide;
 public class GameActivity extends AppCompatActivity {
     public ConstraintLayout loadingScreen;
     public ConstraintLayout mainGameScreen;
+    public ConstraintLayout defeatScreen;
     public ConstraintLayout pausedScreen;
     public ImageView hp_icon1;
     public ImageView hp_icon2;
@@ -194,10 +195,13 @@ public class GameActivity extends AppCompatActivity {
             public void run() {
                 if (cdRunning) {
                     cdSec++;
-                    progressBar.setProgress(cdSec*2);
-                    if (cdSec == 100) {
+                    progressBar.setProgress(cdSec*4);
+                    if (cdSec*4 >= 100) {
                         cdRunning = !cdRunning;
                         handler.removeCallbacksAndMessages(null);
+                        mainGameScreen.setVisibility(View.GONE);
+                        defeatScreen.setVisibility(View.VISIBLE);
+                        pauseMusic();
                     }
                 }
                 handler.postDelayed(this, 1000);
@@ -258,6 +262,7 @@ public class GameActivity extends AppCompatActivity {
         loadingScreen = findViewById(R.id.loadingScreen);
         mainGameScreen = findViewById(R.id.mainGameScreen);
         pausedScreen = findViewById(R.id.pausedScreen);
+        defeatScreen = findViewById(R.id.defeatScreen);
 
         //Buttons
         btnPause = findViewById(R.id.btnPause);
