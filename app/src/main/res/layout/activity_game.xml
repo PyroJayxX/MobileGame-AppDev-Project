@@ -11,6 +11,9 @@
         android:id="@+id/MainGameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/background2"
+        android:backgroundTint="#A6000000"
+        android:backgroundTintMode="src_over"
         android:visibility="visible"
         tools:layout_editor_absoluteX="1dp">
 
@@ -343,7 +346,7 @@
                     android:id="@+id/frontCardView10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/front_card_placeholder"/>
+                    app:srcCompat="@drawable/front_card_placeholder" />
             </ViewSwitcher>
 
             <ViewSwitcher
