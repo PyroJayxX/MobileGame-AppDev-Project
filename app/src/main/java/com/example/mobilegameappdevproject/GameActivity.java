@@ -247,7 +247,7 @@ public class GameActivity extends AppCompatActivity {
             public void run() {
                 if (cdRunning) {
                     cdSec++;
-                    progressBar.setProgress(cdSec*4);
+                    progressBar.setProgress(cdSec*2);
                     if (cdSec*4 >= 100) {
                         cdRunning = !cdRunning;
                         handler.removeCallbacksAndMessages(null);
