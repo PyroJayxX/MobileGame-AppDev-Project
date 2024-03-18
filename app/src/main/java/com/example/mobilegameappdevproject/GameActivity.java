@@ -231,18 +231,17 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animation animation) {
                 isFlipping = false;
-                if(flippedCardB!=null && flippedCardA!=null)
-                cardComparator();
-                if(isFront){
-                    View currentView = card.getCurrentView();
-                    if (currentView instanceof ImageView) {
+                View currentView = card.getCurrentView();
+                if (currentView instanceof ImageView) {
                         Object tag = currentView.getTag();
                         if (tag != null && tag instanceof Integer) {
                             flippedCardTemp = (int) tag;
                             cardCheck();
                         }
                     }
-                }
+
+                if(flippedCardB!=null && flippedCardA!=null)
+                    cardComparator();
             }
             @Override
             public void onAnimationRepeat(Animation animation) {
@@ -270,8 +269,6 @@ public class GameActivity extends AppCompatActivity {
                 case 1:
                     health--;
                     Glide.with(this).load(R.drawable.hp_icon_dmg).into(hp_icon1);
-                    break;
-                case 0:
                     mainGameScreen.setVisibility(View.GONE);
                     defeatScreen.setVisibility(View.VISIBLE);
                     break;
