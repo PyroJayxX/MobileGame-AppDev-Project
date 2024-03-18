@@ -41,11 +41,12 @@ public class GameActivity extends AppCompatActivity {
     public MediaPlayer gameBGM;
     public ImageButton btnPause;
     public ProgressBar progressBar;
+    public ViewSwitcher flippedCardA = null, flippedCardB = null;
     public ImageView card1, card2, card3, card4, card5,card6, card7,
             card8, card9, card10, card11, card12, card13, card14, card15;
     private boolean isFront = false, gameInProgress = false, isFlipping = false, initRunning, initWasRunning, cdRunning;
-    private int initSec = 0, cdSec = 0, health = 3;
-    private int flippedCardA , flippedCardB, flippedCardTemp; // Card Resource ID
+    private int initSec = 0, cdSec = 0, health = 3, flippedCardCount = 0;
+    private int flippedCardAID , flippedCardBID, flippedCardTemp; // Card Resource ID
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +124,7 @@ public class GameActivity extends AppCompatActivity {
     }
     public void btnRetry(View v){
         gameInProgress = false;
+        flippedCardCount = 0;
         releaseMusic();
         finish();
         Intent i = new Intent(this, GameActivity.class);
@@ -132,8 +134,32 @@ public class GameActivity extends AppCompatActivity {
     // Card Logic
     public void onCardClick(View v){
         if (gameInProgress && !isFlipping) {
-            isFlipping = true;
-            flipCard((ViewSwitcher) v);
+            ViewSwitcher card = (ViewSwitcher) v;
+            if (flippedCardA == null) {
+                flipCard((ViewSwitcher) v);
+                flippedCardA = card;
+                flippedCardCount++;
+            } else if (flippedCardB == null && card != flippedCardA) {
+                flipCard((ViewSwitcher) v);
+                flippedCardB = card;
+                flippedCardCount++;
+            }
+        }
+    }
+
+    public void cardComparator(){
+        //FOR JASON
+
+        if (flippedCardA.getChildAt(1)!=flippedCardB.getChildAt(1)){
+            flipCard(flippedCardA);
+            flipCard(flippedCardB);
+            flippedCardCount = 0;
+            flippedCardA = null;
+            flippedCardB = null;
+        } else {
+            flippedCardCount = 0;
+            flippedCardA = null;
+            flippedCardB = null;
         }
     }
 
@@ -181,6 +207,7 @@ public class GameActivity extends AppCompatActivity {
         flip.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
+                isFlipping=true;
             }
             @Override
             public void onAnimationEnd(Animation animation) {
@@ -204,6 +231,8 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animation animation) {
                 isFlipping = false;
+                if(flippedCardB!=null && flippedCardA!=null)
+                cardComparator();
                 if(isFront){
                     View currentView = card.getCurrentView();
                     if (currentView instanceof ImageView) {
