@@ -1,5 +1,7 @@
 package com.example.mobilegameappdevproject;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -37,13 +39,13 @@ public class GameActivity extends AppCompatActivity {
     public ImageView hp_icon3;
     public TextView txtTimer;
     public MediaPlayer gameBGM;
-
     public ImageButton btnPause;
     public ProgressBar progressBar;
     public ImageView card1, card2, card3, card4, card5,card6, card7,
             card8, card9, card10, card11, card12, card13, card14, card15;
-    private boolean isFront = false, gameInProgress = false, initRunning, initWasRunning, cdRunning;
-    private int initSec = 0, cdSec = 0;
+    private boolean isFront = false, gameInProgress = false, isFlipping = false, initRunning, initWasRunning, cdRunning;
+    private int initSec = 0, cdSec = 0, health = 3;
+    private int flippedCardA , flippedCardB, flippedCardTemp; // Card Resource ID
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,7 +131,8 @@ public class GameActivity extends AppCompatActivity {
 
     // Card Logic
     public void onCardClick(View v){
-        if (gameInProgress) {
+        if (gameInProgress && !isFlipping) {
+            isFlipping = true;
             flipCard((ViewSwitcher) v);
         }
     }
@@ -146,6 +149,7 @@ public class GameActivity extends AppCompatActivity {
             ImageView card = getCard(i);
             if(card!=null) {
                 card.setImageResource(imageIndex.get(i-1));
+                card.setTag(imageIndex.get(i-1));
             }
         }
     }
@@ -191,20 +195,58 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onAnimationStart(Animation animation) {
                 if (isFront) {
-                    card.showNext(); // Switch to the back card
+                    card.showPrevious(); // Switch to the back card
                 } else {
-                    card.showPrevious(); // Switch to the front card
+                    card.showNext(); // Switch to the front card
                 }
                 isFront = !isFront; // Toggle the card state
-            }
+                }
             @Override
             public void onAnimationEnd(Animation animation) {
+                isFlipping = false;
+                if(isFront){
+                    View currentView = card.getCurrentView();
+                    if (currentView instanceof ImageView) {
+                        Object tag = currentView.getTag();
+                        if (tag != null && tag instanceof Integer) {
+                            flippedCardTemp = (int) tag;
+                            cardCheck();
+                        }
+                    }
+                }
             }
             @Override
             public void onAnimationRepeat(Animation animation) {
             }
         });
         card.startAnimation(flip);
+    }
+
+    private void cardCheck(){
+        if(flippedCardTemp == R.drawable.mimic || flippedCardTemp == R.drawable.bomber){
+            damage();
+        }
+    }
+
+    public void damage(){
+            switch(health){
+                case 3:
+                    health--;
+                    Glide.with(this).load(R.drawable.hp_icon_dmg).into(hp_icon3);
+                    break;
+                case 2:
+                    health--;
+                    Glide.with(this).load(R.drawable.hp_icon_dmg).into(hp_icon2);
+                    break;
+                case 1:
+                    health--;
+                    Glide.with(this).load(R.drawable.hp_icon_dmg).into(hp_icon1);
+                    break;
+                case 0:
+                    mainGameScreen.setVisibility(View.GONE);
+                    defeatScreen.setVisibility(View.VISIBLE);
+                    break;
+            }
     }
 
     // Timer Methods
@@ -286,7 +328,6 @@ public class GameActivity extends AppCompatActivity {
         hp_icon3 = findViewById(R.id.hp3);
         progressBar = findViewById(R.id.progressBar);
         txtTimer = findViewById(R.id.txtTimer);
-
 
         // GIFS
         Glide.with(this).load(R.drawable.hp_icon).into(hp_icon1);
