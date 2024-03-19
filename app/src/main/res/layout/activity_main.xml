@@ -25,79 +25,9 @@
             android:visibility="visible">
 
             <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/vinque"
-                android:text="Main Menu"
-                android:textColor="#931616"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:visibility="invisible"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <Button
-                android:id="@+id/btnCredits"
-                android:layout_width="160dp"
-                android:layout_height="50dp"
-                android:alpha="0.92"
-                android:backgroundTint="#2D4683"
-                android:fontFamily="sans-serif-black"
-                android:text="CREDITS"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.500"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnStartGame"
-                app:layout_constraintVertical_bias="0.104" />
-
-            <Button
-                android:id="@+id/btnQuit"
-                android:layout_width="160dp"
-                android:layout_height="50dp"
-                android:alpha="0.93"
-                android:backgroundTint="#2D4683"
-                android:fontFamily="sans-serif-black"
-                android:onClick="btnQuit"
-                android:text="EXIT"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.500"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnCredits"
-                app:layout_constraintVertical_bias="0.156" />
-
-            <Button
-                android:id="@+id/btnStartGame"
-                android:layout_width="160dp"
-                android:layout_height="50dp"
-                android:alpha="0.92"
-                android:backgroundTint="#2D4683"
-                android:fontFamily="sans-serif-black"
-                android:onClick="btnStart"
-                android:text="START GAME"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView2"
-                app:layout_constraintVertical_bias="0.206" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="298dp"
-                android:layout_height="233dp"
+                android:id="@+id/txtTitle"
+                android:layout_width="282dp"
+                android:layout_height="194dp"
                 android:fontFamily="@font/vinque"
                 android:shadowColor="#000000"
                 android:shadowRadius="15"
@@ -105,52 +35,76 @@
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="#FDFDFD"
-                android:textSize="75sp"
+                android:textSize="80sp"
                 android:textStyle="bold"
                 android:typeface="sans"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.495"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.181" />
+                app:layout_constraintVertical_bias="0.195" />
+
+            <ImageButton
+                android:id="@+id/btnCredits"
+                android:layout_width="150dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="28dp"
+                android:background="#00FFFFFF"
+                android:onClick="btnCredits"
+                android:scaleType="fitCenter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnStart"
+                app:srcCompat="@drawable/btn_credits" />
+
+            <ImageButton
+                android:id="@+id/btnExit"
+                android:layout_width="150dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="28dp"
+                android:background="#00FFFFFF"
+                android:onClick="btnQuit"
+                android:scaleType="fitCenter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnCredits"
+                app:srcCompat="@drawable/btn_exit" />
+
+            <ImageButton
+                android:id="@+id/btnStart"
+                android:layout_width="150dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="88dp"
+                android:background="#00FFFFFF"
+                android:onClick="btnStart"
+                android:scaleType="fitCenter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.502"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtTitle"
+                app:srcCompat="@drawable/btn_start" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/splashArt"
+            android:id="@+id/creditScreen"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/credits"
             android:visibility="gone">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/loadingScreen"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/background2"
-            android:backgroundTint="#85D6D6D6"
-            android:backgroundTintMode="multiply"
-            android:visibility="gone">
-
-            <ProgressBar
-                android:id="@+id/progressBar2"
-                style="@android:style/Widget.Holo.Light.ProgressBar.Small"
-                android:layout_width="76dp"
-                android:layout_height="74dp"
-                android:layout_marginStart="160dp"
-                android:layout_marginTop="388dp"
-                android:layout_marginEnd="160dp"
-                android:layout_marginBottom="388dp"
-                android:indeterminateBehavior="repeat"
-                android:progressTint="#6E1F1F"
+            <ImageButton
+                android:id="@+id/btnHome"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_marginBottom="184dp"
+                android:background="#00FFFFFF"
+                android:onClick="btnHome"
+                android:scaleType="fitCenter"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.466"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                app:srcCompat="@drawable/circbtn_home" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </FrameLayout>

@@ -23,40 +23,6 @@
             android:layout_height="match_parent"
             android:visibility="gone">
 
-            <Button
-                android:id="@+id/btnBack"
-                android:layout_width="125dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="36dp"
-                android:backgroundTint="#2E6CB6"
-                android:drawableLeft="@drawable/home_icon"
-                android:onClick="btnBack"
-                android:text="BACK"
-                android:textColor="#FFFFFF"
-                app:layout_constraintBottom_toTopOf="@+id/card1"
-                app:layout_constraintEnd_toStartOf="@+id/btnRetry"
-                app:layout_constraintHorizontal_bias="0.205"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <Button
-                android:id="@+id/btnRetry"
-                android:layout_width="125dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="36dp"
-                android:backgroundTint="#2E6CB6"
-                android:drawableRight="@drawable/retry_icon"
-                android:onClick="btnRetry"
-                android:text="RETRY"
-                android:textColor="@color/white"
-                app:layout_constraintBottom_toTopOf="@+id/card3"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.133"
-                app:layout_constraintStart_toEndOf="@+id/card2"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
-
             <ViewSwitcher
                 android:id="@+id/card1"
                 android:layout_width="100dp"
@@ -77,8 +43,9 @@
                 <ImageView
                     android:id="@+id/frontCardView1"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/card_dragon" />
+                    android:layout_height="wrap_content">
+
+                </ImageView>
 
             </ViewSwitcher>
 
@@ -506,10 +473,9 @@
                 android:textSize="34sp"
                 app:layout_constraintBottom_toTopOf="@+id/card2"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.505"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.537" />
+                app:layout_constraintVertical_bias="0.567" />
 
             <ImageButton
                 android:id="@+id/btnPause"
@@ -536,6 +502,36 @@
                 app:layout_constraintTop_toBottomOf="@+id/card15"
                 app:srcCompat="@drawable/skull_icon" />
 
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="68dp"
+                android:layout_height="69dp"
+                android:background="#00FFFFFF"
+                android:onClick="btnBack"
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toTopOf="@+id/card1"
+                app:layout_constraintEnd_toStartOf="@+id/txtTimer"
+                app:layout_constraintHorizontal_bias="0.321"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.627"
+                app:srcCompat="@drawable/circbtn_back" />
+
+            <ImageButton
+                android:id="@+id/btnRetry"
+                android:layout_width="68dp"
+                android:layout_height="69dp"
+                android:background="#00FFFFFF"
+                android:onClick="btnRetry"
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toTopOf="@+id/card3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.638"
+                app:layout_constraintStart_toEndOf="@+id/txtTimer"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.627"
+                app:srcCompat="@drawable/circbtn_retry" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -545,65 +541,11 @@
             android:background="@drawable/background3"
             android:visibility="gone">
 
-            <Button
-                android:id="@+id/btnRestart"
-                android:layout_width="160dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="40dp"
-                android:alpha="0.92"
-                android:backgroundTint="#2D4683"
-                android:fontFamily="sans-serif-black"
-                android:onClick="btnRetry"
-                android:text="RESTART"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:visibility="visible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.501"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnResume" />
-
-            <Button
-                android:id="@+id/btnResume"
-                android:layout_width="160dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="92dp"
-                android:alpha="0.92"
-                android:backgroundTint="#2D4683"
-                android:fontFamily="sans-serif-black"
-                android:onClick="btnResume"
-                android:text="RESUME"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-            <Button
-                android:id="@+id/btnExit"
-                android:layout_width="160dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="40dp"
-                android:alpha="0.93"
-                android:backgroundTint="#2D4683"
-                android:fontFamily="sans-serif-black"
-                android:onClick="btnBack"
-                android:text="EXIT"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnRestart" />
-
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="408dp"
                 android:layout_height="125dp"
-                android:layout_marginTop="140dp"
+                android:layout_marginTop="156dp"
                 android:fontFamily="@font/dungeons"
                 android:shadowColor="#000000"
                 android:shadowDy="3"
@@ -611,11 +553,50 @@
                 android:text="Game Paused"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
-                android:textSize="65sp"
+                android:textSize="70sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.333"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/btnResume"
+                android:layout_width="170dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="96dp"
+                android:background="#00FFFFFF"
+                android:onClick="btnResume"
+                android:scaleType="fitCenter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView3"
+                app:srcCompat="@drawable/btn_resume" />
+
+            <ImageButton
+                android:id="@+id/btnRestart"
+                android:layout_width="170dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="24dp"
+                android:background="#00FFFFFF"
+                android:onClick="btnRetry"
+                android:scaleType="fitCenter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnResume"
+                app:srcCompat="@drawable/btn_restart" />
+
+            <ImageButton
+                android:id="@+id/btnPauseExit"
+                android:layout_width="170dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="24dp"
+                android:background="#00FFFFFF"
+                android:onClick="btnBack"
+                android:scaleType="fitCenter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnRestart"
+                app:srcCompat="@drawable/btn_exit" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -633,39 +614,31 @@
             android:background="@drawable/background3"
             android:visibility="gone">
 
-            <Button
-                android:id="@+id/btnTryAgain"
-                android:layout_width="160dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="28dp"
-                android:alpha="0.92"
-                android:backgroundTint="#2D4683"
-                android:fontFamily="sans-serif-black"
+            <ImageButton
+                android:id="@+id/btnDefeatRetry"
+                android:layout_width="170dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="24dp"
+                android:background="#00FFFFFF"
                 android:onClick="btnRetry"
-                android:text="RETRY"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp"
-                android:textStyle="bold"
+                android:scaleType="fitCenter"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtTryAgain" />
+                app:layout_constraintTop_toBottomOf="@+id/txtTryAgain"
+                app:srcCompat="@drawable/btn_retry" />
 
-            <Button
-                android:id="@+id/btnQuit"
-                android:layout_width="160dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="32dp"
-                android:alpha="0.93"
-                android:backgroundTint="#2D4683"
-                android:fontFamily="sans-serif-black"
+            <ImageButton
+                android:id="@+id/btnDefeatExit"
+                android:layout_width="170dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="24dp"
+                android:background="#00FFFFFF"
                 android:onClick="btnBack"
-                android:text="QUIT"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp"
-                android:textStyle="bold"
+                android:scaleType="fitCenter"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnTryAgain" />
+                app:layout_constraintTop_toBottomOf="@+id/btnDefeatRetry"
+                app:srcCompat="@drawable/btn_quit" />
 
             <TextView
                 android:id="@+id/txtGameOver"
@@ -701,7 +674,7 @@
                 app:layout_constraintHorizontal_bias="0.495"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtGameOver"
-                app:layout_constraintVertical_bias="0.153" />
+                app:layout_constraintVertical_bias="0.12" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout

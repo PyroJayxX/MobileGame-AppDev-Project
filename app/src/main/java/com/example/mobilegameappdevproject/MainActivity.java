@@ -15,8 +15,7 @@ import androidx.core.view.WindowInsetsCompat;
 public class MainActivity extends AppCompatActivity {
     private MediaPlayer menuBGM;
     public ConstraintLayout menuScreen;
-    public ConstraintLayout loadingScreen;
-    public ConstraintLayout splashArt;
+    public ConstraintLayout creditScreen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +69,16 @@ public class MainActivity extends AppCompatActivity {
         overridePendingTransition(0, 0);
     }
 
+    public void btnCredits(View v){
+        menuScreen.setVisibility(View.GONE);
+        creditScreen.setVisibility(View.VISIBLE);
+    }
+
+    public void btnHome(View v){
+        menuScreen.setVisibility(View.VISIBLE);
+        creditScreen.setVisibility(View.GONE);
+    }
+
     public void btnQuit(View v){
         if (menuBGM != null) {
             menuBGM.stop();
@@ -89,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeViews(){
         menuScreen = findViewById(R.id.menuScreen);
-        loadingScreen = findViewById(R.id.loadingScreen);
-        splashArt = findViewById(R.id.splashArt);
+        creditScreen = findViewById(R.id.creditScreen);
     }
 }
