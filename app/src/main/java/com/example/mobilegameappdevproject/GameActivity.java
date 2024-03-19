@@ -57,11 +57,18 @@ public class GameActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startMusic();
+                initializeViews();
+                shuffleCards();
+                initTimer();
+                loadingScreen.setVisibility(View.GONE);
+                mainGameScreen.setVisibility(View.VISIBLE);
+            }
+        }, 1500);
 
-        startMusic();
-        initializeViews();
-        shuffleCards();
-        initTimer();
 
         if (savedInstanceState != null){
             initSec = savedInstanceState.getInt("initSec");
@@ -116,6 +123,9 @@ public class GameActivity extends AppCompatActivity {
     public void btnBack(View v) {
         releaseMusic();
         gameInProgress = false;
+        flippedCardCount = 0;
+        flippedCardA = null;
+        flippedCardB = null;
         //loadingScreen.setVisibility(View.VISIBLE);
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
@@ -124,6 +134,8 @@ public class GameActivity extends AppCompatActivity {
     public void btnRetry(View v){
         gameInProgress = false;
         flippedCardCount = 0;
+        flippedCardA = null;
+        flippedCardB = null;
         releaseMusic();
         finish();
         Intent i = new Intent(this, GameActivity.class);

@@ -19,28 +19,6 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/loadingScreen"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone">
-
-            <ProgressBar
-                android:id="@+id/progressBar2"
-                style="?android:attr/progressBarStyle"
-                android:layout_width="91dp"
-                android:layout_height="93dp"
-                android:layout_marginStart="160dp"
-                android:layout_marginTop="388dp"
-                android:layout_marginEnd="160dp"
-                android:layout_marginBottom="388dp"
-                android:backgroundTint="#571010"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/menuScreen"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -145,6 +123,34 @@
             android:layout_height="match_parent"
             android:visibility="gone">
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/loadingScreen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/background2"
+            android:backgroundTint="#85D6D6D6"
+            android:backgroundTintMode="multiply"
+            android:visibility="gone">
+
+            <ProgressBar
+                android:id="@+id/progressBar2"
+                style="@android:style/Widget.Holo.Light.ProgressBar.Small"
+                android:layout_width="76dp"
+                android:layout_height="74dp"
+                android:layout_marginStart="160dp"
+                android:layout_marginTop="388dp"
+                android:layout_marginEnd="160dp"
+                android:layout_marginBottom="388dp"
+                android:indeterminateBehavior="repeat"
+                android:progressTint="#6E1F1F"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.466"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </FrameLayout>

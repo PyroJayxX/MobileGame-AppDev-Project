@@ -62,7 +62,12 @@ public class MainActivity extends AppCompatActivity {
             menuBGM.stop();
             menuBGM.release();
         }
-        startActivity(new Intent(this, GameActivity.class));
+        Intent intent = new Intent(this, GameActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        overridePendingTransition(0, 0);
     }
 
     public void btnQuit(View v){
