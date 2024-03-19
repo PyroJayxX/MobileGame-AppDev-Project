@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Mobile Game AppDev Project</string>
+    <string name="app_name">Fantasy Flip</string>
     <string name="go_text">GO!</string>
     <string name="card_object">Card Object</string>
 </resources>
