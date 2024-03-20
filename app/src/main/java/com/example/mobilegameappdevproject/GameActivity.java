@@ -32,20 +32,21 @@ public class GameActivity extends AppCompatActivity {
     public ConstraintLayout mainGameScreen;
     public ConstraintLayout defeatScreen;
     public ConstraintLayout pausedScreen;
+    public ConstraintLayout victoryScreen;
     public ImageView hp_icon1;
     public ImageView hp_icon2;
     public ImageView hp_icon3;
     public TextView txtTimer;
+    public TextView txtScore;
     public MediaPlayer gameBGM;
     public ImageButton btnPause;
     public ProgressBar progressBar;
-    public ViewSwitcher flippedCardA = null, flippedCardB = null, hazardA = null, hazardB = null, hazardC = null;
+    public ViewSwitcher flippedCardA = null, flippedCardB = null;
     public ImageView card1, card2, card3, card4, card5,card6, card7,
             card8, card9, card10, card11, card12, card13, card14, card15;
-    private boolean gameInProgress = false, isFlipping = false,
-            cardAIsFront = false, cardBIsFront = false, initRunning, initWasRunning, cdRunning;
-    private int initSec = 0, cdSec = 0, health = 3, flippedCardCount = 0;
-    private int flippedCardAID , flippedCardBID, flippedCardTemp; // Card Resource ID
+    private boolean gameInProgress = false, isFlipping = false, initRunning, initWasRunning, cdRunning;
+    private int initSec = 0, cdSec = 0, health = 3, flippedCardCount = 0, hazardCardCount = 0, flippedCardTemp;
+    private double Score = 0.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,33 +150,46 @@ public class GameActivity extends AppCompatActivity {
             if (flippedCardA == null && card != flippedCardB) {
                 flipCard(card);
                 flippedCardA = card;
-                flippedCardCount++;
             } else if (flippedCardB == null && card != flippedCardA) {
                 flipCard(card);
                 flippedCardB = card;
-                flippedCardCount++;
             } else if (flippedCardA != null && card == flippedCardA){
                 flipCard(card);
                 flippedCardA = null;
-                flippedCardCount--;
             } else if (flippedCardB != null && card == flippedCardB){
                 flipCard(card);
                 flippedCardA = null;
-                flippedCardCount--;
             }
         }
     }
 
-    public void cardComparator(){
-        //FOR JASON
-        if (flippedCardA.getTag() != null && flippedCardA.getTag().equals(R.drawable.mimic) || flippedCardA.getTag() != null && flippedCardA.getTag().equals(R.drawable.bomber) || flippedCardA.getTag() != null && flippedCardA.getTag().equals(R.drawable.poison)) {
+    public void cardComparator(ViewSwitcher cardA, ViewSwitcher cardB) {
+        View cardAImage = cardA.getCurrentView();
+        View cardBImage = cardB.getCurrentView();
+        Object cardAImageTag = null;
+        Object cardBImageTag = null;
+
+        if (cardAImage instanceof ImageView) {
+            cardAImageTag = cardAImage.getTag();
+        }
+        if (cardBImage instanceof ImageView) {
+            cardBImageTag = cardBImage.getTag();
+        }
+
+        if (cardAImageTag != null && cardBImageTag != null && cardAImageTag.equals(cardBImageTag)) {
+            flippedCardA.setClickable(false);
+            flippedCardB.setClickable(false);
             flippedCardA = null;
-        } else if (flippedCardB.getTag() != null && flippedCardB.getTag().equals(R.drawable.mimic) || flippedCardB.getTag() != null && flippedCardB.getTag().equals(R.drawable.bomber) || flippedCardB.getTag() != null && flippedCardB.getTag().equals(R.drawable.poison)) {
             flippedCardB = null;
-        } else {
+            flippedCardCount++;
+            if(flippedCardCount==6){
+                txtScore.setText((int)Score);
+                mainGameScreen.setVisibility(View.GONE);
+                victoryScreen.setVisibility(View.VISIBLE);
+            }
+        } else if (cardAImageTag != null && cardBImageTag != null && !cardAImageTag.equals(cardBImageTag)) {
             flipCard(flippedCardA);
             flipCard(flippedCardB);
-            flippedCardCount = 0;
             flippedCardA = null;
             flippedCardB = null;
         }
@@ -186,12 +200,13 @@ public class GameActivity extends AppCompatActivity {
                 R.drawable.image5, R.drawable.image6, R.drawable.mimic, R.drawable.bomber, R.drawable.poison};
 
         List<Integer> imageIndex = new ArrayList<>(Arrays.asList(images));
+
         Collections.shuffle(imageIndex);
 
         for (int i = 1; i <=15; i++) {
             ImageView card = getCard(i);
             if(card!=null) {
-                card.setImageResource(imageIndex.get(i-1));
+                card.setImageResource(imageIndex.get(i-1)); // Set image
                 card.setTag(imageIndex.get(i-1));
             }
         }
@@ -225,19 +240,21 @@ public class GameActivity extends AppCompatActivity {
                         flippedCardTemp = (int) tag;
                         if(cardIsHazard()){
                             card.setClickable(false);
+                            hazardCardCount++;
                         }
                     }
                 }
             }
             @Override
             public void onAnimationEnd(Animation animation) {
-                if(health==0){
-                    defeatScreen.setVisibility(View.VISIBLE);
-                    mainGameScreen.setVisibility(View.GONE);
-                }
+//                if(health==0){
+//                    defeatScreen.setVisibility(View.VISIBLE);
+//                    mainGameScreen.setVisibility(View.GONE);
+//                }
                 isFlipping = false;
+                Score = calculateScore(100-cdSec, health, hazardCardCount);
                 if(flippedCardB!=null && flippedCardA!=null){
-                    cardComparator();
+                    cardComparator(flippedCardA, flippedCardB);
                 }
             }
             @Override
@@ -319,8 +336,8 @@ public class GameActivity extends AppCompatActivity {
             public void run() {
                 if (cdRunning) {
                     cdSec++;
-                    progressBar.setProgress(cdSec*2);
-                    if (cdSec*2 >= 100) {
+                    progressBar.setProgress(cdSec);
+                    if (cdSec >= 100) {
                         cdRunning = !cdRunning;
                         handler.removeCallbacksAndMessages(null);
                         mainGameScreen.setVisibility(View.GONE);
@@ -351,6 +368,27 @@ public class GameActivity extends AppCompatActivity {
             gameBGM = null;
         }
     }
+
+    public int calculateScore(int remainingTimeSeconds, int remainingHealth, int hazardCardsPulled) {
+        // Maximum score is 100
+        int maxScore = 100;
+
+        // Time contribution: The higher the remaining time, the higher the score
+        int timeContribution =  remainingTimeSeconds / 50 * maxScore;
+
+        // Health contribution: The higher the remaining health, the higher the score
+        int healthContribution =  remainingHealth / 3 * maxScore;
+
+        // Hazard cards contribution: The less hazard cards pulled, the higher the score
+        int hazardContribution = 3 - hazardCardsPulled / 3 * maxScore;
+
+        // Calculate the total score
+        int totalScore = (int) (timeContribution + healthContribution + hazardContribution);
+
+        // Ensure the total score is within the valid range (0 to 100)
+        return Math.max(0, Math.min(maxScore, totalScore));
+    }
+
     private void initializeViews(){
         // Views
         hp_icon1 = findViewById(R.id.hp1);
@@ -358,6 +396,7 @@ public class GameActivity extends AppCompatActivity {
         hp_icon3 = findViewById(R.id.hp3);
         progressBar = findViewById(R.id.progressBar);
         txtTimer = findViewById(R.id.txtTimer);
+        txtScore = findViewById(R.id.txtScore);
 
         // GIFS
         Glide.with(this).load(R.drawable.hp_icon).into(hp_icon1);
@@ -386,6 +425,7 @@ public class GameActivity extends AppCompatActivity {
         mainGameScreen = findViewById(R.id.mainGameScreen);
         pausedScreen = findViewById(R.id.pausedScreen);
         defeatScreen = findViewById(R.id.defeatScreen);
+        victoryScreen = findViewById(R.id.victoryScreen);
 
         //Buttons
         btnPause = findViewById(R.id.btnPause);
