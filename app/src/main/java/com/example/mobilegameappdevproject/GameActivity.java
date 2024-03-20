@@ -320,7 +320,7 @@ public class GameActivity extends AppCompatActivity {
                 if (cdRunning) {
                     cdSec++;
                     progressBar.setProgress(cdSec*2);
-                    if (cdSec*4 >= 100) {
+                    if (cdSec*2 >= 100) {
                         cdRunning = !cdRunning;
                         handler.removeCallbacksAndMessages(null);
                         mainGameScreen.setVisibility(View.GONE);

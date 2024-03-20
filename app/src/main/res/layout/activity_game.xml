@@ -12,10 +12,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/background2"
-        android:backgroundTint="#A6000000"
+        android:backgroundTint="#CC000000"
         android:backgroundTintMode="src_over"
         android:visibility="visible"
-        tools:layout_editor_absoluteX="1dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/mainGameScreen"
@@ -82,7 +85,7 @@
                 android:backgroundTint="#2E4D9A"
                 android:onClick="onCardClick"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.49"
+                app:layout_constraintHorizontal_bias="0.509"
                 app:layout_constraintStart_toEndOf="@+id/card2"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -305,7 +308,7 @@
                 android:backgroundTint="#2E4D9A"
                 android:onClick="onCardClick"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.49"
+                app:layout_constraintHorizontal_bias="0.509"
                 app:layout_constraintStart_toEndOf="@+id/card11"
                 app:layout_constraintTop_toBottomOf="@+id/card9">
 
@@ -383,6 +386,7 @@
                 android:backgroundTint="#2E4D9A"
                 android:onClick="onCardClick"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.509"
                 app:layout_constraintStart_toEndOf="@+id/card14"
                 app:layout_constraintTop_toBottomOf="@+id/card12">
 
@@ -416,10 +420,12 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.504"
+                app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/progressBar"
+                app:layout_constraintVertical_bias="0.01"
                 app:srcCompat="@drawable/hp_icon" />
 
             <ImageView
@@ -491,7 +497,8 @@
                 android:id="@+id/btnBack"
                 android:layout_width="99dp"
                 android:layout_height="60dp"
-                android:background="#00FFFFFF"
+                android:background="#00000000"
+                android:backgroundTintMode="multiply"
                 android:onClick="btnBack"
                 android:scaleType="fitCenter"
                 app:layout_constraintBottom_toTopOf="@+id/card1"
@@ -611,7 +618,7 @@
             android:id="@+id/defeatScreen"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/background3"
+            android:background="@drawable/background1"
             android:visibility="gone">
 
             <ImageButton
@@ -643,16 +650,16 @@
             <TextView
                 android:id="@+id/txtGameOver"
                 android:layout_width="207dp"
-                android:layout_height="131dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="140dp"
                 android:fontFamily="@font/dungeons"
                 android:shadowColor="#000000"
                 android:shadowDy="3"
-                android:shadowRadius="10"
+                android:shadowRadius="15"
                 android:text="Game Over"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
-                android:textSize="70sp"
+                android:textSize="75sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -674,7 +681,7 @@
                 app:layout_constraintHorizontal_bias="0.495"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtGameOver"
-                app:layout_constraintVertical_bias="0.12" />
+                app:layout_constraintVertical_bias="0.163" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -682,7 +689,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/background2"
-            android:backgroundTint="#85D6D6D6"
+            android:backgroundTint="#D6D6D6"
             android:backgroundTintMode="multiply"
             android:visibility="visible">
 

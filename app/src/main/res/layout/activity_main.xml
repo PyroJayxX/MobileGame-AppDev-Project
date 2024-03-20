@@ -9,8 +9,8 @@
 
     <FrameLayout
         android:id="@+id/TitleScreenLayout"
-        android:layout_width="411dp"
-        android:layout_height="879dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="@drawable/background"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -54,21 +54,23 @@
                 android:id="@+id/btnStart"
                 android:layout_width="150dp"
                 android:layout_height="70dp"
-                android:layout_marginTop="68dp"
+                android:layout_marginTop="76dp"
                 android:background="#00FFFFFF"
                 android:onClick="btnStart"
                 android:scaleType="fitCenter"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintHorizontal_bias="0.501"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView4"
+                app:layout_constraintVertical_bias="0.0"
                 app:srcCompat="@drawable/btn_start" />
 
             <ImageView
                 android:id="@+id/imageView4"
                 android:layout_width="304dp"
                 android:layout_height="277dp"
-                android:layout_marginTop="92dp"
+                android:layout_marginTop="72dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.495"
                 app:layout_constraintStart_toStartOf="parent"
