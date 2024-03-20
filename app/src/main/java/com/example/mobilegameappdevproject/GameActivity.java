@@ -44,9 +44,8 @@ public class GameActivity extends AppCompatActivity {
     public ViewSwitcher flippedCardA = null, flippedCardB = null;
     public ImageView card1, card2, card3, card4, card5,card6, card7,
             card8, card9, card10, card11, card12, card13, card14, card15;
-    private boolean gameInProgress = false, isFlipping = false, initRunning, initWasRunning, cdRunning;
-    private int initSec = 0, cdSec = 0, health = 3, flippedCardCount = 0, hazardCardCount = 0, flippedCardTemp;
-    private double Score = 0.0;
+    private boolean gameInProgress = false, isFlipping = false, initRunning, initWasRunning, cdRunning, isVictory = false;
+    private int initSec = 0, cdSec = 0, health = 3, flippedCardCount = 0, hazardCardCount = 0, flippedCardTemp, Score = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,7 +182,8 @@ public class GameActivity extends AppCompatActivity {
             flippedCardB = null;
             flippedCardCount++;
             if(flippedCardCount==6){
-                txtScore.setText((int)Score);
+                isVictory = true;
+                txtScore.setText(Integer.toString(Score));
                 mainGameScreen.setVisibility(View.GONE);
                 victoryScreen.setVisibility(View.VISIBLE);
             }
@@ -252,7 +252,7 @@ public class GameActivity extends AppCompatActivity {
 //                    mainGameScreen.setVisibility(View.GONE);
 //                }
                 isFlipping = false;
-                Score = calculateScore(100-cdSec, health, hazardCardCount);
+                Score = calculateScore(100-cdSec, hazardCardCount);
                 if(flippedCardB!=null && flippedCardA!=null){
                     cardComparator(flippedCardA, flippedCardB);
                 }
@@ -337,7 +337,7 @@ public class GameActivity extends AppCompatActivity {
                 if (cdRunning) {
                     cdSec++;
                     progressBar.setProgress(cdSec);
-                    if (cdSec >= 100) {
+                    if (cdSec >= 100 && !isVictory) {
                         cdRunning = !cdRunning;
                         handler.removeCallbacksAndMessages(null);
                         mainGameScreen.setVisibility(View.GONE);
@@ -369,24 +369,10 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    public int calculateScore(int remainingTimeSeconds, int remainingHealth, int hazardCardsPulled) {
+    public int calculateScore(int remainingTimeSeconds, int hazardCardsPulled) {
         // Maximum score is 100
-        int maxScore = 100;
-
-        // Time contribution: The higher the remaining time, the higher the score
-        int timeContribution =  remainingTimeSeconds / 50 * maxScore;
-
-        // Health contribution: The higher the remaining health, the higher the score
-        int healthContribution =  remainingHealth / 3 * maxScore;
-
-        // Hazard cards contribution: The less hazard cards pulled, the higher the score
-        int hazardContribution = 3 - hazardCardsPulled / 3 * maxScore;
-
-        // Calculate the total score
-        int totalScore = (int) (timeContribution + healthContribution + hazardContribution);
-
-        // Ensure the total score is within the valid range (0 to 100)
-        return Math.max(0, Math.min(maxScore, totalScore));
+        int maxScore = (remainingTimeSeconds*2) - (hazardCardsPulled*5);
+        return maxScore;
     }
 
     private void initializeViews(){
