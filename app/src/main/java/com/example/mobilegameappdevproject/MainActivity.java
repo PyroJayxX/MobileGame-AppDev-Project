@@ -16,6 +16,8 @@ public class MainActivity extends AppCompatActivity {
     private MediaPlayer menuBGM;
     public ConstraintLayout menuScreen;
     public ConstraintLayout creditScreen;
+    public ConstraintLayout modeScreen;
+    private boolean isMortal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,17 +60,10 @@ public class MainActivity extends AppCompatActivity {
     // MENU Methods
     public void btnStart(View v){
         playSoundEffect(R.raw.sfx_button);
-        if (menuBGM != null) {
-            menuBGM.stop();
-            menuBGM.release();
-        }
-        Intent intent = new Intent(this, GameActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        overridePendingTransition(0, 0);
+        menuScreen.setClickable(false);
+        modeScreen.setVisibility(View.VISIBLE);
     }
+
 
     public void btnCredits(View v){
         playSoundEffect(R.raw.sfx_button);
@@ -80,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         playSoundEffect(R.raw.sfx_btnexit);
         menuScreen.setVisibility(View.VISIBLE);
         creditScreen.setVisibility(View.GONE);
+        modeScreen.setVisibility(View.GONE);
     }
 
     public void btnQuit(View v){
@@ -90,6 +86,38 @@ public class MainActivity extends AppCompatActivity {
             menuBGM = null;
         }
         finishAffinity();
+    }
+
+    public void btnMortal(View v){
+        playSoundEffect(R.raw.sfx_button);
+        isMortal = true;
+        if (menuBGM != null) {
+            menuBGM.stop();
+            menuBGM.release();
+        }
+        Intent intent = new Intent(this, GameActivity.class);
+        intent.putExtra("Mode", isMortal);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        overridePendingTransition(0, 0);
+    }
+
+    public void btnImmortal(View v){
+        playSoundEffect(R.raw.sfx_button);
+        isMortal = false;
+        if (menuBGM != null) {
+            menuBGM.stop();
+            menuBGM.release();
+        }
+        Intent intent = new Intent(this, GameActivity.class);
+        intent.putExtra("Mode", isMortal);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        overridePendingTransition(0, 0);
     }
 
     // Initialization Methods
@@ -113,5 +141,6 @@ public class MainActivity extends AppCompatActivity {
     private void initializeViews(){
         menuScreen = findViewById(R.id.menuScreen);
         creditScreen = findViewById(R.id.creditScreen);
+        modeScreen = findViewById(R.id.modeScreen);
     }
 }

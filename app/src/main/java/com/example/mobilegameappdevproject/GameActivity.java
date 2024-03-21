@@ -44,8 +44,8 @@ public class GameActivity extends AppCompatActivity {
     public ViewSwitcher flippedCardA = null, flippedCardB = null;
     public ImageView card1, card2, card3, card4, card5,card6, card7,
             card8, card9, card10, card11, card12, card13, card14, card15;
-    private boolean gameInProgress = false, isFlipping = false, initRunning, initWasRunning, cdRunning, cdWasRunning,
-            isVictory = false, isDefeat = false;
+    private boolean gameInProgress = false, isFlipping = false, isVictory = false, isDefeat = false,
+    initRunning, initWasRunning, cdRunning, cdWasRunning, isMortal;
     private int initSec = 0, cdSec = 0, health = 3, flippedCardCount = 0, hazardCardCount = 0, flippedCardTemp, Score = 0;
 
     @Override
@@ -53,6 +53,11 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_game);
+        isMortal = getIntent().getBooleanExtra("Mode", false);
+        if (isMortal)
+            health = 3;
+        if (!isMortal)
+            health = 4;
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -155,6 +160,7 @@ public class GameActivity extends AppCompatActivity {
         flippedCardB = null;
         releaseMusic();
         Intent i = new Intent(this, GameActivity.class);
+        i.putExtra("Mode", isMortal);
         startActivity(i);
     }
 
@@ -307,6 +313,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void damage(){
+        if(isMortal){
             switch(health){
                 case 3:
                     health--;
@@ -319,8 +326,32 @@ public class GameActivity extends AppCompatActivity {
                 case 1:
                     health--;
                     Glide.with(this).load(R.drawable.hp_icon_dmg).into(hp_icon1);
+                    releaseMusic();
+                    playSoundEffect(R.raw.sfx_gameover);
+                    cdRunning = !cdRunning;
+                    mainGameScreen.setVisibility(View.GONE);
+                    defeatScreen.setVisibility(View.VISIBLE);
+                    gameInProgress = false;
+                    isDefeat = true;
                     break;
             }
+        }
+        if(!isMortal){
+            switch(health){
+                case 4:
+                    health--;
+                    Glide.with(this).load(R.drawable.hp_icon_dmg).into(hp_icon3);
+                    break;
+                case 3:
+                    health--;
+                    Glide.with(this).load(R.drawable.hp_icon_dmg).into(hp_icon2);
+                    break;
+                case 2:
+                    health--;
+                    Glide.with(this).load(R.drawable.hp_icon_dmg).into(hp_icon1);
+                    break;
+            }
+        }
     }
 
     // Timer Methods
@@ -365,6 +396,7 @@ public class GameActivity extends AppCompatActivity {
                     cdSec++;
                     progressBar.setProgress(cdSec);
                     if (cdSec >= 100 && !isVictory) {
+                        releaseMusic();
                         playSoundEffect(R.raw.sfx_gameover);
                         cdRunning = !cdRunning;
                         handler.removeCallbacksAndMessages(null);
@@ -372,7 +404,6 @@ public class GameActivity extends AppCompatActivity {
                         defeatScreen.setVisibility(View.VISIBLE);
                         gameInProgress = false;
                         isDefeat = true;
-                        releaseMusic();
                     }
                 }
                 handler.postDelayed(this, 1000);
@@ -419,9 +450,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public int calculateScore(int remainingTimeSeconds, int hazardCardsPulled) {
-        // Maximum score is 100
-        int maxScore = (remainingTimeSeconds*2) - (hazardCardsPulled*5);
-        return maxScore;
+        return (remainingTimeSeconds) - (hazardCardsPulled*5);
     }
 
     private void initializeViews(){

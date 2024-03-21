@@ -473,7 +473,7 @@
                 android:fontFamily="@font/vinque"
                 android:shadowColor="#000000"
                 android:shadowRadius="15"
-                android:text="GO!"
+                android:text="1"
                 android:textColor="#FFFFFF"
                 android:textSize="34sp"
                 app:layout_constraintBottom_toTopOf="@+id/card2"

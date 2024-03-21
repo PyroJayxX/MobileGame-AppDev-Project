@@ -22,8 +22,7 @@
             android:id="@+id/menuScreen"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="visible"
-            tools:visibility="gone">
+            android:visibility="visible">
 
             <ImageButton
                 android:id="@+id/btnCredits"
@@ -85,8 +84,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/background4"
-            android:visibility="gone"
-            tools:visibility="visible">
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/imageView6"
@@ -322,6 +320,98 @@
                 </TableRow>
             </TableLayout>
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/modeScreen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#BC000000"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/imageView7"
+                android:layout_width="309dp"
+                android:layout_height="231dp"
+                android:background="#00FFFFFF"
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.194"
+                app:srcCompat="@drawable/pop_sign" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/dungeons"
+                android:shadowColor="#A6FFFFFF"
+                android:shadowRadius="5"
+                android:text="CHOOSE MODE"
+                android:textAlignment="center"
+                android:textColor="#2B160F"
+                android:textSize="48sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView7"
+                app:layout_constraintEnd_toEndOf="@+id/imageView7"
+                app:layout_constraintHorizontal_bias="0.504"
+                app:layout_constraintStart_toStartOf="@+id/imageView7"
+                app:layout_constraintTop_toTopOf="@+id/imageView7"
+                app:layout_constraintVertical_bias="0.726" />
+
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="200dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="16dp"
+                android:background="#00FFFFFF"
+                android:onClick="btnImmortal"
+                android:scaleType="fitCenter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.502"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView7"
+                app:srcCompat="@drawable/btn_immortal" />
+
+            <ImageButton
+                android:id="@+id/imageButton2"
+                android:layout_width="200dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="12dp"
+                android:background="#00FFFFFF"
+                android:onClick="btnMortal"
+                android:scaleType="fitCenter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.502"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageButton"
+                app:srcCompat="@drawable/btn_mortal" />
+
+            <ImageButton
+                android:id="@+id/imageButton3"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="8dp"
+                android:background="#00FFFFFF"
+                android:onClick="btnHome"
+                android:scaleType="fitCenter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageButton2"
+                app:srcCompat="@drawable/btn_flee" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </FrameLayout>
