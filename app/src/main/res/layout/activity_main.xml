@@ -22,7 +22,8 @@
             android:id="@+id/menuScreen"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="visible">
+            android:visibility="visible"
+            tools:visibility="gone">
 
             <ImageButton
                 android:id="@+id/btnCredits"
@@ -84,7 +85,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/background4"
-            android:visibility="gone">
+            android:visibility="gone"
+            tools:visibility="visible">
 
             <ImageView
                 android:id="@+id/imageView6"
@@ -115,7 +117,7 @@
 
             <TextView
                 android:id="@+id/textView27"
-                android:layout_width="305dp"
+                android:layout_width="350dp"
                 android:layout_height="71dp"
                 android:layout_marginTop="156dp"
                 android:fontFamily="@font/dungeons"
