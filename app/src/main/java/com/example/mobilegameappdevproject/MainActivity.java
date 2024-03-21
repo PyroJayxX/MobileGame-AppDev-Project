@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
     // MENU Methods
     public void btnStart(View v){
+        playSoundEffect(R.raw.sfx_button);
         if (menuBGM != null) {
             menuBGM.stop();
             menuBGM.release();
@@ -70,16 +71,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void btnCredits(View v){
+        playSoundEffect(R.raw.sfx_button);
         menuScreen.setVisibility(View.GONE);
         creditScreen.setVisibility(View.VISIBLE);
     }
 
     public void btnHome(View v){
+        playSoundEffect(R.raw.sfx_btnexit);
         menuScreen.setVisibility(View.VISIBLE);
         creditScreen.setVisibility(View.GONE);
     }
 
     public void btnQuit(View v){
+        playSoundEffect(R.raw.sfx_btnexit);
         if (menuBGM != null) {
             menuBGM.stop();
             menuBGM.release();
@@ -94,6 +98,16 @@ public class MainActivity extends AppCompatActivity {
         menuBGM = MediaPlayer.create(MainActivity.this, R.raw.tavern_loop);
         menuBGM.setLooping(true);
         menuBGM.start();
+    }
+    private void playSoundEffect(int soundResourceId) {
+        MediaPlayer mediaPlayer = MediaPlayer.create(this, soundResourceId);
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                mediaPlayer.release();
+            }
+        });
+        mediaPlayer.start();
     }
 
     private void initializeViews(){

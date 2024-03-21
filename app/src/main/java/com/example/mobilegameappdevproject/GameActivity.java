@@ -38,13 +38,14 @@ public class GameActivity extends AppCompatActivity {
     public ImageView hp_icon3;
     public TextView txtTimer;
     public TextView txtScore;
-    public MediaPlayer gameBGM;
+    public MediaPlayer gameBGM, sfx;
     public ImageButton btnPause;
     public ProgressBar progressBar;
     public ViewSwitcher flippedCardA = null, flippedCardB = null;
     public ImageView card1, card2, card3, card4, card5,card6, card7,
             card8, card9, card10, card11, card12, card13, card14, card15;
-    private boolean gameInProgress = false, isFlipping = false, initRunning, initWasRunning, cdRunning, isVictory = false;
+    private boolean gameInProgress = false, isFlipping = false, initRunning, initWasRunning, cdRunning,
+            isVictory = false, isDefeat = false;
     private int initSec = 0, cdSec = 0, health = 3, flippedCardCount = 0, hazardCardCount = 0, flippedCardTemp, Score = 0;
 
     @Override
@@ -107,6 +108,7 @@ public class GameActivity extends AppCompatActivity {
 
     // Buttons
     public void btnPause(View v){
+        playSoundEffect(R.raw.sfx_button);
         cdOnPause();
         if (gameBGM != null && gameBGM.isPlaying()) {
             pauseMusic();
@@ -115,12 +117,14 @@ public class GameActivity extends AppCompatActivity {
         pausedScreen.setVisibility(View.VISIBLE);
     }
     public void btnResume(View v){
+        playSoundEffect(R.raw.sfx_btnexit);
         cdOnStart();
         gameBGM.start();
         mainGameScreen.setVisibility(View.VISIBLE);
         pausedScreen.setVisibility(View.GONE);
     }
     public void btnBack(View v) {
+        playSoundEffect(R.raw.sfx_btnexit);
         releaseMusic();
         gameInProgress = false;
         flippedCardCount = 0;
@@ -132,6 +136,7 @@ public class GameActivity extends AppCompatActivity {
         finish();
     }
     public void btnRetry(View v){
+        playSoundEffect(R.raw.sfx_btnexit);
         gameInProgress = false;
         flippedCardCount = 0;
         flippedCardA = null;
@@ -176,6 +181,7 @@ public class GameActivity extends AppCompatActivity {
         }
 
         if (cardAImageTag != null && cardBImageTag != null && cardAImageTag.equals(cardBImageTag)) {
+            playSoundEffect(R.raw.sfx_cardmatch);
             flippedCardA.setClickable(false);
             flippedCardB.setClickable(false);
             flippedCardA = null;
@@ -183,11 +189,14 @@ public class GameActivity extends AppCompatActivity {
             flippedCardCount++;
             if(flippedCardCount==6){
                 isVictory = true;
+                gameInProgress = false;
+                cdOnPause();
                 txtScore.setText(Integer.toString(Score));
                 mainGameScreen.setVisibility(View.GONE);
                 victoryScreen.setVisibility(View.VISIBLE);
             }
         } else if (cardAImageTag != null && cardBImageTag != null && !cardAImageTag.equals(cardBImageTag)) {
+            playSoundEffect(R.raw.sfx_notmatch);
             flipCard(flippedCardA);
             flipCard(flippedCardB);
             flippedCardA = null;
@@ -218,6 +227,7 @@ public class GameActivity extends AppCompatActivity {
         flip.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
+                playSoundEffect(R.raw.sfx_cardflip);
                 isFlipping=true;
             }
             @Override
@@ -279,17 +289,17 @@ public class GameActivity extends AppCompatActivity {
     public void damage(){
             switch(health){
                 case 3:
-                    MediaPlayer.create(GameActivity.this, R.raw.aray).start();
+                    playSoundEffect(R.raw.sfx_ouch);
                     health--;
                     Glide.with(this).load(R.drawable.hp_icon_dmg).into(hp_icon3);
                     break;
                 case 2:
-                    MediaPlayer.create(GameActivity.this, R.raw.ouch).start();
+                    playSoundEffect(R.raw.sfx_ouch);
                     health--;
                     Glide.with(this).load(R.drawable.hp_icon_dmg).into(hp_icon2);
                     break;
                 case 1:
-                    MediaPlayer.create(GameActivity.this, R.raw.haha_bubu).start();
+                    playSoundEffect(R.raw.sfx_ouch);
                     health--;
                     Glide.with(this).load(R.drawable.hp_icon_dmg).into(hp_icon1);
                     break;
@@ -338,11 +348,14 @@ public class GameActivity extends AppCompatActivity {
                     cdSec++;
                     progressBar.setProgress(cdSec);
                     if (cdSec >= 100 && !isVictory) {
+                        playSoundEffect(R.raw.sfx_gameover);
                         cdRunning = !cdRunning;
                         handler.removeCallbacksAndMessages(null);
                         mainGameScreen.setVisibility(View.GONE);
                         defeatScreen.setVisibility(View.VISIBLE);
-                        pauseMusic();
+                        gameInProgress = false;
+                        isDefeat = true;
+                        releaseMusic();
                     }
                 }
                 handler.postDelayed(this, 1000);
@@ -367,6 +380,26 @@ public class GameActivity extends AppCompatActivity {
             gameBGM.release();
             gameBGM = null;
         }
+    }
+
+    private void playSoundEffect(int soundResourceId) {
+        sfx = null;
+        sfx  = MediaPlayer.create(this, soundResourceId);
+        sfx.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                mediaPlayer.release();
+                if(isDefeat && !gameInProgress){
+                    isDefeat = !isDefeat;
+                    playSoundEffect(R.raw.bgm_gameover);
+                }
+                if(isVictory && !gameInProgress){
+                    isVictory = !isVictory;
+                    playSoundEffect(R.raw.sfx_victory);
+                }
+            }
+        });
+        sfx.start();
     }
 
     public int calculateScore(int remainingTimeSeconds, int hazardCardsPulled) {
