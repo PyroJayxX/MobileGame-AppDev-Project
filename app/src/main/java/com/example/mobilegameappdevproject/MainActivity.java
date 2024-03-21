@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +18,9 @@ public class MainActivity extends AppCompatActivity {
     public ConstraintLayout menuScreen;
     public ConstraintLayout creditScreen;
     public ConstraintLayout modeScreen;
+    public ImageButton btnStart;
+    public ImageButton btnCredits;
+    public ImageButton btnExit;
     private boolean isMortal;
 
     @Override
@@ -60,8 +64,10 @@ public class MainActivity extends AppCompatActivity {
     // MENU Methods
     public void btnStart(View v){
         playSoundEffect(R.raw.sfx_button);
-        menuScreen.setClickable(false);
         modeScreen.setVisibility(View.VISIBLE);
+        btnStart.setClickable(false);
+        btnExit.setClickable(false);
+        btnCredits.setClickable(false);
     }
 
 
@@ -73,6 +79,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void btnHome(View v){
         playSoundEffect(R.raw.sfx_btnexit);
+        btnStart.setClickable(true);
+        btnExit.setClickable(true);
+        btnCredits.setClickable(true);
         menuScreen.setVisibility(View.VISIBLE);
         creditScreen.setVisibility(View.GONE);
         modeScreen.setVisibility(View.GONE);
@@ -142,5 +151,8 @@ public class MainActivity extends AppCompatActivity {
         menuScreen = findViewById(R.id.menuScreen);
         creditScreen = findViewById(R.id.creditScreen);
         modeScreen = findViewById(R.id.modeScreen);
+        btnStart = findViewById(R.id.btnStart);
+        btnCredits = findViewById(R.id.btnCredits);
+        btnExit = findViewById(R.id.btnExit);
     }
 }
