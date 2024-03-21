@@ -61,7 +61,7 @@ public class GameActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startMusic();
+                startMusic(R.raw.red_barons_theme);
                 initializeViews();
                 shuffleCards();
                 initTimer();
@@ -94,6 +94,9 @@ public class GameActivity extends AppCompatActivity {
         }
         initWasRunning = initRunning;
         initRunning = false;
+        cdOnPause();
+        mainGameScreen.setVisibility(View.GONE);
+        pausedScreen.setVisibility(View.VISIBLE);
     }
     @Override
     protected void onResume() {
@@ -132,7 +135,6 @@ public class GameActivity extends AppCompatActivity {
         flippedCardA = null;
         flippedCardB = null;
         releaseMusic();
-        gameInProgress = false;
         flippedCardCount = 0;
         flippedCardA = null;
         flippedCardB = null;
@@ -145,7 +147,6 @@ public class GameActivity extends AppCompatActivity {
         playSoundEffect(R.raw.sfx_btnexit);
         isVictory = false;
         isDefeat = false;
-        gameInProgress = false;
         flippedCardCount = 0;
         flippedCardA = null;
         flippedCardB = null;
@@ -180,14 +181,12 @@ public class GameActivity extends AppCompatActivity {
         View cardBImage = cardB.getCurrentView();
         Object cardAImageTag = null;
         Object cardBImageTag = null;
-
         if (cardAImage instanceof ImageView) {
             cardAImageTag = cardAImage.getTag();
         }
         if (cardBImage instanceof ImageView) {
             cardBImageTag = cardBImage.getTag();
         }
-
         if (cardAImageTag != null && cardBImageTag != null && cardAImageTag.equals(cardBImageTag)) {
             playSoundEffect(R.raw.sfx_cardmatch);
             flippedCardA.setClickable(false);
@@ -292,6 +291,7 @@ public class GameActivity extends AppCompatActivity {
     }
     private boolean cardIsHazard(){
         if(flippedCardTemp == R.drawable.mimic || flippedCardTemp == R.drawable.bomber || flippedCardTemp == R.drawable.poison){
+            playSoundEffect(R.raw.sfx_ouch);
             damage();
             if(flippedCardA != null && flippedCardB == null){
                 flippedCardA = null;
@@ -307,17 +307,14 @@ public class GameActivity extends AppCompatActivity {
     public void damage(){
             switch(health){
                 case 3:
-                    playSoundEffect(R.raw.sfx_ouch);
                     health--;
                     Glide.with(this).load(R.drawable.hp_icon_dmg).into(hp_icon3);
                     break;
                 case 2:
-                    playSoundEffect(R.raw.sfx_ouch);
                     health--;
                     Glide.with(this).load(R.drawable.hp_icon_dmg).into(hp_icon2);
                     break;
                 case 1:
-                    playSoundEffect(R.raw.sfx_ouch);
                     health--;
                     Glide.with(this).load(R.drawable.hp_icon_dmg).into(hp_icon1);
                     break;
@@ -382,8 +379,8 @@ public class GameActivity extends AppCompatActivity {
     }
 
     // Initialization Methods and Utils
-    private void startMusic(){
-        gameBGM = MediaPlayer.create(GameActivity.this, R.raw.red_barons_theme);
+    private void startMusic(int soundResourceID){
+        gameBGM = MediaPlayer.create(GameActivity.this, soundResourceID);
         gameBGM.setLooping(true);
         gameBGM.start();
     }
@@ -408,7 +405,7 @@ public class GameActivity extends AppCompatActivity {
                 sfx.release();
                 if(isDefeat && !gameInProgress){
                     isDefeat = !isDefeat;
-                    playSoundEffect(R.raw.bgm_gameover);
+                    startMusic(R.raw.bgm_gameover);
                 }
                 if(isVictory && !gameInProgress){
                     isVictory = !isVictory;
