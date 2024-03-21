@@ -44,7 +44,7 @@ public class GameActivity extends AppCompatActivity {
     public ViewSwitcher flippedCardA = null, flippedCardB = null;
     public ImageView card1, card2, card3, card4, card5,card6, card7,
             card8, card9, card10, card11, card12, card13, card14, card15;
-    private boolean gameInProgress = false, isFlipping = false, initRunning, initWasRunning, cdRunning,
+    private boolean gameInProgress = false, isFlipping = false, initRunning, initWasRunning, cdRunning, cdWasRunning,
             isVictory = false, isDefeat = false;
     private int initSec = 0, cdSec = 0, health = 3, flippedCardCount = 0, hazardCardCount = 0, flippedCardTemp, Score = 0;
 
@@ -77,6 +77,7 @@ public class GameActivity extends AppCompatActivity {
             initWasRunning = savedInstanceState.getBoolean("initWasRunning");
             cdSec = savedInstanceState.getInt("cdSec");
             cdRunning = savedInstanceState.getBoolean("cdRunning");
+            cdWasRunning = savedInstanceState.getBoolean("cdWasRunning");
         }
     }
 
@@ -94,9 +95,10 @@ public class GameActivity extends AppCompatActivity {
         }
         initWasRunning = initRunning;
         initRunning = false;
-        cdOnPause();
-        mainGameScreen.setVisibility(View.GONE);
-        pausedScreen.setVisibility(View.VISIBLE);
+        if(cdRunning){
+            cdWasRunning = true;
+            cdOnPause();
+        }
     }
     @Override
     protected void onResume() {
@@ -107,6 +109,11 @@ public class GameActivity extends AppCompatActivity {
         if (initWasRunning){
             initRunning = true;
         }
+        if (cdWasRunning){
+            cdWasRunning = false;
+            cdOnStart();
+        }
+
     }
 
     // Buttons
@@ -131,19 +138,15 @@ public class GameActivity extends AppCompatActivity {
         isVictory = false;
         isDefeat = false;
         gameInProgress = false;
-        flippedCardCount = 0;
-        flippedCardA = null;
-        flippedCardB = null;
         releaseMusic();
         flippedCardCount = 0;
         flippedCardA = null;
         flippedCardB = null;
-        //loadingScreen.setVisibility(View.VISIBLE);
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
-        finish();
     }
     public void btnRetry(View v){
+        finish();
         playSoundEffect(R.raw.sfx_btnexit);
         isVictory = false;
         isDefeat = false;
@@ -151,7 +154,6 @@ public class GameActivity extends AppCompatActivity {
         flippedCardA = null;
         flippedCardB = null;
         releaseMusic();
-        finish();
         Intent i = new Intent(this, GameActivity.class);
         startActivity(i);
     }
