@@ -225,6 +225,15 @@ public class GameActivity extends AppCompatActivity {
             if(card!=null) {
                 card.setImageResource(imageIndex.get(i-1)); // Set image
                 card.setTag(imageIndex.get(i-1));
+                if(card.getTag().equals(R.drawable.mimic)){
+                    Glide.with(this).load(R.drawable.mimic).into(card);
+                }
+                if(card.getTag().equals(R.drawable.bomber)){
+                    Glide.with(this).load(R.drawable.bomber).into(card);
+                }
+                if(card.getTag().equals(R.drawable.poison)){
+                    Glide.with(this).load(R.drawable.poison).into(card);
+                }
             }
         }
     }
@@ -291,6 +300,7 @@ public class GameActivity extends AppCompatActivity {
             }
             return true;
         }
+
         return false;
     }
 
