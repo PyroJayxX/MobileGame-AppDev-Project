@@ -38,7 +38,7 @@ public class GameActivity extends AppCompatActivity {
     public ImageView hp_icon3;
     public TextView txtTimer;
     public TextView txtScore;
-    public MediaPlayer gameBGM, sfx;
+    public MediaPlayer gameBGM;
     public ImageButton btnPause;
     public ProgressBar progressBar;
     public ViewSwitcher flippedCardA = null, flippedCardB = null;
@@ -401,10 +401,11 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void playSoundEffect(int soundResourceId) {
-        sfx  = MediaPlayer.create(this, soundResourceId);
+        MediaPlayer sfx  = MediaPlayer.create(this, soundResourceId);
         sfx.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
+                sfx.release();
                 if(isDefeat && !gameInProgress){
                     isDefeat = !isDefeat;
                     playSoundEffect(R.raw.bgm_gameover);
