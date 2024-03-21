@@ -125,6 +125,12 @@ public class GameActivity extends AppCompatActivity {
     }
     public void btnBack(View v) {
         playSoundEffect(R.raw.sfx_btnexit);
+        isVictory = false;
+        isDefeat = false;
+        gameInProgress = false;
+        flippedCardCount = 0;
+        flippedCardA = null;
+        flippedCardB = null;
         releaseMusic();
         gameInProgress = false;
         flippedCardCount = 0;
@@ -137,6 +143,8 @@ public class GameActivity extends AppCompatActivity {
     }
     public void btnRetry(View v){
         playSoundEffect(R.raw.sfx_btnexit);
+        isVictory = false;
+        isDefeat = false;
         gameInProgress = false;
         flippedCardCount = 0;
         flippedCardA = null;
@@ -383,12 +391,10 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void playSoundEffect(int soundResourceId) {
-        sfx = null;
         sfx  = MediaPlayer.create(this, soundResourceId);
         sfx.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
-                mediaPlayer.release();
                 if(isDefeat && !gameInProgress){
                     isDefeat = !isDefeat;
                     playSoundEffect(R.raw.bgm_gameover);
