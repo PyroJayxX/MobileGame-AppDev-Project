@@ -546,7 +546,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/background3"
-            android:visibility="gone">
+            android:visibility="gone"
+            tools:visibility="visible">
 
             <TextView
                 android:id="@+id/textView3"
@@ -764,7 +765,8 @@
             android:background="@drawable/background2"
             android:backgroundTint="#D6D6D6"
             android:backgroundTintMode="multiply"
-            android:visibility="visible">
+            android:visibility="visible"
+            tools:visibility="gone">
 
             <ProgressBar
                 android:id="@+id/progressBar3"

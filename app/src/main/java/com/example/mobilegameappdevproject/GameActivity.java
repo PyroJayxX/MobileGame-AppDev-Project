@@ -46,7 +46,7 @@ public class GameActivity extends AppCompatActivity {
             card8, card9, card10, card11, card12, card13, card14, card15;
     private boolean gameInProgress = false, isFlipping = false, isVictory = false, isDefeat = false,
     initRunning, initWasRunning, cdRunning, cdWasRunning, isMortal;
-    private int initSec = 0, cdSec = 0, health = 3, flippedCardCount = 0, hazardCardCount = 0, flippedCardTemp, Score = 0;
+    private int initSec = 4, cdSec = 0, health = 3, flippedCardCount = 0, hazardCardCount = 0, flippedCardTemp, Score = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +54,6 @@ public class GameActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_game);
         isMortal = getIntent().getBooleanExtra("Mode", false);
-        if (isMortal)
-            health = 3;
-        if (!isMortal)
-            health = 4;
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -300,7 +296,9 @@ public class GameActivity extends AppCompatActivity {
     private boolean cardIsHazard(){
         if(flippedCardTemp == R.drawable.mimic || flippedCardTemp == R.drawable.bomber || flippedCardTemp == R.drawable.poison){
             playSoundEffect(R.raw.sfx_ouch);
-            damage();
+            if(isMortal) {
+                damage();
+            }
             if(flippedCardA != null && flippedCardB == null){
                 flippedCardA = null;
             } else if (flippedCardA != null && flippedCardB != null){
@@ -313,17 +311,16 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void damage(){
-        if(isMortal){
-            switch(health){
-                case 3:
-                    health--;
-                    Glide.with(this).load(R.drawable.hp_icon_dmg).into(hp_icon3);
-                    break;
-                case 2:
+        switch(health){
+            case 3:
+                health--;
+                Glide.with(this).load(R.drawable.hp_icon_dmg).into(hp_icon3);
+                break;
+            case 2:
                     health--;
                     Glide.with(this).load(R.drawable.hp_icon_dmg).into(hp_icon2);
                     break;
-                case 1:
+            case 1:
                     health--;
                     Glide.with(this).load(R.drawable.hp_icon_dmg).into(hp_icon1);
                     releaseMusic();
@@ -334,23 +331,7 @@ public class GameActivity extends AppCompatActivity {
                     gameInProgress = false;
                     isDefeat = true;
                     break;
-            }
-        }
-        if(!isMortal){
-            switch(health){
-                case 4:
-                    health--;
-                    Glide.with(this).load(R.drawable.hp_icon_dmg).into(hp_icon3);
-                    break;
-                case 3:
-                    health--;
-                    Glide.with(this).load(R.drawable.hp_icon_dmg).into(hp_icon2);
-                    break;
-                case 2:
-                    health--;
-                    Glide.with(this).load(R.drawable.hp_icon_dmg).into(hp_icon1);
-                    break;
-            }
+
         }
     }
 
@@ -368,12 +349,10 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if (initRunning) {
-                    initSec++;
-                    txtTimer.setText(String.valueOf(initSec));
-                    if (initSec==4){
+                    txtTimer.setText(String.valueOf(initSec-1));
+                    if (initSec==1){
                         txtTimer.setText(R.string.go_text);
-                    }
-                    if (initSec>4){
+                    } else if (initSec==0){
                         txtTimer.setVisibility(View.INVISIBLE);
                         btnPause.setVisibility(View.VISIBLE);
                         handler.removeCallbacksAndMessages(null);
@@ -381,6 +360,7 @@ public class GameActivity extends AppCompatActivity {
                         gameInProgress = true;
                         cdTimer();
                     }
+                    initSec--;
                 }
                 handler.postDelayed(this, 1000);
             }
@@ -463,9 +443,16 @@ public class GameActivity extends AppCompatActivity {
         txtScore = findViewById(R.id.txtScore);
 
         // GIFS
-        Glide.with(this).load(R.drawable.hp_icon).into(hp_icon1);
-        Glide.with(this).load(R.drawable.hp_icon).into(hp_icon2);
-        Glide.with(this).load(R.drawable.hp_icon).into(hp_icon3);
+        if(isMortal) {
+            Glide.with(this).load(R.drawable.hp_icon).into(hp_icon1);
+            Glide.with(this).load(R.drawable.hp_icon).into(hp_icon2);
+            Glide.with(this).load(R.drawable.hp_icon).into(hp_icon3);
+        }
+        if(!isMortal) {
+            Glide.with(this).load(R.drawable.immortal_heart).into(hp_icon1);
+            Glide.with(this).load(R.drawable.immortal_heart).into(hp_icon2);
+            Glide.with(this).load(R.drawable.immortal_heart).into(hp_icon3);
+        }
 
         //Card Objects
         card1 = findViewById(R.id.frontCardView1);

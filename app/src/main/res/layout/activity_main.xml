@@ -206,7 +206,7 @@
                         android:fontFamily="sans-serif"
                         android:shadowColor="#716060"
                         android:shadowRadius="1"
-                        android:text="Jason Wiliam Almendra"
+                        android:text="Jason William Almendra"
                         android:textAlignment="inherit"
                         android:textColor="#2B160F"
                         android:textSize="12sp" />
