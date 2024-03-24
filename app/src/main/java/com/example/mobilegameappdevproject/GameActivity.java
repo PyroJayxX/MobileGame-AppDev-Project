@@ -430,7 +430,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public int calculateScore(int remainingTimeSeconds, int hazardCardsPulled) {
-        return (remainingTimeSeconds) - (hazardCardsPulled*5);
+        return (remainingTimeSeconds * 20) - (hazardCardsPulled*33);
     }
 
     private void initializeViews(){
