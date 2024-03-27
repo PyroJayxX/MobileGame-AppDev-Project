@@ -1,7 +1,6 @@
 package com.example.mobilegameappdevproject;
 
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -14,7 +13,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
-    private MediaPlayer menuBGM;
     public ConstraintLayout menuScreen;
     public ConstraintLayout creditScreen;
     public ConstraintLayout modeScreen;
@@ -23,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     public ImageButton btnExit;
     private boolean isMortal;
 
+    SoundManager soundManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,37 +32,32 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        // Encapsulation
+        soundManager = SoundManager.getInstance(getApplicationContext());
 
         initializeViews();
-        startMusic();
+        soundManager.playBackgroundMusic(R.raw.tavern_loop);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (menuBGM != null) {
-            menuBGM.release();
-            menuBGM = null;
-        }
+        soundManager.stopBackgroundMusic();
     }
     @Override
     protected void onPause() {
         super.onPause();
-        if (menuBGM != null && menuBGM.isPlaying()) {
-            menuBGM.pause();
-        }
+        soundManager.pauseBackgroundMusic();
     }
     @Override
     protected void onResume() {
         super.onResume();
-        if (menuBGM != null && !menuBGM.isPlaying()) {
-            menuBGM.start();
-        }
+        soundManager.resumeBackgroundMusic();
     }
 
     // MENU Methods
     public void btnStart(View v){
-        playSoundEffect(R.raw.sfx_button);
+        soundManager.playSoundEffect(R.raw.sfx_button);
         modeScreen.setVisibility(View.VISIBLE);
         btnStart.setClickable(false);
         btnExit.setClickable(false);
@@ -72,13 +66,13 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void btnCredits(View v){
-        playSoundEffect(R.raw.sfx_button);
+        soundManager.playSoundEffect(R.raw.sfx_button);
         menuScreen.setVisibility(View.GONE);
         creditScreen.setVisibility(View.VISIBLE);
     }
 
     public void btnHome(View v){
-        playSoundEffect(R.raw.sfx_btnexit);
+        soundManager.playSoundEffect(R.raw.sfx_btnexit);
         btnStart.setClickable(true);
         btnExit.setClickable(true);
         btnCredits.setClickable(true);
@@ -88,22 +82,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void btnQuit(View v){
-        playSoundEffect(R.raw.sfx_btnexit);
-        if (menuBGM != null) {
-            menuBGM.stop();
-            menuBGM.release();
-            menuBGM = null;
-        }
+        soundManager.playSoundEffect(R.raw.sfx_btnexit);
+        soundManager.stopBackgroundMusic();
         finishAffinity();
     }
 
     public void btnMortal(View v){
-        playSoundEffect(R.raw.sfx_button);
+        soundManager.playSoundEffect(R.raw.sfx_button);
         isMortal = true;
-        if (menuBGM != null) {
-            menuBGM.stop();
-            menuBGM.release();
-        }
+        soundManager.stopBackgroundMusic();
         Intent intent = new Intent(this, GameActivity.class);
         intent.putExtra("Mode", isMortal);
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -114,12 +101,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void btnImmortal(View v){
-        playSoundEffect(R.raw.sfx_button);
+        soundManager.playSoundEffect(R.raw.sfx_button);
         isMortal = false;
-        if (menuBGM != null) {
-            menuBGM.stop();
-            menuBGM.release();
-        }
+        soundManager.stopBackgroundMusic();
         Intent intent = new Intent(this, GameActivity.class);
         intent.putExtra("Mode", isMortal);
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -127,24 +111,6 @@ public class MainActivity extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         overridePendingTransition(0, 0);
-    }
-
-    // Initialization Methods
-
-    private void startMusic(){
-        menuBGM = MediaPlayer.create(MainActivity.this, R.raw.tavern_loop);
-        menuBGM.setLooping(true);
-        menuBGM.start();
-    }
-    private void playSoundEffect(int soundResourceId) {
-        MediaPlayer mediaPlayer = MediaPlayer.create(this, soundResourceId);
-        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mediaPlayer) {
-                mediaPlayer.release();
-            }
-        });
-        mediaPlayer.start();
     }
 
     private void initializeViews(){

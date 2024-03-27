@@ -24,7 +24,8 @@
             android:id="@+id/mainGameScreen"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone">
+            android:visibility="gone"
+            tools:visibility="visible">
 
             <ViewSwitcher
                 android:id="@+id/card1"
@@ -546,8 +547,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/background3"
-            android:visibility="gone"
-            tools:visibility="visible">
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/textView3"
