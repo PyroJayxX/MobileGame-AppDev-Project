@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -20,11 +18,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 public class GameActivity extends AppCompatActivity {
     public ConstraintLayout loadingScreen;
@@ -42,10 +35,10 @@ public class GameActivity extends AppCompatActivity {
     public ViewSwitcher flippedCardA = null, flippedCardB = null;
     public ImageView card1, card2, card3, card4, card5,card6, card7,
             card8, card9, card10, card11, card12, card13, card14, card15;
-    private boolean gameInProgress = false, isFlipping = false, isVictory = false, isDefeat = false,
-    initRunning, initWasRunning, cdRunning, cdWasRunning, isMortal;
-    private int initSec = 4, cdSec = 0, health = 3, flippedCardCount = 0, hazardCardCount = 0, flippedCardTemp, Score = 0;
-
+    boolean gameInProgress = false, isFlipping = false, isVictory = false, isMortal;
+    private boolean initRunning, initWasRunning, cdRunning, cdWasRunning;
+    int cdSec = 0, flippedCardCount = 0, hazardCardCount = 0, flippedCardTemp, Score = 0;
+    private int health = 3, initSec = 4;
     SoundManager soundManager;
 
     @Override
@@ -67,7 +60,6 @@ public class GameActivity extends AppCompatActivity {
             public void run() {
                 soundManager.playBackgroundMusic(R.raw.red_barons_theme);
                 initializeViews();
-                shuffleCards();
                 initTimer();
                 loadingScreen.setVisibility(View.GONE);
                 mainGameScreen.setVisibility(View.VISIBLE);
@@ -88,7 +80,7 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        gameInProgress = false;
+        resetVariables();
         soundManager.stopBackgroundMusic();
     }
     @Override
@@ -134,13 +126,8 @@ public class GameActivity extends AppCompatActivity {
     }
     public void btnBack(View v) {
         soundManager.playSoundEffect(R.raw.sfx_btnexit);
-        isVictory = false;
-        isDefeat = false;
-        gameInProgress = false;
         soundManager.stopBackgroundMusic();
-        flippedCardCount = 0;
-        flippedCardA = null;
-        flippedCardB = null;
+        resetVariables();
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
     }
@@ -148,7 +135,6 @@ public class GameActivity extends AppCompatActivity {
         finish();
         soundManager.playSoundEffect(R.raw.sfx_btnexit);
         isVictory = false;
-        isDefeat = false;
         flippedCardCount = 0;
         flippedCardA = null;
         flippedCardB = null;
@@ -156,152 +142,6 @@ public class GameActivity extends AppCompatActivity {
         Intent i = new Intent(this, GameActivity.class);
         i.putExtra("Mode", isMortal);
         startActivity(i);
-    }
-
-    // Card Logic
-    public void onCardClick(View v){
-        if (gameInProgress && !isFlipping) {
-            ViewSwitcher card = (ViewSwitcher) v;
-            if (flippedCardA == null && card != flippedCardB) {
-                flipCard(card);
-                flippedCardA = card;
-            } else if (flippedCardB == null && card != flippedCardA) {
-                flipCard(card);
-                flippedCardB = card;
-            } else if (flippedCardA != null && card == flippedCardA){
-                flipCard(card);
-                flippedCardA = null;
-            } else if (flippedCardB != null && card == flippedCardB){
-                flipCard(card);
-                flippedCardA = null;
-            }
-        }
-    }
-
-    public void cardComparator(ViewSwitcher cardA, ViewSwitcher cardB) {
-        View cardAImage = cardA.getCurrentView();
-        View cardBImage = cardB.getCurrentView();
-        Object cardAImageTag = null;
-        Object cardBImageTag = null;
-        if (cardAImage instanceof ImageView) {
-            cardAImageTag = cardAImage.getTag();
-        }
-        if (cardBImage instanceof ImageView) {
-            cardBImageTag = cardBImage.getTag();
-        }
-        if (cardAImageTag != null && cardBImageTag != null && cardAImageTag.equals(cardBImageTag)) {
-            soundManager.playSoundEffect(R.raw.sfx_cardmatch);
-            flippedCardA.setClickable(false);
-            flippedCardB.setClickable(false);
-            flippedCardA = null;
-            flippedCardB = null;
-            flippedCardCount++;
-            if(flippedCardCount==6){
-                isVictory = true;
-                gameInProgress = false;
-                cdOnPause();
-                txtScore.setText(Integer.toString(Score));
-                mainGameScreen.setVisibility(View.GONE);
-                victoryScreen.setVisibility(View.VISIBLE);
-                soundManager.playSoundEffect(R.raw.sfx_victory);
-            }
-        } else if (cardAImageTag != null && cardBImageTag != null && !cardAImageTag.equals(cardBImageTag)) {
-            flipCard(flippedCardA);
-            flipCard(flippedCardB);
-            soundManager.playSoundEffect(R.raw.sfx_notmatch);
-            flippedCardA = null;
-            flippedCardB = null;
-        }
-    }
-    private void shuffleCards() {
-        Integer[] images = {R.drawable.image1, R.drawable.image2, R.drawable.image3, R.drawable.image4, R.drawable.image5,
-                R.drawable.image6, R.drawable.image1, R.drawable.image2, R.drawable.image3, R.drawable.image4,
-                R.drawable.image5, R.drawable.image6, R.drawable.mimic, R.drawable.bomber, R.drawable.poison};
-
-        List<Integer> imageIndex = new ArrayList<>(Arrays.asList(images));
-
-        Collections.shuffle(imageIndex);
-
-        for (int i = 1; i <=15; i++) {
-            ImageView card = getCard(i);
-            if(card!=null) {
-                card.setImageResource(imageIndex.get(i-1)); // Set image
-                card.setTag(imageIndex.get(i-1));
-                if(card.getTag().equals(R.drawable.mimic)){
-                    Glide.with(this).load(R.drawable.mimic).into(card);
-                }
-                if(card.getTag().equals(R.drawable.bomber)){
-                    Glide.with(this).load(R.drawable.bomber).into(card);
-                }
-                if(card.getTag().equals(R.drawable.poison)){
-                    Glide.with(this).load(R.drawable.poison).into(card);
-                }
-            }
-        }
-    }
-    private void flipCard(final ViewSwitcher card) {
-        // Apply flip animation
-        Animation flip = AnimationUtils.loadAnimation(this, R.anim.flip);
-        Animation midFlip = AnimationUtils.loadAnimation(this, R.anim.flip_middle);
-        flip.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-                soundManager.playSoundEffect(R.raw.sfx_cardflip);
-                isFlipping=true;
-            }
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                // Start the midFlip animation after the first animation ends
-                card.startAnimation(midFlip);
-            }
-            @Override
-            public void onAnimationRepeat(Animation animation){
-            }
-        });
-        midFlip.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-                card.showNext();
-                View currentView = card.getCurrentView();
-                if (currentView instanceof ImageView) {
-                    Object tag = currentView.getTag();
-                    if (tag != null && tag instanceof Integer) {
-                        flippedCardTemp = (int) tag;
-                        if(cardIsHazard()){
-                            card.setClickable(false);
-                            hazardCardCount++;
-                        }
-                    }
-                }
-            }
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                isFlipping = false;
-                Score = calculateScore(100-cdSec, hazardCardCount);
-                if(flippedCardB!=null && flippedCardA!=null){
-                    cardComparator(flippedCardA, flippedCardB);
-                }
-            }
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-        });
-        card.startAnimation(flip);
-    }
-    private boolean cardIsHazard(){
-        if(flippedCardTemp == R.drawable.mimic || flippedCardTemp == R.drawable.bomber || flippedCardTemp == R.drawable.poison){
-            soundManager.playSoundEffect(R.raw.sfx_ouch);
-            if(isMortal) {
-                damage();
-            }
-            if(flippedCardA != null && flippedCardB == null){
-                flippedCardA = null;
-            } else if (flippedCardA != null && flippedCardB != null){
-                flippedCardB = null;
-            }
-            return true;
-        }
-        return false;
     }
 
     public void damage(){
@@ -324,8 +164,7 @@ public class GameActivity extends AppCompatActivity {
                     mainGameScreen.setVisibility(View.GONE);
                     defeatScreen.setVisibility(View.VISIBLE);
                     gameInProgress = false;
-                    isDefeat = true;
-                    break;
+                break;
 
         }
     }
@@ -334,7 +173,7 @@ public class GameActivity extends AppCompatActivity {
     private void cdOnStart(){
         cdRunning = true;
     }
-    private void cdOnPause(){
+    void cdOnPause(){
         cdRunning = false;
     }
     private void initTimer() {
@@ -378,7 +217,6 @@ public class GameActivity extends AppCompatActivity {
                         mainGameScreen.setVisibility(View.GONE);
                         defeatScreen.setVisibility(View.VISIBLE);
                         gameInProgress = false;
-                        isDefeat = true;
                     }
                 }
                 handler.postDelayed(this, 1000);
@@ -386,7 +224,7 @@ public class GameActivity extends AppCompatActivity {
         });
     }
 
-    // Initialization Methods and Utils
+    // Initialization Methods
     public int calculateScore(int remainingTimeSeconds, int hazardCardsPulled) {
         int score = (remainingTimeSeconds * 20) - (hazardCardsPulled*33);
         if (score>100) {
@@ -433,6 +271,7 @@ public class GameActivity extends AppCompatActivity {
         card13 = findViewById(R.id.frontCardView13);
         card14 = findViewById(R.id.frontCardView14);
         card15 = findViewById(R.id.frontCardView15);
+        CardUtils.shuffleCards(this);
 
         //Layouts
         loadingScreen = findViewById(R.id.loadingScreen);
@@ -445,7 +284,27 @@ public class GameActivity extends AppCompatActivity {
         btnPause = findViewById(R.id.btnPause);
     }
 
-    private ImageView getCard(int index) {
+    // Card functions
+    public void onCardClick(View v) {
+        if (gameInProgress && !isFlipping) {
+            ViewSwitcher card = (ViewSwitcher) v;
+            if (flippedCardA == null && card != flippedCardB) {
+                CardUtils.flipCard(this, card);
+                flippedCardA = card;
+            } else if (flippedCardB == null && card != flippedCardA) {
+                CardUtils.flipCard(this, card);
+                flippedCardB = card;
+            } else if (flippedCardA != null && card == flippedCardA) {
+                CardUtils.flipCard(this, card);
+                flippedCardA = null;
+            } else if (flippedCardB != null && card == flippedCardB) {
+                CardUtils.flipCard(this, card);
+                flippedCardA = null;
+            }
+        }
+    }
+
+    ImageView getCard(int index) {
         switch (index) {
             case 1: return card1;
             case 2: return card2;
@@ -464,5 +323,52 @@ public class GameActivity extends AppCompatActivity {
             case 15: return card15;
             default: return null;
         }
+    }
+
+    private void resetVariables() {
+        loadingScreen = null;
+        mainGameScreen = null;
+        defeatScreen = null;
+        pausedScreen = null;
+        victoryScreen = null;
+        hp_icon1 = null;
+        hp_icon2 = null;
+        hp_icon3 = null;
+        txtTimer = null;
+        txtScore = null;
+        btnPause = null;
+        progressBar = null;
+        flippedCardA = null;
+        flippedCardB = null;
+        card1 = null;
+        card2 = null;
+        card3 = null;
+        card4 = null;
+        card5 = null;
+        card6 = null;
+        card7 = null;
+        card8 = null;
+        card9 = null;
+        card10 = null;
+        card11 = null;
+        card12 = null;
+        card13 = null;
+        card14 = null;
+        card15 = null;
+        gameInProgress = false;
+        isFlipping = false;
+        isVictory = false;
+        initRunning = false;
+        initWasRunning = false;
+        cdRunning = false;
+        cdWasRunning = false;
+        isMortal = false;
+        initSec = 0;
+        cdSec = 0;
+        health = 0;
+        flippedCardCount = 0;
+        hazardCardCount = 0;
+        flippedCardTemp = 0;
+        Score = 0;
     }
 }
