@@ -458,13 +458,13 @@
                 app:layout_constraintVertical_bias="0.12" />
 
             <ImageView
-                android:id="@+id/dragon_icon"
+                android:id="@+id/time_icon"
                 android:layout_width="51dp"
                 android:layout_height="48dp"
+                app:layout_constraintBottom_toBottomOf="@+id/progressBar"
                 app:layout_constraintEnd_toStartOf="@+id/progressBar"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/imageView"
+                app:layout_constraintTop_toTopOf="@+id/progressBar"
+                app:layout_constraintVertical_bias="0.552"
                 app:srcCompat="@android:drawable/ic_menu_recent_history" />
 
             <TextView
@@ -474,7 +474,7 @@
                 android:fontFamily="@font/vinque"
                 android:shadowColor="#000000"
                 android:shadowRadius="15"
-                android:text="1"
+                android:text="3"
                 android:textColor="#FFFFFF"
                 android:textSize="34sp"
                 app:layout_constraintBottom_toTopOf="@+id/card2"
@@ -487,11 +487,10 @@
                 android:id="@+id/imageView"
                 android:layout_width="46dp"
                 android:layout_height="51dp"
-                android:layout_marginTop="4dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.2"
+                app:layout_constraintBottom_toBottomOf="@+id/progressBar"
                 app:layout_constraintStart_toEndOf="@+id/progressBar"
-                app:layout_constraintTop_toBottomOf="@+id/card15"
+                app:layout_constraintTop_toTopOf="@+id/progressBar"
+                app:layout_constraintVertical_bias="0.512"
                 app:srcCompat="@drawable/skull_icon" />
 
             <ImageButton

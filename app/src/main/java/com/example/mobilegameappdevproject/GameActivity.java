@@ -52,20 +52,16 @@ public class GameActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        // Encapsulation
+
         soundManager = SoundManager.getInstance(getApplicationContext());
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                soundManager.playBackgroundMusic(R.raw.red_barons_theme);
-                initializeViews();
-                initTimer();
-                loadingScreen.setVisibility(View.GONE);
-                mainGameScreen.setVisibility(View.VISIBLE);
-            }
+        new Handler().postDelayed(() -> {
+            soundManager.playBackgroundMusic(R.raw.red_barons_theme);
+            initializeViews();
+            initTimer();
+            loadingScreen.setVisibility(View.GONE);
+            mainGameScreen.setVisibility(View.VISIBLE);
         }, 1500);
-
 
         if (savedInstanceState != null){
             initSec = savedInstanceState.getInt("initSec");

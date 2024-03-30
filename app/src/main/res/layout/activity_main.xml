@@ -19,10 +19,157 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/loginScreen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="320dp"
+                android:layout_height="184dp"
+                android:layout_marginTop="120dp"
+                android:fontFamily="@font/dungeons"
+                android:shadowColor="#FFFFFF"
+                android:shadowRadius="10"
+                android:text="LOGIN OR REGISTER TO VIEW THE LEADERBOARD"
+                android:textAlignment="center"
+                android:textColor="#2E0E0E"
+                android:textSize="48sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.485"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="LOG IN"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.496"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="REGISTER"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.496"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button" />
+
+            <EditText
+                android:id="@+id/txtUsername"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="32dp"
+                android:background="#371C1C"
+                android:ems="10"
+                android:hint="Enter Username"
+                android:inputType="text"
+                android:paddingStart="20dp"
+                android:textAlignment="textStart"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#FFFFFF"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.504"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+            <EditText
+                android:id="@+id/txtPassword"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="12dp"
+                android:background="#371C1C"
+                android:ems="10"
+                android:hint="Enter Password"
+                android:inputType="text"
+                android:paddingStart="20dp"
+                android:textAlignment="textStart"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#FFFFFF"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.503"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtUsername" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/vinque"
+                android:text="Error message here."
+                android:textColor="#000000"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtPassword" />
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:onClick="btnHome"
+                android:text="RETURN"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button2" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/allTimeRank"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/weeklyRank"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/dailyRank"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/menuScreen"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="visible">
+
+            <ImageButton
+                android:id="@+id/btnRank"
+                android:layout_width="100dp"
+                android:layout_height="121dp"
+                android:layout_marginBottom="32dp"
+                android:background="#00FFFFFF"
+                android:onClick="btnRank"
+                android:scaleType="fitCenter"
+                android:src="@drawable/btn_rank"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.466"
+                app:layout_constraintStart_toEndOf="@+id/btnExit" />
 
             <ImageButton
                 android:id="@+id/btnCredits"

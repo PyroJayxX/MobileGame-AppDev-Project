@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     public ConstraintLayout menuScreen;
     public ConstraintLayout creditScreen;
     public ConstraintLayout modeScreen;
+    public ConstraintLayout loginScreen;
     public ImageButton btnStart;
     public ImageButton btnCredits;
     public ImageButton btnExit;
@@ -77,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
         btnExit.setClickable(true);
         btnCredits.setClickable(true);
         menuScreen.setVisibility(View.VISIBLE);
+        loginScreen.setVisibility(View.GONE);
         creditScreen.setVisibility(View.GONE);
         modeScreen.setVisibility(View.GONE);
     }
@@ -93,9 +95,6 @@ public class MainActivity extends AppCompatActivity {
         soundManager.stopBackgroundMusic();
         Intent intent = new Intent(this, GameActivity.class);
         intent.putExtra("Mode", isMortal);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         overridePendingTransition(0, 0);
     }
@@ -106,17 +105,22 @@ public class MainActivity extends AppCompatActivity {
         soundManager.stopBackgroundMusic();
         Intent intent = new Intent(this, GameActivity.class);
         intent.putExtra("Mode", isMortal);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         overridePendingTransition(0, 0);
+    }
+
+    public void btnRank (View v){
+        soundManager.playSoundEffect(R.raw.sfx_button);
+        menuScreen.setVisibility(View.GONE);
+        loginScreen.setVisibility(View.VISIBLE);
     }
 
     private void initializeViews(){
         menuScreen = findViewById(R.id.menuScreen);
         creditScreen = findViewById(R.id.creditScreen);
         modeScreen = findViewById(R.id.modeScreen);
+        loginScreen = findViewById(R.id.loginScreen);
+
         btnStart = findViewById(R.id.btnStart);
         btnCredits = findViewById(R.id.btnCredits);
         btnExit = findViewById(R.id.btnExit);
