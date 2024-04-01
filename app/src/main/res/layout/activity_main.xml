@@ -26,17 +26,16 @@
 
             <ImageButton
                 android:id="@+id/btnRank"
-                android:layout_width="100dp"
-                android:layout_height="121dp"
-                android:layout_marginBottom="32dp"
+                android:layout_width="300dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="40dp"
                 android:background="#00FFFFFF"
                 android:onClick="btnRank"
                 android:scaleType="fitCenter"
                 android:src="@drawable/btn_rank"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.466"
-                app:layout_constraintStart_toEndOf="@+id/btnExit" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnExit" />
 
             <ImageButton
                 android:id="@+id/btnCredits"
@@ -84,7 +83,7 @@
                 android:id="@+id/imageView4"
                 android:layout_width="304dp"
                 android:layout_height="277dp"
-                android:layout_marginTop="72dp"
+                android:layout_marginTop="48dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.495"
                 app:layout_constraintStart_toStartOf="parent"

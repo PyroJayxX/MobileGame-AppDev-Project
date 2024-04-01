@@ -36,8 +36,6 @@ public class MainActivity extends AppCompatActivity {
     public ImageButton btnCredits;
     public ImageButton btnExit;
     public ImageButton btnRank;
-    private boolean isMortal;
-
     public Button btnLogin;
     public Button btnSignup;
     public Button btnCreateAcc;
@@ -145,26 +143,6 @@ public class MainActivity extends AppCompatActivity {
         soundManager.playSoundEffect(R.raw.sfx_btnexit);
         soundManager.stopBackgroundMusic();
         finishAffinity();
-    }
-
-    public void btnMortal(View v){
-        soundManager.playSoundEffect(R.raw.sfx_button);
-        isMortal = true;
-        soundManager.stopBackgroundMusic();
-        Intent intent = new Intent(this, GameActivity.class);
-        intent.putExtra("Mode", "novice");
-        startActivity(intent);
-        overridePendingTransition(0, 0);
-    }
-
-    public void btnImmortal(View v){
-        soundManager.playSoundEffect(R.raw.sfx_button);
-        isMortal = false;
-        soundManager.stopBackgroundMusic();
-        Intent intent = new Intent(this, GameActivity.class);
-        intent.putExtra("Mode", isMortal);
-        startActivity(intent);
-        overridePendingTransition(0, 0);
     }
 
     public void noviceMode(View v){
