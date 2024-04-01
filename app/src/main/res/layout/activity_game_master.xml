@@ -1,0 +1,1020 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GameActivity">
+
+    <FrameLayout
+        android:id="@+id/MainGameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background2"
+        android:backgroundTint="#CC000000"
+        android:backgroundTintMode="src_over"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/mainGameScreen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cardsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="525dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.453">
+
+                <ViewSwitcher
+                    android:id="@+id/card1"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginEnd="10dp"
+                    android:backgroundTint="#2E4D9A"
+                    android:onClick="onCardClick"
+                    app:layout_constraintBottom_toTopOf="@+id/card9"
+                    app:layout_constraintEnd_toStartOf="@+id/card2"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.125">
+
+                    <ImageView
+                        android:id="@+id/backCardView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/card_back" />
+
+                    <ImageView
+                        android:id="@+id/frontCardView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter">
+
+                    </ImageView>
+                </ViewSwitcher>
+
+                <ViewSwitcher
+                    android:id="@+id/card2"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginEnd="90dp"
+                    android:backgroundTint="#2E4D9A"
+                    android:onClick="onCardClick"
+                    app:layout_constraintBottom_toTopOf="@+id/card10"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.504"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.125">
+
+                    <ImageView
+                        android:id="@+id/backCardView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/card_back" />
+
+                    <ImageView
+                        android:id="@+id/frontCardView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/front_card_placeholder" />
+
+                </ViewSwitcher>
+
+                <ViewSwitcher
+                    android:id="@+id/card3"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="90dp"
+                    android:backgroundTint="#2E4D9A"
+                    android:onClick="onCardClick"
+                    app:layout_constraintBottom_toTopOf="@+id/card11"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.125">
+
+                    <ImageView
+                        android:id="@+id/backCardView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/card_back" />
+
+                    <ImageView
+                        android:id="@+id/frontCardView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/front_card_placeholder" />
+                </ViewSwitcher>
+
+                <ViewSwitcher
+                    android:id="@+id/card4"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="10dp"
+                    android:backgroundTint="#2E4D9A"
+                    android:onClick="onCardClick"
+                    app:layout_constraintBottom_toTopOf="@+id/card12"
+                    app:layout_constraintStart_toEndOf="@+id/card3"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.125">
+
+                    <ImageView
+                        android:id="@+id/backCardView4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/card_back" />
+
+                    <ImageView
+                        android:id="@+id/frontCardView4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter">
+
+                    </ImageView>
+                </ViewSwitcher>
+
+                <ViewSwitcher
+                    android:id="@+id/card5"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginEnd="8dp"
+                    android:backgroundTint="#2E4D9A"
+                    android:onClick="onCardClick"
+                    app:layout_constraintBottom_toTopOf="@+id/card9"
+                    app:layout_constraintEnd_toStartOf="@+id/card6"
+                    app:layout_constraintTop_toBottomOf="@+id/card1">
+
+                    <ImageView
+                        android:id="@+id/backCardView5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/card_back" />
+
+                    <ImageView
+                        android:id="@+id/frontCardView5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter">
+
+                    </ImageView>
+                </ViewSwitcher>
+
+                <ViewSwitcher
+                    android:id="@+id/card6"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginEnd="90dp"
+                    android:backgroundTint="#2E4D9A"
+                    android:onClick="onCardClick"
+                    app:layout_constraintBottom_toTopOf="@+id/card10"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.504"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/card2">
+
+                    <ImageView
+                        android:id="@+id/backCardView6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/card_back" />
+
+                    <ImageView
+                        android:id="@+id/frontCardView6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter">
+
+                    </ImageView>
+                </ViewSwitcher>
+
+                <ViewSwitcher
+                    android:id="@+id/card7"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="90dp"
+                    android:backgroundTint="#2E4D9A"
+                    android:onClick="onCardClick"
+                    app:layout_constraintBottom_toTopOf="@+id/card11"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/card3">
+
+                    <ImageView
+                        android:id="@+id/backCardView7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/card_back" />
+
+                    <ImageView
+                        android:id="@+id/frontCardView7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter">
+
+                    </ImageView>
+                </ViewSwitcher>
+
+                <ViewSwitcher
+                    android:id="@+id/card8"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="10dp"
+                    android:backgroundTint="#2E4D9A"
+                    android:onClick="onCardClick"
+                    app:layout_constraintBottom_toTopOf="@+id/card12"
+                    app:layout_constraintStart_toEndOf="@+id/card7"
+                    app:layout_constraintTop_toBottomOf="@+id/card4">
+
+                    <ImageView
+                        android:id="@+id/backCardView8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/card_back" />
+
+                    <ImageView
+                        android:id="@+id/frontCardView8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter">
+
+                    </ImageView>
+                </ViewSwitcher>
+
+                <ViewSwitcher
+                    android:id="@+id/card9"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginEnd="10dp"
+                    android:backgroundTint="#2E4D9A"
+                    android:onClick="onCardClick"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/card10"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/backCardView9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/card_back" />
+
+                    <ImageView
+                        android:id="@+id/frontCardView9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter">
+
+                    </ImageView>
+                </ViewSwitcher>
+
+                <ViewSwitcher
+                    android:id="@+id/card10"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginEnd="90dp"
+                    android:backgroundTint="#2E4D9A"
+                    android:onClick="onCardClick"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.504"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/backCardView10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/card_back" />
+
+                    <ImageView
+                        android:id="@+id/frontCardView10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter">
+
+                    </ImageView>
+                </ViewSwitcher>
+
+                <ViewSwitcher
+                    android:id="@+id/card11"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="90dp"
+                    android:backgroundTint="#2E4D9A"
+                    android:onClick="onCardClick"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/backCardView11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/card_back" />
+
+                    <ImageView
+                        android:id="@+id/frontCardView11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter">
+
+                    </ImageView>
+                </ViewSwitcher>
+
+                <ViewSwitcher
+                    android:id="@+id/card12"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="10dp"
+                    android:backgroundTint="#2E4D9A"
+                    android:onClick="onCardClick"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/card11"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/backCardView12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/card_back" />
+
+                    <ImageView
+                        android:id="@+id/frontCardView12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter">
+
+                    </ImageView>
+                </ViewSwitcher>
+
+                <ViewSwitcher
+                    android:id="@+id/card13"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginEnd="10dp"
+                    android:backgroundTint="#2E4D9A"
+                    android:onClick="onCardClick"
+                    app:layout_constraintBottom_toTopOf="@+id/card17"
+                    app:layout_constraintEnd_toStartOf="@+id/card14"
+                    app:layout_constraintTop_toBottomOf="@+id/card9">
+
+                    <ImageView
+                        android:id="@+id/backCardView13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/card_back" />
+
+                    <ImageView
+                        android:id="@+id/frontCardView13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter">
+
+                    </ImageView>
+                </ViewSwitcher>
+
+                <ViewSwitcher
+                    android:id="@+id/card14"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginEnd="90dp"
+                    android:backgroundTint="#2E4D9A"
+                    android:onClick="onCardClick"
+                    app:layout_constraintBottom_toTopOf="@+id/card18"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.504"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/card10">
+
+                    <ImageView
+                        android:id="@+id/backCardView14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/card_back" />
+
+                    <ImageView
+                        android:id="@+id/frontCardView14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter">
+
+                    </ImageView>
+                </ViewSwitcher>
+
+                <ViewSwitcher
+                    android:id="@+id/card15"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="90dp"
+                    android:backgroundTint="#2E4D9A"
+                    android:onClick="onCardClick"
+                    app:layout_constraintBottom_toTopOf="@+id/card19"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/card11">
+
+                    <ImageView
+                        android:id="@+id/backCardView15"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/card_back" />
+
+                    <ImageView
+                        android:id="@+id/frontCardView15"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter">
+
+                    </ImageView>
+                </ViewSwitcher>
+
+                <ViewSwitcher
+                    android:id="@+id/card16"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="10dp"
+                    android:backgroundTint="#2E4D9A"
+                    android:onClick="onCardClick"
+                    app:layout_constraintBottom_toTopOf="@+id/card20"
+                    app:layout_constraintStart_toEndOf="@+id/card15"
+                    app:layout_constraintTop_toBottomOf="@+id/card12">
+
+                    <ImageView
+                        android:id="@+id/backCardView16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/card_back" />
+
+                    <ImageView
+                        android:id="@+id/frontCardView16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter">
+
+                    </ImageView>
+                </ViewSwitcher>
+
+                <ViewSwitcher
+                    android:id="@+id/card17"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginEnd="10dp"
+                    android:backgroundTint="#2E4D9A"
+                    android:onClick="onCardClick"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/card18"
+                    app:layout_constraintTop_toBottomOf="@+id/card9"
+                    app:layout_constraintVertical_bias="0.881">
+
+                    <ImageView
+                        android:id="@+id/backCardView17"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/card_back" />
+
+                    <ImageView
+                        android:id="@+id/frontCardView17"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter">
+
+                    </ImageView>
+                </ViewSwitcher>
+
+                <ViewSwitcher
+                    android:id="@+id/card18"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginEnd="90dp"
+                    android:backgroundTint="#2E4D9A"
+                    android:onClick="onCardClick"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.504"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/card10"
+                    app:layout_constraintVertical_bias="0.881">
+
+                    <ImageView
+                        android:id="@+id/backCardView18"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/card_back" />
+
+                    <ImageView
+                        android:id="@+id/frontCardView18"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter">
+
+                    </ImageView>
+                </ViewSwitcher>
+
+                <ViewSwitcher
+                    android:id="@+id/card19"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="90dp"
+                    android:backgroundTint="#2E4D9A"
+                    android:onClick="onCardClick"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/card11"
+                    app:layout_constraintVertical_bias="0.881">
+
+                    <ImageView
+                        android:id="@+id/backCardView19"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/card_back" />
+
+                    <ImageView
+                        android:id="@+id/frontCardView19"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter">
+
+                    </ImageView>
+                </ViewSwitcher>
+
+                <ViewSwitcher
+                    android:id="@+id/card20"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="10dp"
+                    android:backgroundTint="#2E4D9A"
+                    android:onClick="onCardClick"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/card19"
+                    app:layout_constraintTop_toBottomOf="@+id/card12"
+                    app:layout_constraintVertical_bias="0.874">
+
+                    <ImageView
+                        android:id="@+id/backCardView20"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/card_back" />
+
+                    <ImageView
+                        android:id="@+id/frontCardView20"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter">
+
+                    </ImageView>
+                </ViewSwitcher>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageView
+                android:id="@+id/hp1"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintEnd_toStartOf="@+id/hp2"
+                app:layout_constraintHorizontal_bias="0.978"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/hp2"
+                app:srcCompat="@drawable/hp_icon" />
+
+            <ImageView
+                android:id="@+id/hp2"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/progressBar"
+                app:layout_constraintVertical_bias="0.17"
+                app:srcCompat="@drawable/hp_icon" />
+
+            <ImageView
+                android:id="@+id/hp3"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.01"
+                app:layout_constraintStart_toEndOf="@+id/hp2"
+                app:layout_constraintTop_toTopOf="@+id/hp2"
+                app:srcCompat="@drawable/hp_icon" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="280dp"
+                android:layout_height="10dp"
+                android:indeterminate="false"
+                android:indeterminateDrawable="@android:drawable/progress_indeterminate_horizontal"
+                android:pointerIcon="arrow"
+                android:progressDrawable="@android:drawable/progress_horizontal"
+                android:progressTint="#E35407"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.496"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardsLayout"
+                app:layout_constraintVertical_bias="0.136" />
+
+            <ImageView
+                android:id="@+id/time_icon"
+                android:layout_width="51dp"
+                android:layout_height="48dp"
+                app:layout_constraintBottom_toBottomOf="@+id/progressBar"
+                app:layout_constraintEnd_toStartOf="@+id/progressBar"
+                app:layout_constraintTop_toTopOf="@+id/progressBar"
+                app:layout_constraintVertical_bias="0.552"
+                app:srcCompat="@android:drawable/ic_menu_recent_history" />
+
+            <TextView
+                android:id="@+id/txtTimer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/vinque"
+                android:shadowColor="#000000"
+                android:shadowRadius="15"
+                android:text="3"
+                android:textColor="#FFFFFF"
+                android:textSize="34sp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toTopOf="@+id/cardsLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.877" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="46dp"
+                android:layout_height="51dp"
+                android:scaleType="fitEnd"
+                app:layout_constraintBottom_toBottomOf="@+id/progressBar"
+                app:layout_constraintStart_toEndOf="@+id/progressBar"
+                app:layout_constraintTop_toTopOf="@+id/progressBar"
+                app:layout_constraintVertical_bias="0.512"
+                app:srcCompat="@drawable/skull_icon" />
+
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="99dp"
+                android:layout_height="60dp"
+                android:layout_marginEnd="50dp"
+                android:background="#00000000"
+                android:backgroundTintMode="multiply"
+                android:onClick="btnBack"
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toBottomOf="@+id/txtTimer"
+                app:layout_constraintEnd_toStartOf="@+id/btnPause"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/txtTimer"
+                app:srcCompat="@drawable/btn_back" />
+
+            <ImageButton
+                android:id="@+id/btnRetry"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="50dp"
+                android:background="#00FFFFFF"
+                android:onClick="btnRetry"
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toBottomOf="@+id/txtTimer"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/btnPause"
+                app:layout_constraintTop_toTopOf="@+id/txtTimer"
+                app:srcCompat="@drawable/btn_tryagain" />
+
+            <ImageButton
+                android:id="@+id/btnPause"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="#00FFFFFF"
+                android:onClick="btnPause"
+                android:scaleType="fitCenter"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/txtTimer"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/txtTimer"
+                app:layout_constraintVertical_bias="0.71"
+                app:srcCompat="@drawable/pause_icon" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/pausedScreen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/background3"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="408dp"
+                android:layout_height="125dp"
+                android:layout_marginTop="156dp"
+                android:fontFamily="@font/dungeons"
+                android:shadowColor="#000000"
+                android:shadowDy="3"
+                android:shadowRadius="10"
+                android:text="Game Paused"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="70sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.333"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/btnResume"
+                android:layout_width="170dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="96dp"
+                android:background="#00FFFFFF"
+                android:onClick="btnResume"
+                android:scaleType="fitCenter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView3"
+                app:srcCompat="@drawable/btn_resume" />
+
+            <ImageButton
+                android:id="@+id/btnRestart"
+                android:layout_width="170dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="24dp"
+                android:background="#00FFFFFF"
+                android:onClick="btnRetry"
+                android:scaleType="fitCenter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnResume"
+                app:srcCompat="@drawable/btn_restart" />
+
+            <ImageButton
+                android:id="@+id/btnPauseExit"
+                android:layout_width="170dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="24dp"
+                android:background="#00FFFFFF"
+                android:onClick="btnBack"
+                android:scaleType="fitCenter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnRestart"
+                app:srcCompat="@drawable/btn_exit" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/victoryScreen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/background5"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="400dp"
+                android:layout_height="600dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.454"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.343"
+                app:srcCompat="@drawable/scroll2" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="288dp"
+                android:fontFamily="@font/dungeons"
+                android:shadowColor="#FFFFFF"
+                android:shadowRadius="5"
+                android:text="SCORE"
+                android:textColor="#2B160F"
+                android:textSize="48sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.501"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/imageView2" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/dungeons"
+                android:shadowColor="#FFFFFF"
+                android:shadowRadius="5"
+                android:text="High Score:"
+                android:textColor="#773939"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+                app:layout_constraintEnd_toEndOf="@+id/imageView2"
+                app:layout_constraintHorizontal_bias="0.421"
+                app:layout_constraintStart_toStartOf="@+id/imageView2"
+                app:layout_constraintTop_toBottomOf="@+id/txtScore"
+                app:layout_constraintVertical_bias="0.05" />
+
+            <TextView
+                android:id="@+id/txtScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/vinque"
+                android:text="100"
+                android:textColor="#2B2B2B"
+                android:textSize="60sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.49"
+                app:layout_constraintStart_toStartOf="@+id/imageView2"
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+            <TextView
+                android:id="@+id/txtHighScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/vinque"
+                android:text="100"
+                android:textColor="#2B2B2B"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView10"
+                app:layout_constraintEnd_toEndOf="@+id/imageView2"
+                app:layout_constraintHorizontal_bias="0.08"
+                app:layout_constraintStart_toEndOf="@+id/textView10"
+                app:layout_constraintTop_toTopOf="@+id/textView10"
+                app:layout_constraintVertical_bias="0.6" />
+
+            <ImageButton
+                android:id="@+id/imageView3"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="#00C1ACAC"
+                android:onClick="btnBack"
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.623"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtScore"
+                app:layout_constraintVertical_bias="0.428"
+                app:srcCompat="@drawable/circbtn_home" />
+
+            <ImageButton
+                android:id="@+id/imageView5"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="24dp"
+                android:background="#00FFFFFF"
+                android:onClick="btnRetry"
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.364"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtScore"
+                app:layout_constraintVertical_bias="0.294"
+                app:srcCompat="@drawable/circbtn_retry" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/defeatScreen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/background1"
+            android:visibility="gone">
+
+            <ImageButton
+                android:id="@+id/btnDefeatRetry"
+                android:layout_width="170dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="24dp"
+                android:background="#00FFFFFF"
+                android:onClick="btnRetry"
+                android:scaleType="fitCenter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtTryAgain"
+                app:srcCompat="@drawable/btn_retry" />
+
+            <ImageButton
+                android:id="@+id/btnDefeatExit"
+                android:layout_width="170dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="24dp"
+                android:background="#00FFFFFF"
+                android:onClick="btnBack"
+                android:scaleType="fitCenter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnDefeatRetry"
+                app:srcCompat="@drawable/btn_quit" />
+
+            <TextView
+                android:id="@+id/txtGameOver"
+                android:layout_width="207dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="140dp"
+                android:fontFamily="@font/dungeons"
+                android:shadowColor="#000000"
+                android:shadowDy="3"
+                android:shadowRadius="15"
+                android:text="Game Over"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="75sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txtTryAgain"
+                android:layout_width="296dp"
+                android:layout_height="52dp"
+                android:fontFamily="sans-serif-medium"
+                android:shadowColor="#000000"
+                android:shadowDy="3"
+                android:shadowRadius="10"
+                android:text="Try Again?"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="30dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.495"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtGameOver"
+                app:layout_constraintVertical_bias="0.163" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/loadingScreen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/background2"
+            android:backgroundTint="#D6D6D6"
+            android:backgroundTintMode="multiply"
+            android:visibility="visible"
+            tools:visibility="gone">
+
+            <ProgressBar
+                android:id="@+id/progressBar3"
+                style="@android:style/Widget.Holo.Light.ProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminateBehavior="repeat"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 package com.example.mobilegameappdevproject;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -30,29 +31,43 @@ public class GameActivity extends AppCompatActivity {
     public ImageView hp_icon3;
     public TextView txtTimer;
     public TextView txtScore;
+    public TextView txtHighScore;
     public ImageButton btnPause;
     public ProgressBar progressBar;
     public ViewSwitcher flippedCardA = null, flippedCardB = null;
-    public ImageView card1, card2, card3, card4, card5,card6, card7,
-            card8, card9, card10, card11, card12, card13, card14, card15;
-    boolean gameInProgress = false, isFlipping = false, isVictory = false, isMortal;
+    public ImageView card1, card2, card3, card4, card5,card6, card7, card8, card9, card10,
+            card11, card12, card13, card14, card15, card16, card17, card18, card19, card20;
+    boolean gameInProgress = false, isFlipping = false, isVictory = false;
     private boolean initRunning, initWasRunning, cdRunning, cdWasRunning;
-    int cdSec = 0, flippedCardCount = 0, hazardCardCount = 0, flippedCardTemp, Score = 0;
+    int cdSec = 0, flippedCardCount = 0, hazardCardCount = 0, flippedCardTemp, Score = 0, currentHighScore;
     private int health = 3, initSec = 4;
+    String gameMode;
     SoundManager soundManager;
+    SharedPreferences localHighScore;
+    SharedPreferences.Editor localScoreEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_game);
-        isMortal = getIntent().getBooleanExtra("Mode", false);
+        gameMode = getIntent().getStringExtra("Mode");
+        if(gameMode!=null && gameMode.equals("novice")) {
+            setContentView(R.layout.activity_game_novice);
+        }
+        if(gameMode!=null && gameMode.equals("veteran")) {
+            setContentView(R.layout.activity_game_veteran);
+        }
+        if(gameMode!=null && gameMode.equals("master")) {
+            setContentView(R.layout.activity_game_master);
+        }
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
+        localHighScore = getSharedPreferences(gameMode + "HighScore", MODE_PRIVATE);
+        localScoreEditor = localHighScore.edit();
+        currentHighScore = retrieveLocalHighScore(gameMode);
         soundManager = SoundManager.getInstance(getApplicationContext());
 
         new Handler().postDelayed(() -> {
@@ -63,7 +78,7 @@ public class GameActivity extends AppCompatActivity {
             mainGameScreen.setVisibility(View.VISIBLE);
         }, 1500);
 
-        if (savedInstanceState != null){
+        if (savedInstanceState != null) {
             initSec = savedInstanceState.getInt("initSec");
             initRunning = savedInstanceState.getBoolean("initRunning");
             initWasRunning = savedInstanceState.getBoolean("initWasRunning");
@@ -136,7 +151,7 @@ public class GameActivity extends AppCompatActivity {
         flippedCardB = null;
         soundManager.stopBackgroundMusic();
         Intent i = new Intent(this, GameActivity.class);
-        i.putExtra("Mode", isMortal);
+        i.putExtra("Mode", gameMode);
         startActivity(i);
     }
 
@@ -238,18 +253,14 @@ public class GameActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         txtTimer = findViewById(R.id.txtTimer);
         txtScore = findViewById(R.id.txtScore);
+        txtHighScore = findViewById(R.id.txtHighScore);
 
         // GIFS
-        if(isMortal) {
-            Glide.with(this).load(R.drawable.hp_icon).into(hp_icon1);
-            Glide.with(this).load(R.drawable.hp_icon).into(hp_icon2);
-            Glide.with(this).load(R.drawable.hp_icon).into(hp_icon3);
-        }
-        if(!isMortal) {
-            Glide.with(this).load(R.drawable.immortal_heart).into(hp_icon1);
-            Glide.with(this).load(R.drawable.immortal_heart).into(hp_icon2);
-            Glide.with(this).load(R.drawable.immortal_heart).into(hp_icon3);
-        }
+
+        Glide.with(this).load(R.drawable.hp_icon).into(hp_icon1);
+        Glide.with(this).load(R.drawable.hp_icon).into(hp_icon2);
+        Glide.with(this).load(R.drawable.hp_icon).into(hp_icon3);
+
 
         //Card Objects
         card1 = findViewById(R.id.frontCardView1);
@@ -267,6 +278,11 @@ public class GameActivity extends AppCompatActivity {
         card13 = findViewById(R.id.frontCardView13);
         card14 = findViewById(R.id.frontCardView14);
         card15 = findViewById(R.id.frontCardView15);
+        card16 = findViewById(R.id.frontCardView16);
+        card17 = findViewById(R.id.frontCardView17);
+        card18 = findViewById(R.id.frontCardView18);
+        card19 = findViewById(R.id.frontCardView19);
+        card20 = findViewById(R.id.frontCardView20);
         CardUtils.shuffleCards(this);
 
         //Layouts
@@ -317,6 +333,11 @@ public class GameActivity extends AppCompatActivity {
             case 13: return card13;
             case 14: return card14;
             case 15: return card15;
+            case 16: return card16;
+            case 17: return card17;
+            case 18: return card18;
+            case 19: return card19;
+            case 20: return card20;
             default: return null;
         }
     }
@@ -351,6 +372,11 @@ public class GameActivity extends AppCompatActivity {
         card13 = null;
         card14 = null;
         card15 = null;
+        card16 = null;
+        card17 = null;
+        card18 = null;
+        card19 = null;
+        card20 = null;
         gameInProgress = false;
         isFlipping = false;
         isVictory = false;
@@ -358,7 +384,7 @@ public class GameActivity extends AppCompatActivity {
         initWasRunning = false;
         cdRunning = false;
         cdWasRunning = false;
-        isMortal = false;
+        gameMode = null;
         initSec = 0;
         cdSec = 0;
         health = 0;
@@ -366,5 +392,17 @@ public class GameActivity extends AppCompatActivity {
         hazardCardCount = 0;
         flippedCardTemp = 0;
         Score = 0;
+    }
+
+    public void updateLocalHighScore(String gameMode, int newHighScore) {
+        SharedPreferences localHighScore = getSharedPreferences(gameMode + "HighScore", MODE_PRIVATE);
+        SharedPreferences.Editor localScoreEditor = localHighScore.edit();
+        localScoreEditor.putInt("highScore", newHighScore);
+        localScoreEditor.apply();
+    }
+
+    public int retrieveLocalHighScore(String gameMode) {
+        SharedPreferences localHighScore = getSharedPreferences(gameMode + "HighScore", MODE_PRIVATE);
+        return localHighScore.getInt("highScore", 0);
     }
 }

@@ -16,6 +16,7 @@ import java.util.List;
 public class CardUtils {
 
     public static void shuffleCards(GameActivity gameActivity) {
+        if(gameActivity.gameMode.equals("veteran")){
         Integer[] images = {R.drawable.image1, R.drawable.image2, R.drawable.image3, R.drawable.image4, R.drawable.image5,
                 R.drawable.image6, R.drawable.image1, R.drawable.image2, R.drawable.image3, R.drawable.image4,
                 R.drawable.image5, R.drawable.image6, R.drawable.mimic, R.drawable.bomber, R.drawable.poison};
@@ -39,6 +40,53 @@ public class CardUtils {
                 card.setTag(resourceId);
             }
         }
+        }
+
+        if(gameActivity.gameMode.equals("novice")){
+            Integer[] images = {R.drawable.image1, R.drawable.image2, R.drawable.image3, R.drawable.image4, R.drawable.image5,
+                    R.drawable.image6, R.drawable.image1, R.drawable.image2, R.drawable.image3, R.drawable.image4,
+                    R.drawable.image5, R.drawable.image6};
+
+            List<Integer> imageIndex = new ArrayList<>(Arrays.asList(images));
+            Collections.shuffle(imageIndex);
+
+            for (int i = 1; i <= 12; i++) {
+                ImageView card = gameActivity.getCard(i);
+                if (card != null) {
+                    int resourceId = imageIndex.get(i - 1);
+                    card.setImageResource(resourceId);
+                    card.setTag(resourceId);
+                }
+            }
+        }
+
+        if(gameActivity.gameMode.equals("master")){
+            Integer[] images = {R.drawable.image1, R.drawable.image2, R.drawable.image3, R.drawable.image4, R.drawable.image5, R.drawable.image6,
+                    R.drawable.image7, R.drawable.image8, R.drawable.image1, R.drawable.image2, R.drawable.image3, R.drawable.image4, R.drawable.image5,
+                    R.drawable.image6, R.drawable.image7, R.drawable.image8, R.drawable.mimic, R.drawable.bomber, R.drawable.poison, R.drawable.trap};
+
+            List<Integer> imageIndex = new ArrayList<>(Arrays.asList(images));
+            Collections.shuffle(imageIndex);
+
+            for (int i = 1; i <= 20; i++) {
+                ImageView card = gameActivity.getCard(i);
+                if (card != null) {
+                    int resourceId = imageIndex.get(i - 1);
+                    if (resourceId == R.drawable.mimic) {
+                        Glide.with(gameActivity).load(R.drawable.mimic).into(card);
+                    } else if (resourceId == R.drawable.bomber) {
+                        Glide.with(gameActivity).load(R.drawable.bomber).into(card);
+                    } else if (resourceId == R.drawable.poison) {
+                        Glide.with(gameActivity).load(R.drawable.poison).into(card);
+                    } else if (resourceId == R.drawable.trap){
+                        Glide.with(gameActivity).load(R.drawable.trap).into(card);
+                    } else {
+                        card.setImageResource(resourceId);
+                    }
+                    card.setTag(resourceId);
+                }
+            }
+        }
     }
     public static void cardComparator(GameActivity gameActivity, ViewSwitcher cardA, ViewSwitcher cardB) {
         View cardAImage = cardA.getCurrentView();
@@ -58,15 +106,7 @@ public class CardUtils {
             gameActivity.flippedCardA = null;
             gameActivity.flippedCardB = null;
             gameActivity.flippedCardCount++;
-            if (gameActivity.flippedCardCount == 6) {
-                gameActivity.isVictory = true;
-                gameActivity.gameInProgress = false;
-                gameActivity.cdOnPause();
-                gameActivity.txtScore.setText(Integer.toString(gameActivity.Score));
-                gameActivity.mainGameScreen.setVisibility(View.GONE);
-                gameActivity.victoryScreen.setVisibility(View.VISIBLE);
-                gameActivity.soundManager.playSoundEffect(R.raw.sfx_victory);
-            }
+            victoryChecker(gameActivity);
         } else if (cardAImageTag != null && cardBImageTag != null && !cardAImageTag.equals(cardBImageTag)) {
             flipCard(gameActivity, cardA);
             flipCard(gameActivity, cardB);
@@ -77,11 +117,9 @@ public class CardUtils {
     }
 
     public static boolean cardIsHazard(GameActivity gameActivity) {
-        if (gameActivity.flippedCardTemp == R.drawable.mimic || gameActivity.flippedCardTemp == R.drawable.bomber || gameActivity.flippedCardTemp == R.drawable.poison) {
+        if (gameActivity.flippedCardTemp == R.drawable.mimic || gameActivity.flippedCardTemp == R.drawable.bomber || gameActivity.flippedCardTemp == R.drawable.poison || gameActivity.flippedCardTemp == R.drawable.trap) {
             gameActivity.soundManager.playSoundEffect(R.raw.sfx_ouch);
-            if (gameActivity.isMortal) {
-                gameActivity.damage();
-            }
+            gameActivity.damage();
             if (gameActivity.flippedCardA != null && gameActivity.flippedCardB == null) {
                 gameActivity.flippedCardA = null;
             } else if (gameActivity.flippedCardA != null && gameActivity.flippedCardB != null) {
@@ -118,6 +156,12 @@ public class CardUtils {
             @Override
             public void onAnimationStart(Animation animation) {
                 card.showNext();
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                gameActivity.isFlipping = false;
+
                 View currentView = card.getCurrentView();
                 if (currentView instanceof ImageView) {
                     Object tag = currentView.getTag();
@@ -129,11 +173,6 @@ public class CardUtils {
                         }
                     }
                 }
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                gameActivity.isFlipping = false;
                 gameActivity.Score = gameActivity.calculateScore(100 - gameActivity.cdSec, gameActivity.hazardCardCount);
                 if (gameActivity.flippedCardB != null && gameActivity.flippedCardA != null) {
                     cardComparator(gameActivity, gameActivity.flippedCardA, gameActivity.flippedCardB);
@@ -145,6 +184,29 @@ public class CardUtils {
             }
         });
         card.startAnimation(flip);
+    }
+
+    public static void victoryChecker(GameActivity gameActivity) {
+        int requiredMatches = 6; // Default for novice and veteran modes
+        if (gameActivity.gameMode.equals("master")) {
+            requiredMatches = 8; // For master mode
+        }
+
+        if (gameActivity.flippedCardCount == requiredMatches) {
+            gameActivity.soundManager.playSoundEffect(R.raw.sfx_victory);
+            gameActivity.isVictory = true;
+            gameActivity.gameInProgress = false;
+            gameActivity.cdOnPause();
+            gameActivity.txtScore.setText(Integer.toString(gameActivity.Score));
+            if (gameActivity.Score > gameActivity.currentHighScore) {
+                gameActivity.currentHighScore = gameActivity.Score;
+                // Update the local high score for the current game mode
+                gameActivity.updateLocalHighScore(gameActivity.gameMode, gameActivity.currentHighScore);
+            }
+            gameActivity.txtHighScore.setText(Integer.toString(gameActivity.currentHighScore));
+            gameActivity.mainGameScreen.setVisibility(View.GONE);
+            gameActivity.victoryScreen.setVisibility(View.VISIBLE);
+        }
     }
 
 }

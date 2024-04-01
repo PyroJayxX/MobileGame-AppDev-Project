@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     public ImageButton btnStart;
     public ImageButton btnCredits;
     public ImageButton btnExit;
+    public ImageButton btnRank;
     private boolean isMortal;
 
     public Button btnLogin;
@@ -110,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
         modeScreen.setVisibility(View.VISIBLE);
         btnStart.setClickable(false);
         btnExit.setClickable(false);
+        btnRank.setClickable(false);
         btnCredits.setClickable(false);
     }
 
@@ -129,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
         btnStart.setClickable(true);
         btnExit.setClickable(true);
         btnCredits.setClickable(true);
+        btnRank.setClickable(true);
         menuScreen.setVisibility(View.VISIBLE);
         loginScreen.setVisibility(View.GONE);
         creditScreen.setVisibility(View.GONE);
@@ -149,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
         isMortal = true;
         soundManager.stopBackgroundMusic();
         Intent intent = new Intent(this, GameActivity.class);
-        intent.putExtra("Mode", isMortal);
+        intent.putExtra("Mode", "novice");
         startActivity(intent);
         overridePendingTransition(0, 0);
     }
@@ -163,6 +166,31 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
         overridePendingTransition(0, 0);
     }
+
+    public void noviceMode(View v){
+        soundManager.playSoundEffect(R.raw.sfx_button);
+        soundManager.stopBackgroundMusic();
+        Intent intent = new Intent(this, GameActivity.class);
+        intent.putExtra("Mode", "novice");
+        startActivity(intent);
+    }
+    public void veteranMode(View v){
+        soundManager.playSoundEffect(R.raw.sfx_button);
+        soundManager.stopBackgroundMusic();
+        Intent intent = new Intent(this, GameActivity.class);
+        intent.putExtra("Mode", "veteran");
+        startActivity(intent);
+    }
+    public void masterMode(View v){
+        soundManager.playSoundEffect(R.raw.sfx_button);
+        soundManager.stopBackgroundMusic();
+        Intent intent = new Intent(this, GameActivity.class);
+        intent.putExtra("Mode", "master");
+        startActivity(intent);
+    }
+
+
+
 
     public void btnRank (View v){
         soundManager.playSoundEffect(R.raw.sfx_button);
@@ -190,6 +218,7 @@ public class MainActivity extends AppCompatActivity {
         btnStart = findViewById(R.id.btnStart);
         btnCredits = findViewById(R.id.btnCredits);
         btnExit = findViewById(R.id.btnExit);
+        btnRank = findViewById(R.id.btnRank);
 
         // User Management
         btnLogin = findViewById(R.id.btnLogin);
