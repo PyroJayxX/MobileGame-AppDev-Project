@@ -191,12 +191,10 @@ public class CardUtils {
         if (gameActivity.gameMode.equals("master")) {
             requiredMatches = 8; // For master mode
         }
-
         if (gameActivity.flippedCardCount == requiredMatches) {
             gameActivity.soundManager.playSoundEffect(R.raw.sfx_victory);
             gameActivity.isVictory = true;
             gameActivity.gameInProgress = false;
-            gameActivity.cdOnPause();
             gameActivity.txtScore.setText(Integer.toString(gameActivity.Score));
             if (gameActivity.Score > gameActivity.currentHighScore) {
                 gameActivity.currentHighScore = gameActivity.Score;
@@ -208,5 +206,4 @@ public class CardUtils {
             gameActivity.victoryScreen.setVisibility(View.VISIBLE);
         }
     }
-
 }

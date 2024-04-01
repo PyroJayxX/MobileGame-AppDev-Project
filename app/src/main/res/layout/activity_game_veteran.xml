@@ -36,7 +36,7 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.484">
+                app:layout_constraintVertical_bias="0.433">
 
                 <ViewSwitcher
                     android:id="@+id/card1"
@@ -522,7 +522,7 @@
                 android:onClick="btnBack"
                 android:scaleType="fitCenter"
                 app:layout_constraintBottom_toBottomOf="@+id/txtTimer"
-                app:layout_constraintEnd_toStartOf="@+id/txtTimer"
+                app:layout_constraintEnd_toStartOf="@+id/btnPause"
                 app:layout_constraintHorizontal_bias="0.326"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/txtTimer"
@@ -539,7 +539,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/txtTimer"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.694"
-                app:layout_constraintStart_toEndOf="@+id/txtTimer"
+                app:layout_constraintStart_toEndOf="@+id/btnPause"
                 app:layout_constraintTop_toTopOf="@+id/txtTimer"
                 app:layout_constraintVertical_bias="0.5"
                 app:srcCompat="@drawable/btn_tryagain" />
@@ -649,7 +649,7 @@
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="292dp"
+                android:layout_marginTop="288dp"
                 android:fontFamily="@font/dungeons"
                 android:shadowColor="#FFFFFF"
                 android:shadowRadius="5"
@@ -657,22 +657,56 @@
                 android:textColor="#2B160F"
                 android:textSize="48sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.501"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/imageView2" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/dungeons"
+                android:shadowColor="#FFFFFF"
+                android:shadowRadius="5"
+                android:text="High Score:"
+                android:textColor="#773939"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+                app:layout_constraintEnd_toEndOf="@+id/imageView2"
+                app:layout_constraintHorizontal_bias="0.421"
+                app:layout_constraintStart_toStartOf="@+id/imageView2"
+                app:layout_constraintTop_toBottomOf="@+id/txtScore"
+                app:layout_constraintVertical_bias="0.05" />
 
             <TextView
                 android:id="@+id/txtScore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="4dp"
                 android:fontFamily="@font/vinque"
                 android:text="100"
                 android:textColor="#2B2B2B"
-                android:textSize="65sp"
+                android:textSize="60sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.489"
+                app:layout_constraintHorizontal_bias="0.49"
                 app:layout_constraintStart_toStartOf="@+id/imageView2"
                 app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+            <TextView
+                android:id="@+id/txtHighScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/vinque"
+                android:text="100"
+                android:textColor="#2B2B2B"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView10"
+                app:layout_constraintEnd_toEndOf="@+id/imageView2"
+                app:layout_constraintHorizontal_bias="0.08"
+                app:layout_constraintStart_toEndOf="@+id/textView10"
+                app:layout_constraintTop_toTopOf="@+id/textView10"
+                app:layout_constraintVertical_bias="0.6" />
 
             <ImageButton
                 android:id="@+id/imageView3"
@@ -683,10 +717,10 @@
                 android:scaleType="fitCenter"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView2"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.609"
+                app:layout_constraintHorizontal_bias="0.623"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtScore"
-                app:layout_constraintVertical_bias="0.277"
+                app:layout_constraintVertical_bias="0.428"
                 app:srcCompat="@drawable/circbtn_home" />
 
             <ImageButton
@@ -699,10 +733,10 @@
                 android:scaleType="fitCenter"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView2"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.373"
+                app:layout_constraintHorizontal_bias="0.364"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtScore"
-                app:layout_constraintVertical_bias="0.071"
+                app:layout_constraintVertical_bias="0.294"
                 app:srcCompat="@drawable/circbtn_retry" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
