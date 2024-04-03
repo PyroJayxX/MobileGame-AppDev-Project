@@ -4,9 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -32,17 +33,24 @@ public class MainActivity extends AppCompatActivity {
     public ConstraintLayout dailyRankScreen;
     public ConstraintLayout weeklyRankScreen;
     public ConstraintLayout allTimeRankScreen;
+    public ConstraintLayout guideScreen;
+    public ConstraintLayout mainMenu;
+    public ConstraintLayout menuHeader;
+    public ConstraintLayout menuFooter;
     public ImageButton btnStart;
     public ImageButton btnCredits;
     public ImageButton btnExit;
     public ImageButton btnRank;
-    public Button btnLogin;
-    public Button btnSignup;
-    public Button btnCreateAcc;
+    public ImageButton btnLogin;
+    public ImageButton btnSignup;
+    public ImageButton btnVolume;
+    public ImageView loginTitle;
     public EditText txtUsername;
     public EditText txtEmail;
     public EditText txtPassword;
     public EditText txtConfirmPassword;
+    public TextView txtCreateAccount;
+    boolean hasAccount = true, isBgmMuted = false;
     private FirebaseAuth mAuth;
     FirebaseUser currentUser;
     private String email, password;
@@ -131,18 +139,41 @@ public class MainActivity extends AppCompatActivity {
         btnCredits.setClickable(true);
         btnRank.setClickable(true);
         menuScreen.setVisibility(View.VISIBLE);
+        mainMenu.setVisibility(View.VISIBLE);
+        menuHeader.setVisibility(View.VISIBLE);
+        menuFooter.setVisibility(View.VISIBLE);
         loginScreen.setVisibility(View.GONE);
         creditScreen.setVisibility(View.GONE);
         modeScreen.setVisibility(View.GONE);
         allTimeRankScreen.setVisibility(View.GONE);
         weeklyRankScreen.setVisibility(View.GONE);
         dailyRankScreen.setVisibility(View.GONE);
+        guideScreen.setVisibility(View.GONE);
     }
 
     public void btnQuit(View v){
         soundManager.playSoundEffect(R.raw.sfx_btnexit);
         soundManager.stopBackgroundMusic();
         finishAffinity();
+    }
+
+    public void btnGuide(View v){
+        soundManager.playSoundEffect(R.raw.sfx_button);
+        menuScreen.setVisibility(View.GONE);
+        guideScreen.setVisibility(View.VISIBLE);
+    }
+
+    public void btnVolume(View v){
+        soundManager.playSoundEffect(R.raw.sfx_button);
+        if (isBgmMuted) {
+            btnVolume.setImageResource(R.drawable.icon_volume);
+            soundManager.resumeBackgroundMusic();
+        }
+        if (!isBgmMuted){
+            btnVolume.setImageResource(R.drawable.icon_muted);
+            soundManager.pauseBackgroundMusic();
+        }
+        isBgmMuted = !isBgmMuted;
     }
 
     public void noviceMode(View v){
@@ -168,18 +199,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
     public void btnRank (View v){
         soundManager.playSoundEffect(R.raw.sfx_button);
-        menuScreen.setVisibility(View.GONE);
+        mainMenu.setVisibility(View.GONE);
+        menuFooter.setVisibility(View.GONE);
         if (currentUser != null) {
             // User is logged in, show the dailyRankScreen
-            menuScreen.setVisibility(View.GONE);
             dailyRankScreen.setVisibility(View.VISIBLE);
         } else {
             // User is not logged in, show the loginScreen
-            menuScreen.setVisibility(View.GONE);
+            if(!hasAccount) {
+                txtCreateAccount.setText("I already have an account.");
+                btnLogin.setVisibility(View.GONE);
+                btnSignup.setVisibility(View.VISIBLE);
+                txtUsername.setVisibility(View.VISIBLE);
+                txtConfirmPassword.setVisibility(View.VISIBLE);
+                txtConfirmPassword.setEnabled(true);
+            }
+            if(hasAccount){
+                txtCreateAccount.setText("I don't have an account.");
+                btnLogin.setVisibility(View.VISIBLE);
+                btnSignup.setVisibility(View.GONE);
+                txtUsername.setVisibility(View.GONE);
+                txtConfirmPassword.setVisibility(View.GONE);
+                txtConfirmPassword.setEnabled(false);
+            }
             loginScreen.setVisibility(View.VISIBLE);
         }
     }
@@ -189,20 +233,26 @@ public class MainActivity extends AppCompatActivity {
         creditScreen = findViewById(R.id.creditScreen);
         modeScreen = findViewById(R.id.modeScreen);
         loginScreen = findViewById(R.id.loginScreen);
+        guideScreen = findViewById(R.id.guideScreen);
         dailyRankScreen = findViewById(R.id.dailyRank);
         weeklyRankScreen = findViewById(R.id.weeklyRank);
         allTimeRankScreen = findViewById(R.id.allTimeRank);
+        mainMenu = findViewById(R.id.main_menu);
+        menuHeader = findViewById(R.id.header_layout);
+        menuFooter = findViewById(R.id.footer_layout);
 
         btnStart = findViewById(R.id.btnStart);
         btnCredits = findViewById(R.id.btnCredits);
         btnExit = findViewById(R.id.btnExit);
         btnRank = findViewById(R.id.btnRank);
+        btnVolume = findViewById(R.id.icon_volume);
 
         // User Management
+        txtCreateAccount = findViewById(R.id.txtCreateAcc);
         btnLogin = findViewById(R.id.btnLogin);
         btnSignup = findViewById(R.id.btnSignup);
-        btnCreateAcc = findViewById(R.id.btnCreateAcc);
         txtUsername = findViewById(R.id.txtUsername);
+        loginTitle = findViewById(R.id.loginTitle);
         txtEmail = findViewById(R.id.txtEmail);;
         txtPassword = findViewById(R.id.txtPassword);;
         txtConfirmPassword = findViewById(R.id.txtConfirmPassword);;
@@ -216,7 +266,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Check if email or password is empty
         if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
-            Toast.makeText(MainActivity.this, "Please enter both email and password.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "Please fill up all required fields.", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -281,30 +331,26 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void createAcc (View v){
+    public void createAccToggle (View v){
         soundManager.playSoundEffect(R.raw.sfx_button);
-        btnLogin.setVisibility(View.GONE);
-        btnCreateAcc.setVisibility(View.GONE);
-        btnSignup.setVisibility(View.VISIBLE);
-        txtUsername.setVisibility(View.VISIBLE);
-        txtConfirmPassword.setVisibility(View.VISIBLE);
-        txtConfirmPassword.setEnabled(true);
-    }
-
-    public void onReturnClick (View v){
-        soundManager.playSoundEffect(R.raw.sfx_btnexit);
-        switch (txtUsername.getVisibility()){
-            case View.VISIBLE:
-                btnLogin.setVisibility(View.VISIBLE);
-                btnCreateAcc.setVisibility(View.VISIBLE);
-                btnSignup.setVisibility(View.GONE);
-                txtUsername.setVisibility(View.GONE);
-                txtConfirmPassword.setVisibility(View.INVISIBLE);
-                txtConfirmPassword.setEnabled(false);
-                break;
-            case View.GONE:
-                returnToMenu();
-                break;
+        hasAccount = !hasAccount;
+        if(!hasAccount) {
+            loginTitle.setImageResource(R.drawable.signup_title);
+            txtCreateAccount.setText("I already have an account.");
+            btnLogin.setVisibility(View.GONE);
+            btnSignup.setVisibility(View.VISIBLE);
+            txtUsername.setVisibility(View.VISIBLE);
+            txtConfirmPassword.setVisibility(View.VISIBLE);
+            txtConfirmPassword.setEnabled(true);
+        }
+        if(hasAccount){
+            loginTitle.setImageResource(R.drawable.login_title);
+            txtCreateAccount.setText("I don't have an account.");
+            btnLogin.setVisibility(View.VISIBLE);
+            btnSignup.setVisibility(View.GONE);
+            txtUsername.setVisibility(View.GONE);
+            txtConfirmPassword.setVisibility(View.GONE);
+            txtConfirmPassword.setEnabled(false);
         }
     }
 }
