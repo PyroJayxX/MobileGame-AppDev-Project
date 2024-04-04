@@ -26,6 +26,7 @@ public class GameActivity extends AppCompatActivity {
     public ConstraintLayout defeatScreen;
     public ConstraintLayout pausedScreen;
     public ConstraintLayout victoryScreen;
+    public ConstraintLayout guideScreen;
     public ImageView hp_icon1;
     public ImageView hp_icon2;
     public ImageView hp_icon3;
@@ -33,11 +34,12 @@ public class GameActivity extends AppCompatActivity {
     public TextView txtScore;
     public TextView txtHighScore;
     public ImageButton btnPause;
+    public ImageButton btnVolume;
     public ProgressBar progressBar;
     public ViewSwitcher flippedCardA = null, flippedCardB = null;
     public ImageView card1, card2, card3, card4, card5,card6, card7, card8, card9, card10,
             card11, card12, card13, card14, card15, card16, card17, card18, card19, card20;
-    boolean gameInProgress = false, isFlipping = false, isVictory = false;
+    boolean gameInProgress = false, isFlipping = false, isVictory = false, isBgmMuted;
     private boolean initRunning, initWasRunning, cdRunning, cdWasRunning;
     int cdSec = 0, flippedCardCount = 0, hazardCardCount = 0, flippedCardTemp, Score = 0, currentHighScore;
     private int health = 3, initSec = 4;
@@ -50,6 +52,7 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
+        isBgmMuted = getIntent().getBooleanExtra("isBgmMuted", false);
         gameMode = getIntent().getStringExtra("Mode");
         if(gameMode!=null && gameMode.equals("novice")) {
             setContentView(R.layout.activity_game_novice);
@@ -71,8 +74,13 @@ public class GameActivity extends AppCompatActivity {
         soundManager = SoundManager.getInstance(getApplicationContext());
 
         new Handler().postDelayed(() -> {
-            soundManager.playBackgroundMusic(R.raw.red_barons_theme);
             initializeViews();
+            if(!isBgmMuted) {
+                soundManager.playBackgroundMusic(R.raw.red_barons_theme);
+            }
+            if(isBgmMuted) {
+                btnVolume.setImageResource(R.drawable.icon_muted);
+            }
             initTimer();
             loadingScreen.setVisibility(View.GONE);
             mainGameScreen.setVisibility(View.VISIBLE);
@@ -122,6 +130,7 @@ public class GameActivity extends AppCompatActivity {
 
     // Buttons
     public void btnPause(View v){
+        // Pauses the game activity
         soundManager.playSoundEffect(R.raw.sfx_button);
         cdOnPause();
         soundManager.pauseBackgroundMusic();
@@ -129,6 +138,7 @@ public class GameActivity extends AppCompatActivity {
         pausedScreen.setVisibility(View.VISIBLE);
     }
     public void btnResume(View v){
+        // Resumes the game activity
         soundManager.playSoundEffect(R.raw.sfx_btnexit);
         cdOnStart();
         soundManager.resumeBackgroundMusic();
@@ -136,13 +146,16 @@ public class GameActivity extends AppCompatActivity {
         pausedScreen.setVisibility(View.GONE);
     }
     public void btnBack(View v) {
+        // Returns to menu
         soundManager.playSoundEffect(R.raw.sfx_btnexit);
+        Intent i = new Intent(this, MainActivity.class);
+        i.putExtra("isBgmMuted", isBgmMuted);
         soundManager.stopBackgroundMusic();
         resetVariables();
-        Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
     }
     public void btnRetry(View v){
+        // Stops the activity and reopens it
         finish();
         soundManager.playSoundEffect(R.raw.sfx_btnexit);
         isVictory = false;
@@ -155,7 +168,40 @@ public class GameActivity extends AppCompatActivity {
         startActivity(i);
     }
 
+    public void btnVolume(View v){
+        // Mute and un-mute toggle of Bgm
+        soundManager.playSoundEffect(R.raw.sfx_button);
+        if (isBgmMuted) {
+            btnVolume.setImageResource(R.drawable.icon_volume);
+            if(SoundManager.backgroundMusicPlayer == null){
+                soundManager.playBackgroundMusic(R.raw.red_barons_theme);
+                return;
+            }
+            soundManager.resumeBackgroundMusic();
+            isBgmMuted = false;
+        } else {
+            btnVolume.setImageResource(R.drawable.icon_muted);
+            soundManager.pauseBackgroundMusic();
+            isBgmMuted = true;
+        }
+    }
+
+    public void btnGuide(View v){
+        // Toggles How to Play screen visibility
+        soundManager.playSoundEffect(R.raw.sfx_button);
+        pausedScreen.setVisibility(View.GONE);
+        guideScreen.setVisibility(View.VISIBLE);
+    }
+
+    public void exitGuide(View v){
+        // Exits How to Play screen visibility
+        soundManager.playSoundEffect(R.raw.sfx_btnexit);
+        pausedScreen.setVisibility(View.VISIBLE);
+        guideScreen.setVisibility(View.GONE);
+    }
+
     public void damage(){
+        // Reduces health by one point
         switch(health){
             case 3:
                 health--;
@@ -182,12 +228,15 @@ public class GameActivity extends AppCompatActivity {
 
     // Timer Methods
     private void cdOnStart(){
+        // Toggles countdown running boolean to true
         cdRunning = true;
     }
     void cdOnPause(){
+        // Toggles countdown running boolean to false
         cdRunning = false;
     }
     private void initTimer() {
+        // Runs the initial timer from 3 to 1
         initRunning = true;
         final Handler handler = new Handler();
         handler.post(new Runnable() {
@@ -212,6 +261,7 @@ public class GameActivity extends AppCompatActivity {
         });
     }
     private void cdTimer() {
+        // Runs the countdown timer of 100 seconds
         cdRunning = true;
         final Handler handler = new Handler();
         handler.post(new Runnable() {
@@ -234,9 +284,8 @@ public class GameActivity extends AppCompatActivity {
             }
         });
     }
-
-    // Initialization Methods
     public int calculateScore(int remainingTimeSeconds, int hazardCardsPulled) {
+        // Calculates score
         int score = (remainingTimeSeconds * 20) - (hazardCardsPulled*33);
         if (score>100) {
             return score;
@@ -246,6 +295,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void initializeViews(){
+        // Injects the elements from xml file to this java activity-controller
         // Views
         hp_icon1 = findViewById(R.id.hp1);
         hp_icon2 = findViewById(R.id.hp2);
@@ -256,7 +306,6 @@ public class GameActivity extends AppCompatActivity {
         txtHighScore = findViewById(R.id.txtHighScore);
 
         // GIFS
-
         Glide.with(this).load(R.drawable.hp_icon).into(hp_icon1);
         Glide.with(this).load(R.drawable.hp_icon).into(hp_icon2);
         Glide.with(this).load(R.drawable.hp_icon).into(hp_icon3);
@@ -291,13 +340,16 @@ public class GameActivity extends AppCompatActivity {
         pausedScreen = findViewById(R.id.pausedScreen);
         defeatScreen = findViewById(R.id.defeatScreen);
         victoryScreen = findViewById(R.id.victoryScreen);
+        guideScreen = findViewById(R.id.guideScreen);
 
         //Buttons
         btnPause = findViewById(R.id.btnPause);
+        btnVolume = findViewById(R.id.icon_volume);
     }
 
     // Card functions
     public void onCardClick(View v) {
+        // Setters for flipped card variables
         if (gameInProgress && !isFlipping) {
             ViewSwitcher card = (ViewSwitcher) v;
             if (flippedCardA == null && card != flippedCardB) {
@@ -317,6 +369,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     ImageView getCard(int index) {
+        // Gets the ImageSwitcher instance of selected card
         switch (index) {
             case 1: return card1;
             case 2: return card2;
@@ -395,6 +448,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void updateLocalHighScore(String gameMode, int newHighScore) {
+        // Updates highscore in the local save
         SharedPreferences localHighScore = getSharedPreferences(gameMode + "HighScore", MODE_PRIVATE);
         SharedPreferences.Editor localScoreEditor = localHighScore.edit();
         localScoreEditor.putInt("highScore", newHighScore);
@@ -402,6 +456,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public int retrieveLocalHighScore(String gameMode) {
+        // Retrieves highscore from the local save
         SharedPreferences localHighScore = getSharedPreferences(gameMode + "HighScore", MODE_PRIVATE);
         return localHighScore.getInt("highScore", 0);
     }

@@ -5,10 +5,8 @@ import android.media.MediaPlayer;
 
 public class SoundManager {
     private static SoundManager instance;
-    private MediaPlayer backgroundMusicPlayer;
+    static MediaPlayer backgroundMusicPlayer;
     private Context appContext;
-
-    // Private constructor to prevent instantiation outside the class
     private SoundManager(Context context) {
         this.appContext = context.getApplicationContext();
     }
@@ -20,40 +18,35 @@ public class SoundManager {
         }
         return instance;
     }
-
-    // Method to start playing background music
     public void playBackgroundMusic(int musicResourceID) {
+        // Method to start playing background music
         stopBackgroundMusic();
         backgroundMusicPlayer = MediaPlayer.create(appContext, musicResourceID);
         backgroundMusicPlayer.setLooping(true);
         backgroundMusicPlayer.start();
     }
-
-    // Method to stop background music
     public void stopBackgroundMusic() {
+        // Method to stop background music
         if (backgroundMusicPlayer != null) {
             backgroundMusicPlayer.stop();
             backgroundMusicPlayer.release();
             backgroundMusicPlayer = null;
         }
     }
-
-    // Method to pause background music
     public void pauseBackgroundMusic() {
+        // Method to pause background music
         if (backgroundMusicPlayer != null && backgroundMusicPlayer.isPlaying()) {
             backgroundMusicPlayer.pause();
         }
     }
-
-    // Method to resume background music
     public void resumeBackgroundMusic() {
+        // Method to resume background music
         if (backgroundMusicPlayer != null && !backgroundMusicPlayer.isPlaying()) {
             backgroundMusicPlayer.start();
         }
     }
-
-    // Method to play a sound effect
     public void playSoundEffect(int soundResourceID) {
+        // Method to play a sound effect
         MediaPlayer soundEffectPlayer = MediaPlayer.create(appContext, soundResourceID);
         soundEffectPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override

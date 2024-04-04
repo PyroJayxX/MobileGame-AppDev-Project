@@ -16,6 +16,7 @@ import java.util.List;
 public class CardUtils {
 
     public static void shuffleCards(GameActivity gameActivity) {
+        // Shuffle cards function depending on game mode
         if(gameActivity.gameMode.equals("veteran")){
         Integer[] images = {R.drawable.image1, R.drawable.image2, R.drawable.image3, R.drawable.image4, R.drawable.image5,
                 R.drawable.image6, R.drawable.image1, R.drawable.image2, R.drawable.image3, R.drawable.image4,
@@ -89,6 +90,7 @@ public class CardUtils {
         }
     }
     public static void cardComparator(GameActivity gameActivity, ViewSwitcher cardA, ViewSwitcher cardB) {
+        // Compares if the tag between two cards opened are equal
         View cardAImage = cardA.getCurrentView();
         View cardBImage = cardB.getCurrentView();
         Object cardAImageTag = null;
@@ -117,6 +119,7 @@ public class CardUtils {
     }
 
     public static boolean cardIsHazard(GameActivity gameActivity) {
+        // Checks if card is an instance of a bomber, mimic, poison, or trap
         if (gameActivity.flippedCardTemp == R.drawable.mimic || gameActivity.flippedCardTemp == R.drawable.bomber || gameActivity.flippedCardTemp == R.drawable.poison || gameActivity.flippedCardTemp == R.drawable.trap) {
             gameActivity.soundManager.playSoundEffect(R.raw.sfx_ouch);
             gameActivity.damage();
@@ -130,9 +133,8 @@ public class CardUtils {
         return false;
     }
 
-
     public static void flipCard(GameActivity gameActivity, final ViewSwitcher card) {
-        // Apply flip animation
+        // Toggles card view between frontcard and backcard with animation
         Animation flip = AnimationUtils.loadAnimation(gameActivity, R.anim.flip);
         Animation midFlip = AnimationUtils.loadAnimation(gameActivity, R.anim.flip_middle);
         flip.setAnimationListener(new Animation.AnimationListener() {
@@ -141,13 +143,11 @@ public class CardUtils {
                 gameActivity.soundManager.playSoundEffect(R.raw.sfx_cardflip);
                 gameActivity.isFlipping = true;
             }
-
             @Override
             public void onAnimationEnd(Animation animation) {
                 // Start the midFlip animation after the first animation ends
                 card.startAnimation(midFlip);
             }
-
             @Override
             public void onAnimationRepeat(Animation animation) {
             }
@@ -157,7 +157,6 @@ public class CardUtils {
             public void onAnimationStart(Animation animation) {
                 card.showNext();
             }
-
             @Override
             public void onAnimationEnd(Animation animation) {
                 gameActivity.isFlipping = false;
@@ -178,7 +177,6 @@ public class CardUtils {
                     cardComparator(gameActivity, gameActivity.flippedCardA, gameActivity.flippedCardB);
                 }
             }
-
             @Override
             public void onAnimationRepeat(Animation animation) {
             }
@@ -187,6 +185,7 @@ public class CardUtils {
     }
 
     public static void victoryChecker(GameActivity gameActivity) {
+        // Checks if user has won
         int requiredMatches = 6; // Default for novice and veteran modes
         if (gameActivity.gameMode.equals("master")) {
             requiredMatches = 8; // For master mode

@@ -750,62 +750,159 @@
             android:background="@drawable/background3"
             android:visibility="gone">
 
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="408dp"
-                android:layout_height="125dp"
-                android:layout_marginTop="156dp"
-                android:fontFamily="@font/dungeons"
-                android:shadowColor="#000000"
-                android:shadowDy="3"
-                android:shadowRadius="10"
-                android:text="Game Paused"
-                android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:textSize="70sp"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/header_layout"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.333"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
 
-            <ImageButton
-                android:id="@+id/btnResume"
-                android:layout_width="170dp"
-                android:layout_height="75dp"
-                android:layout_marginTop="96dp"
-                android:background="#00FFFFFF"
-                android:onClick="btnResume"
-                android:scaleType="fitCenter"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView3"
-                app:srcCompat="@drawable/btn_resume" />
+                <ImageButton
+                    android:id="@+id/icon_volume"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="#00FFFFFF"
+                    android:onClick="btnVolume"
+                    android:scaleType="fitCenter"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/icon_volume" />
 
-            <ImageButton
-                android:id="@+id/btnRestart"
-                android:layout_width="170dp"
-                android:layout_height="75dp"
-                android:layout_marginTop="24dp"
-                android:background="#00FFFFFF"
-                android:onClick="btnRetry"
-                android:scaleType="fitCenter"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnResume"
-                app:srcCompat="@drawable/btn_restart" />
+                <ImageButton
+                    android:id="@+id/icon_guide"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:background="#00FFFFFF"
+                    android:onClick="btnGuide"
+                    android:scaleType="fitCenter"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/icon_guide" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <ImageButton
-                android:id="@+id/btnPauseExit"
-                android:layout_width="170dp"
-                android:layout_height="75dp"
-                android:layout_marginTop="24dp"
-                android:background="#00FFFFFF"
-                android:onClick="btnBack"
-                android:scaleType="fitCenter"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/header_layout"
+                app:layout_constraintVertical_bias="0.3">
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="408dp"
+                    android:layout_height="125dp"
+                    android:fontFamily="@font/dungeons"
+                    android:shadowColor="#000000"
+                    android:shadowDy="3"
+                    android:shadowRadius="10"
+                    android:text="Game Paused"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="70sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/btnResume"
+                    android:layout_width="170dp"
+                    android:layout_height="75dp"
+                    android:layout_marginTop="64dp"
+                    android:background="#00FFFFFF"
+                    android:onClick="btnResume"
+                    android:scaleType="fitCenter"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView3"
+                    app:srcCompat="@drawable/btn_resume" />
+
+                <ImageButton
+                    android:id="@+id/btnRestart"
+                    android:layout_width="170dp"
+                    android:layout_height="75dp"
+                    android:layout_marginTop="16dp"
+                    android:background="#00FFFFFF"
+                    android:onClick="btnRetry"
+                    android:scaleType="fitCenter"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/btnResume"
+                    app:srcCompat="@drawable/btn_restart" />
+
+                <ImageButton
+                    android:id="@+id/btnPauseExit"
+                    android:layout_width="170dp"
+                    android:layout_height="75dp"
+                    android:layout_marginTop="16dp"
+                    android:background="#00FFFFFF"
+                    android:onClick="btnBack"
+                    android:scaleType="fitCenter"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/btnRestart"
+                    app:srcCompat="@drawable/btn_exit" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/guideScreen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/background6"
+            android:visibility="gone">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnRestart"
-                app:srcCompat="@drawable/btn_exit" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/guide_title"
+                    android:layout_width="300dp"
+                    android:layout_height="100dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/guide_title" />
+
+                <ImageView
+                    android:id="@+id/imageView8"
+                    android:layout_width="405dp"
+                    android:layout_height="550dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/guide_title"
+                    app:srcCompat="@drawable/guide" />
+
+                <ImageButton
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="48dp"
+                    android:background="#00FFFFFF"
+                    android:onClick="exitGuide"
+                    android:scaleType="fitCenter"
+                    app:layout_constraintBottom_toBottomOf="@id/imageView8"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.498"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:srcCompat="@drawable/circbtn_exit" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
