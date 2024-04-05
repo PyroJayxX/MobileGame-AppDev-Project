@@ -1,4 +1,6 @@
 package com.example.mobilegameappdevproject;
+
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -47,6 +49,7 @@ public class GameActivity extends AppCompatActivity {
     SoundManager soundManager;
     SharedPreferences localHighScore;
     SharedPreferences.Editor localScoreEditor;
+    private static Context appContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,9 +71,10 @@ public class GameActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        appContext = getApplicationContext();
         localHighScore = getSharedPreferences(gameMode + "HighScore", MODE_PRIVATE);
         localScoreEditor = localHighScore.edit();
-        currentHighScore = retrieveLocalHighScore(gameMode);
+        currentHighScore = DatabaseUtils.retrieveLocalHighScore(this, gameMode);
         soundManager = SoundManager.getInstance(getApplicationContext());
 
         new Handler().postDelayed(() -> {
@@ -447,17 +451,7 @@ public class GameActivity extends AppCompatActivity {
         Score = 0;
     }
 
-    public void updateLocalHighScore(String gameMode, int newHighScore) {
-        // Updates highscore in the local save
-        SharedPreferences localHighScore = getSharedPreferences(gameMode + "HighScore", MODE_PRIVATE);
-        SharedPreferences.Editor localScoreEditor = localHighScore.edit();
-        localScoreEditor.putInt("highScore", newHighScore);
-        localScoreEditor.apply();
-    }
-
-    public int retrieveLocalHighScore(String gameMode) {
-        // Retrieves highscore from the local save
-        SharedPreferences localHighScore = getSharedPreferences(gameMode + "HighScore", MODE_PRIVATE);
-        return localHighScore.getInt("highScore", 0);
+    public static Context getAppContext() {
+        return appContext;
     }
 }

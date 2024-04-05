@@ -1,7 +1,9 @@
 package com.example.mobilegameappdevproject;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -24,6 +26,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
     public ConstraintLayout menuScreen;
@@ -52,8 +59,6 @@ public class MainActivity extends AppCompatActivity {
     boolean hasAccount = true, isBgmMuted = false, isDailyScreen = true;
     private FirebaseAuth mAuth;
     FirebaseUser currentUser;
-    private String email, password;
-
 
     SoundManager soundManager;
     @Override
@@ -91,8 +96,18 @@ public class MainActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         Toast.makeText(MainActivity.this, "Logged in.", Toast.LENGTH_SHORT).show();
                         // User still exists, set high score and username
+                        UserModel.loadUser(MainActivity.this);
+                        // Update all database high score
+                        int noviceHighScore = DatabaseUtils.retrieveLocalHighScore(MainActivity.this, "novice");
+                        int veteranHighScore = DatabaseUtils.retrieveLocalHighScore(MainActivity.this, "veteran");
+                        int masterHighScore = DatabaseUtils.retrieveLocalHighScore(MainActivity.this, "master");
+                        DatabaseUtils.updateDatabaseHighScore(MainActivity.this, "novice", noviceHighScore, currentUser.getUid());
+                        DatabaseUtils.updateDatabaseHighScore(MainActivity.this, "veteran", veteranHighScore, currentUser.getUid());
+                        DatabaseUtils.updateDatabaseHighScore(MainActivity.this, "master", masterHighScore, currentUser.getUid());
                     } else {
                         // User does not exist, handle this case if needed
+                        UserModel.onUserLogout(MainActivity.this);
+                        currentUser = null;
                         mAuth.signOut();
                     }
                 }
@@ -300,34 +315,70 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Login Screen Buttons
-    public void onLoginClick (View v){
-        // Logs in user if their credentials are correct
+    public void onLoginClick(View v) {
+        // Logs in user if their credentials are correct and compares their current local score from their record in database
         soundManager.playSoundEffect(R.raw.sfx_button);
-        email = String.valueOf(txtEmail.getText());
-        password = String.valueOf(txtPassword.getText());
+        UserModel.email = String.valueOf(txtEmail.getText());
+        UserModel.password = String.valueOf(txtPassword.getText());
 
         // Check if email or password is empty, if true then returns void and prompts the user
-        if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
+        if (TextUtils.isEmpty(UserModel.email) || TextUtils.isEmpty(UserModel.password)) {
             Toast.makeText(MainActivity.this, "Please fill up all required fields.", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        mAuth.signInWithEmailAndPassword(email, password)
+        mAuth.signInWithEmailAndPassword(UserModel.email, UserModel.password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            loginScreen.setVisibility(View.GONE);
-                            rankScreen.setVisibility(View.VISIBLE);
                             currentUser = mAuth.getCurrentUser();
                             Toast.makeText(MainActivity.this, "Login successful.",
                                     Toast.LENGTH_SHORT).show();
+
+                            // Retrieve the username from the database
+                            DatabaseReference userRef = FirebaseDatabase.getInstance("https://mobilegameappdevproject-default-rtdb.asia-southeast1.firebasedatabase.app")
+                                    .getReference()
+                                    .child("users")
+                                    .child(currentUser.getUid());
+                            userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if (snapshot.exists()) {
+                                        // Set the username
+                                        UserModel.username = snapshot.child("username").getValue(String.class);
+                                        // Save the user credentials
+                                        UserModel.saveUser(MainActivity.this);
+                                        Toast.makeText(MainActivity.this, "Username: " + UserModel.username, Toast.LENGTH_SHORT).show();
+
+                                        // Update all database high score
+                                        int noviceHighScore = DatabaseUtils.retrieveLocalHighScore(MainActivity.this, "novice");
+                                        int veteranHighScore = DatabaseUtils.retrieveLocalHighScore(MainActivity.this, "veteran");
+                                        int masterHighScore = DatabaseUtils.retrieveLocalHighScore(MainActivity.this, "master");
+                                        DatabaseUtils.updateDatabaseHighScore(MainActivity.this, "novice", noviceHighScore, currentUser.getUid());
+                                        DatabaseUtils.updateDatabaseHighScore(MainActivity.this, "veteran", veteranHighScore, currentUser.getUid());
+                                        DatabaseUtils.updateDatabaseHighScore(MainActivity.this, "master", masterHighScore, currentUser.getUid());
+
+                                        // Proceed with UI changes
+                                        loginScreen.setVisibility(View.GONE);
+                                        rankScreen.setVisibility(View.VISIBLE);
+                                    } else {
+                                        Toast.makeText(MainActivity.this, "Something wrong with code.", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                    // Handle the error
+                                }
+                            });
                         } else {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(MainActivity.this, "Incorrect email or password.",
                                     Toast.LENGTH_SHORT).show();
                         }
+
                     }
                 });
     }
@@ -335,28 +386,43 @@ public class MainActivity extends AppCompatActivity {
     public void onSignupClick (View v){
         // Signs up user if credentials are correct
         soundManager.playSoundEffect(R.raw.sfx_button);
-        email = String.valueOf(txtEmail.getText());
-        password = String.valueOf(txtPassword.getText());
+        UserModel.email = String.valueOf(txtEmail.getText());
+        UserModel.password = String.valueOf(txtPassword.getText());
+        UserModel.username = String.valueOf(txtUsername.getText());
+        UserModel.confirmPassword = String.valueOf(txtConfirmPassword.getText());
 
         // Check if email or password is empty, if true then prompts the user
-        if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password) || TextUtils.isEmpty(String.valueOf(txtConfirmPassword.getText()))) {
+        if (TextUtils.isEmpty(UserModel.email) || TextUtils.isEmpty(UserModel.password) || TextUtils.isEmpty(UserModel.username) || TextUtils.isEmpty(UserModel.confirmPassword)){
             Toast.makeText(MainActivity.this, "Please fill up all required fields.", Toast.LENGTH_SHORT).show();
             return;
         }
 
         // If password is equals with confirm password -> Create the user with email and password
-        if (password.equals(String.valueOf(txtConfirmPassword.getText()))){
-            mAuth.createUserWithEmailAndPassword(email, password)
+        if (UserModel.password.equals(String.valueOf(txtConfirmPassword.getText()))){
+            mAuth.createUserWithEmailAndPassword(UserModel.email, UserModel.password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 // Sign-up success, update UI with the signed-in user's information
                                 currentUser = mAuth.getCurrentUser();
-                                Toast.makeText(MainActivity.this, "Sign up successful.",
-                                        Toast.LENGTH_SHORT).show();
-                                loginScreen.setVisibility(View.GONE);
-                                rankScreen.setVisibility(View.VISIBLE);
+                                // Reload the user's authentication state
+                                currentUser.reload().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> reloadTask) {
+                                        if (reloadTask.isSuccessful()) {
+                                            Toast.makeText(MainActivity.this, "Sign up successful.",
+                                                    Toast.LENGTH_SHORT).show();
+                                            loginScreen.setVisibility(View.GONE);
+                                            rankScreen.setVisibility(View.VISIBLE);
+                                            DatabaseUtils.writeUserDataToFirebase(MainActivity.this, UserModel.username);
+                                            UserModel.saveUser(MainActivity.this);
+                                        } else {
+                                            // Reloading failed
+                                            Toast.makeText(MainActivity.this, "Authentication failed: " + reloadTask.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
                             } else {
                                 // If sign-up fails, display a message to the user
                                 if (task.getException() instanceof FirebaseAuthUserCollisionException) {
@@ -375,11 +441,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onLogoutClick(View v){
-        // Logs out the user
+        // Update all database high score
+        int noviceHighScore = DatabaseUtils.retrieveLocalHighScore(MainActivity.this, "novice");
+        int veteranHighScore = DatabaseUtils.retrieveLocalHighScore(MainActivity.this, "veteran");
+        int masterHighScore = DatabaseUtils.retrieveLocalHighScore(MainActivity.this, "master");
+        DatabaseUtils.updateDatabaseHighScore(MainActivity.this, "novice", noviceHighScore, currentUser.getUid());
+        DatabaseUtils.updateDatabaseHighScore(MainActivity.this, "veteran", veteranHighScore, currentUser.getUid());
+        DatabaseUtils.updateDatabaseHighScore(MainActivity.this, "master", masterHighScore, currentUser.getUid());
+
         Toast.makeText(MainActivity.this, "Logged out.", Toast.LENGTH_SHORT).show();
         soundManager.playSoundEffect(R.raw.sfx_btnexit);
         mAuth.signOut();
-        currentUser=null;
+        currentUser = null;
+        UserModel.onUserLogout(MainActivity.this);
         returnToMenu();
     }
 

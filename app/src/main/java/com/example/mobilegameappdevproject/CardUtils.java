@@ -1,5 +1,6 @@
 package com.example.mobilegameappdevproject;
 
+import android.content.Context;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -185,6 +186,7 @@ public class CardUtils {
     }
 
     public static void victoryChecker(GameActivity gameActivity) {
+        Context context = GameActivity.getAppContext();
         // Checks if user has won
         int requiredMatches = 6; // Default for novice and veteran modes
         if (gameActivity.gameMode.equals("master")) {
@@ -198,7 +200,7 @@ public class CardUtils {
             if (gameActivity.Score > gameActivity.currentHighScore) {
                 gameActivity.currentHighScore = gameActivity.Score;
                 // Update the local high score for the current game mode
-                gameActivity.updateLocalHighScore(gameActivity.gameMode, gameActivity.currentHighScore);
+                DatabaseUtils.updateLocalHighScore(context, gameActivity.gameMode, gameActivity.currentHighScore);
             }
             gameActivity.txtHighScore.setText(Integer.toString(gameActivity.currentHighScore));
             gameActivity.mainGameScreen.setVisibility(View.GONE);
