@@ -2,6 +2,8 @@ package com.example.mobilegameappdevproject;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -79,6 +81,32 @@ public class DatabaseUtils {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 // Handle error
+            }
+        });
+    }
+
+    public static void retrieveUserDetails(){
+        DatabaseReference userRef = FirebaseDatabase.getInstance("https://mobilegameappdevproject-default-rtdb.asia-southeast1.firebasedatabase.app")
+                .getReference()
+                .child("users")
+                .child(MainActivity.currentUser.getUid())
+                .child("username");
+
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    UserModel.username = dataSnapshot.getValue(String.class);
+                    Log.d("MainActivity", "Username Retrieved Successfully.");
+                } else {
+                    Log.e("MainActivity", "Error retrieving username:");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle error
+                Log.e("MainActivity", "Error retrieving username: " + error.getMessage());
             }
         });
     }

@@ -4,10 +4,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public class UserModel {
-    private static final String PREF_NAME = "user_pref";
-    private static final String KEY_EMAIL = "email";
-    private static final String KEY_PASSWORD = "password";
-    private static final String KEY_USERNAME = "username";
+    public static String PREF_NAME = "user_pref";
+    public static String KEY_EMAIL = "email";
+    public static String KEY_PASSWORD = "password";
+    public static String KEY_USERNAME = "username";
 
     static String email, password, username, confirmPassword;
 

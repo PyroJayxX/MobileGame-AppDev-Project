@@ -1,10 +1,9 @@
 package com.example.mobilegameappdevproject;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -19,6 +18,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -31,6 +32,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class MainActivity extends AppCompatActivity {
     public ConstraintLayout menuScreen;
@@ -56,11 +61,15 @@ public class MainActivity extends AppCompatActivity {
     public EditText txtPassword;
     public EditText txtConfirmPassword;
     public TextView txtCreateAccount;
-    boolean hasAccount = true, isBgmMuted = false, isDailyScreen = true;
+    int rankScreenFlag = 0;
+    String highscore;
+    boolean hasAccount = true, isBgmMuted = false;
     private FirebaseAuth mAuth;
-    FirebaseUser currentUser;
-
+    static FirebaseUser currentUser;
     SoundManager soundManager;
+    ArrayList<LeaderboardModel> LeaderboardModel = new ArrayList<>();
+    RecyclerView recyclerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     @Override
     protected void onStart(){
         super.onStart();
@@ -97,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "Logged in.", Toast.LENGTH_SHORT).show();
                         // User still exists, set high score and username
                         UserModel.loadUser(MainActivity.this);
+                        DatabaseUtils.retrieveUserDetails();
                         // Update all database high score
                         int noviceHighScore = DatabaseUtils.retrieveLocalHighScore(MainActivity.this, "novice");
                         int veteranHighScore = DatabaseUtils.retrieveLocalHighScore(MainActivity.this, "veteran");
@@ -239,6 +250,11 @@ public class MainActivity extends AppCompatActivity {
         soundManager.playSoundEffect(R.raw.sfx_button);
         mainMenu.setVisibility(View.GONE);
         menuFooter.setVisibility(View.GONE);
+        getLeaderboardData();
+        LB_RecyclerViewAdapter adapter = new LB_RecyclerViewAdapter(this, LeaderboardModel);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         if (currentUser != null) {
             // User is logged in, show the dailyRankScreen
             rankScreen.setVisibility(View.VISIBLE);
@@ -265,17 +281,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void rankScreenToggle(View v){
-        // Toggle button between daily and all-time rank screen
-        soundManager.playSoundEffect(R.raw.sfx_button);
-        if(isDailyScreen){
-            rankTitle.setImageResource(R.drawable.alltime_title);
-            rankTitle.setTag(R.drawable.alltime_title);
+        rankScreenFlag++;
+        if (rankScreenFlag == 3){
+            rankScreenFlag = 0;
         }
-        if (!isDailyScreen){
-            rankTitle.setImageResource(R.drawable.daily_title);
-            rankTitle.setTag(R.drawable.daily_title);
+        switch(rankScreenFlag){
+            case 0: rankTitle.setImageResource(R.drawable.title_novice);
+                break;
+            case 1: rankTitle.setImageResource(R.drawable.title_veteran);
+                break;
+            case 2: rankTitle.setImageResource(R.drawable.title_master);
+                break;
         }
-        isDailyScreen = !isDailyScreen;
+        getLeaderboardData();
+        LB_RecyclerViewAdapter adapter = new LB_RecyclerViewAdapter(this, LeaderboardModel);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
     }
 
 
@@ -292,6 +314,7 @@ public class MainActivity extends AppCompatActivity {
         mainMenu = findViewById(R.id.main_menu);
         menuHeader = findViewById(R.id.header_layout);
         menuFooter = findViewById(R.id.footer_layout);
+        recyclerView = findViewById(R.id.rankRecyclerView);
 
         // Buttons initialization;
         btnStart = findViewById(R.id.btnStart);
@@ -357,6 +380,7 @@ public class MainActivity extends AppCompatActivity {
                                         int veteranHighScore = DatabaseUtils.retrieveLocalHighScore(MainActivity.this, "veteran");
                                         int masterHighScore = DatabaseUtils.retrieveLocalHighScore(MainActivity.this, "master");
                                         DatabaseUtils.updateDatabaseHighScore(MainActivity.this, "novice", noviceHighScore, currentUser.getUid());
+                                        DatabaseUtils.updateDatabaseHighScore(MainActivity.this, "veteran", veteranHighScore, currentUser.getUid());
                                         DatabaseUtils.updateDatabaseHighScore(MainActivity.this, "veteran", veteranHighScore, currentUser.getUid());
                                         DatabaseUtils.updateDatabaseHighScore(MainActivity.this, "master", masterHighScore, currentUser.getUid());
 
@@ -479,5 +503,69 @@ public class MainActivity extends AppCompatActivity {
             txtConfirmPassword.setVisibility(View.GONE);
             txtConfirmPassword.setEnabled(false);
         }
+    }
+
+    public void getLeaderboardData() {
+        DatabaseReference usersRef = FirebaseDatabase.getInstance("https://mobilegameappdevproject-default-rtdb.asia-southeast1.firebasedatabase.app")
+                .getReference()
+                .child("users");
+
+        usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // Clear the LeaderboardModel list before populating it with new data
+                LeaderboardModel.clear();
+
+                // Temporary list to store LeaderboardModel objects with scores
+                ArrayList<LeaderboardModel> tempList = new ArrayList<>();
+
+                // Iterate through each user node in the database
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                    // Retrieve the username and scores
+                    String username = userSnapshot.child("username").getValue(String.class);
+
+                    if(rankScreenFlag==0) {
+                        highscore = String.valueOf(userSnapshot.child("noviceHighscore").getValue(Long.class));
+                    } else if(rankScreenFlag==1) {
+                        highscore = String.valueOf(userSnapshot.child("veteranHighscore").getValue(Long.class));
+                    } else if(rankScreenFlag==2) {
+                        highscore = String.valueOf(userSnapshot.child("masterHighscore").getValue(Long.class));
+                    }
+
+                    // Create LeaderboardModel objects and add them to temporary list
+                    tempList.add(new LeaderboardModel("", username, highscore));
+
+                    Log.d("MainActivity", "Data fetched successfully.");
+                }
+
+                // Sort the temporary list in descending order based on score
+                Collections.sort(tempList, new Comparator<LeaderboardModel>() {
+                    @Override
+                    public int compare(LeaderboardModel o1, LeaderboardModel o2) {
+                        int score1 = Integer.parseInt(o1.getTxtRankScore());
+                        int score2 = Integer.parseInt(o2.getTxtRankScore());
+                        Log.d("MainActivity", "Compared successfully.");
+                        return Integer.compare(score2, score1);
+                    }
+                });
+
+                // Assign ranks based on the sorted order
+                for (int i = 0; i < tempList.size(); i++) {
+                    tempList.get(i).setTxtRank(String.valueOf(i + 1));
+                }
+
+                // Add the sorted and ranked list to LeaderboardModel
+                LeaderboardModel.addAll(tempList);
+
+                // Notify the RecyclerView adapter about the data changes
+                recyclerView.getAdapter().notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle error
+                Log.d("MainActivity", "Retrieval failure.");
+            }
+        });
     }
 }

@@ -207,4 +207,40 @@ public class CardUtils {
             gameActivity.victoryScreen.setVisibility(View.VISIBLE);
         }
     }
+
+    public static void flipCardNoCompare(GameActivity gameActivity, final ViewSwitcher card) {
+        // Toggles card view between frontcard and backcard with animation
+        Animation flip = AnimationUtils.loadAnimation(gameActivity, R.anim.flip);
+        Animation midFlip = AnimationUtils.loadAnimation(gameActivity, R.anim.flip_middle);
+        flip.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                gameActivity.soundManager.playSoundEffect(R.raw.sfx_cardflip);
+                gameActivity.isFlipping = true;
+            }
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                // Start the midFlip animation after the first animation ends
+                card.startAnimation(midFlip);
+            }
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+        midFlip.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                card.showNext();
+            }
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                gameActivity.isFlipping = false;
+            }
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+        card.startAnimation(flip);
+    }
+
 }
